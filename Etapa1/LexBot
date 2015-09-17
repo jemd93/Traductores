@@ -11,17 +11,37 @@
 #
 # Proyecto BOT - Etapa 1
 
+import sys
 import ply.lex as lex
+
+finput = open(sys.argv[1],'r') # Abre el archivo escrito en el terminal para
+                               # futura lectura
 
 # Nombres de los tokens
 
 tokens = (
    'TkCreate',
    'TkIdent',     
-   'TkNum',     
+   'TkNum',          
+   'TkCaracter', 
    'TkTrue',    
-   'TkFalse',     
-   'TkCaracter',  
+   'TkFalse',
+
+   'TkActivate', 
+   'TkActivation',
+   'TkAvance',
+   'TkDeactivate',
+   'TkDeactivation',
+   'TkStore',
+   'TkRecieve',
+   'TkCollect',
+   'TkDrop',
+   'TkOn',
+   'TkEnd',
+   'TkBot',
+   'TkExecute',
+   'TkDefault',
+
    'TkComa',    
    'TkPunto',
    'TkDosPuntos',
@@ -48,6 +68,20 @@ t_TkCreate
 t_TkIdent
 t_TkNum
 t_TkCaracter
+t_TkActivate
+t_TkActivation
+t_TkAvance
+t_TkDeactivate
+t_TkDeactivation
+t_TkStore
+t_TkRecieve
+t_TkCollect
+t_TkDrop
+t_TkOn
+t_TkEnd
+t_TkBot
+t_TkExecute
+t_TkDefault
 
 '''
 
@@ -100,3 +134,17 @@ def t_ID(t):
 '''
 # A string containing ignored characters (spaces and tabs)
 # t_ignore  = ' \t'
+
+lexer = lex.lex()
+
+lexer.input(finput)
+
+# if __name__ == '__main__':
+#      lex.runmain()
+
+# Tokenizar
+while True:
+    tok = lexer.token()
+    if not tok: 
+        break      # No more input
+    print(tok)
