@@ -45,6 +45,9 @@ reservadas = {
   'right'         : 'TkRight',
   'up'            : 'TkUp',
   'down'          : 'TkDown',
+
+  'true'          : 'TkTrue',
+  'false'         : 'TkFalse',
 }
 
 tokens = [
@@ -52,8 +55,6 @@ tokens = [
    'TkNum',          
    'TkCaracter', 
 
-   'TkTrue',    
-   'TkFalse',
    'TkComa',    
    'TkPunto',
    'TkDosPuntos',
@@ -76,8 +77,6 @@ tokens = [
 
 # Reglas de expresiones regulares simples
 
-t_TkTrue         = r'\#t'  # Consegui esto en internet no estoy clara o:
-t_TkFalse        = r'\#f' 
 t_TkComa         = r'\,'
 t_TkPunto        = r'\.'
 t_TkDosPuntos    = r'\:'

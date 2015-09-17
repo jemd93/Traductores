@@ -1,5 +1,5 @@
 create
-	int bot /\ \/ contador
+	int bot /\ \/ true false contador
 		on activation:
 			store 35.$
 		end
