@@ -17,43 +17,39 @@ finput = open(sys.argv[1],'r') # Abre el archivo escrito en el terminal para
 
 # Nombres de los tokens
 reservadas = {
-   'create' : 'TkCreate',
+  'create'        : 'TkCreate',
+  'int'           : 'TkInt',
+  'bool'          : 'TkBool',
+  'char'          : 'TkChar',
+  'bot'           : 'TkBot',
+  'on'            : 'TkOn',
+  'activation'    : 'TkActivation',
+  'store'         : 'TkStore',
+  'end'           : 'TkEnd',
+  'execute'       : 'TkExecute',
+  'activate'      : 'TkActivate',
+  'recieve'       : 'TkRecieve',
+  'avance'        : 'TkAvance',
+  'deactivate'    : 'TkDeactivate',
+  'deactivation'  : 'TkDeactivation',
+  'collect'       : 'TkCollect',
+  'drop'          : 'TkDrop',
+  'default'       : 'TkDefault',
+  'send'          : 'TkSend',
 
-   'int' : 'TkInt',
-
-   'bot' : 'TkBot',
-
-   'on' : 'TkOn',
-
-   'activation' : 'TkActivation',
-
-   'store' : 'TkStore',
-
-   'end' : 'TkEnd',
-
-   'execute' : 'TkExecute',
-
-   'activate' : 'TkActivate',
+  'left'          : 'TkLeft',
+  'right'         : 'TkRight',
+  'up'            : 'TkUp',
+  'down'          : 'TkDown',
 }
 
 tokens = [
-   'TkCreate',
    'TkIdent',     
    'TkNum',          
    'TkCaracter', 
+
    'TkTrue',    
    'TkFalse',
-
-   'TkAvance',
-   'TkDeactivate',
-   'TkDeactivation',
-   'TkStore',
-   'TkRecieve',
-   'TkCollect',
-   'TkDrop',
-   'TkDefault',
-   'TkSend',
-
    'TkComa',    
    'TkPunto',
    'TkDosPuntos',
@@ -73,22 +69,6 @@ tokens = [
    'TkMayorIgual',
    'TkIgual',
 ] + list(reservadas.values())
-
-'''
-
-t_TkIdent
-t_TkNum
-t_TkCaracter
-t_TkAvance
-t_TkDeactivate
-t_TkDeactivation
-t_TkRecieve
-t_TkCollect
-t_TkDrop
-t_TkExecute
-t_TkDefault
-
-'''
 
 # Reglas de expresiones regulares simples
 
@@ -120,36 +100,44 @@ t_TkIgual        = r'\='
 # Alternatively, you can include the prefix "ignore_" in the token declaration to force a token to be ignored. For example:
 # t_ignore_COMMENT = r'\#.*'
 
-# '''
-
-# '''
-
-# tokens = ['LPAREN','RPAREN',...,'ID'] + list(reserved.values())
-
-# def t_ID(t):
-#     r'[a-zA-Z_][a-zA-Z_0-9]*'
-#     t.type = reserved.get(t.value,'ID')    # Check for reserved words
-#     return t
+def t_TkCaracter(t):
+  #hola
+  return t
 
 def t_TkIdent(t):
-	r'[a-zA-Z_][a-zA-Z_0-9]*'
-	return t
+  r'[a-zA-Z_][a-zA-Z_0-9]*'
+  t.type = reservadas.get(t.value,'TkIdent')
+  return t
 
 def t_TkNum(t):
-	r'\d+'
-	t.value = int(t.value)    
-    return t
+  r'\d+'
+  t.value = int(t.value)    
+  return t
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+def t_error(t):
+  print("Illegal character '%s'" % t.value[0]) # Esto manda error para caracteres no soportados
+  t.lexer.skip(1)
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
 lexer = lex.lex()
 
-lexer.input(finput)
+data = '''create
+            int bot contador
+              on activation:
+                store 35.
+              end
+            end
+          execute
+            activate contador.
+          end'''
+
+lexer.input(data)
 
 # if __name__ == '__main__':
 #      lex.runmain()
