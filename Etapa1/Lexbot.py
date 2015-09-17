@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-#!/usr/bin/env python
-
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
@@ -18,8 +16,27 @@ finput = open(sys.argv[1],'r') # Abre el archivo escrito en el terminal para
                                # futura lectura
 
 # Nombres de los tokens
+reservadas = {
+   'create' : 'TkCreate',
 
-tokens = (
+   'int' : 'TkInt',
+
+   'bot' : 'TkBot',
+
+   'on' : 'TkOn',
+
+   'activation' : 'TkActivation',
+
+   'store' : 'TkStore',
+
+   'end' : 'TkEnd',
+
+   'execute' : 'TkExecute',
+
+   'activate' : 'TkActivate',
+}
+
+tokens = [
    'TkCreate',
    'TkIdent',     
    'TkNum',          
@@ -27,8 +44,6 @@ tokens = (
    'TkTrue',    
    'TkFalse',
 
-   'TkActivate', 
-   'TkActivation',
    'TkAvance',
    'TkDeactivate',
    'TkDeactivation',
@@ -36,11 +51,8 @@ tokens = (
    'TkRecieve',
    'TkCollect',
    'TkDrop',
-   'TkOn',
-   'TkEnd',
-   'TkBot',
-   'TkExecute',
    'TkDefault',
+   'TkSend',
 
    'TkComa',    
    'TkPunto',
@@ -60,26 +72,19 @@ tokens = (
    'TkMayor',
    'TkMayorIgual',
    'TkIgual',
-)
+] + list(reservadas.values())
 
 '''
 
-t_TkCreate
 t_TkIdent
 t_TkNum
 t_TkCaracter
-t_TkActivate
-t_TkActivation
 t_TkAvance
 t_TkDeactivate
 t_TkDeactivation
-t_TkStore
 t_TkRecieve
 t_TkCollect
 t_TkDrop
-t_TkOn
-t_TkEnd
-t_TkBot
 t_TkExecute
 t_TkDefault
 
@@ -108,32 +113,39 @@ t_TkMayor        = r'\>'
 t_TkMayorIgual   = r'\>\=' # ***
 t_TkIgual        = r'\='
 
-'''def t_COMMENT(t):
-    r'\#.*'
-    pass
-    # No return value. Token discarded
-Alternatively, you can include the prefix "ignore_" in the token declaration to force a token to be ignored. For example:
-t_ignore_COMMENT = r'\#.*'
+# '''def t_COMMENT(t):
+#     r'\#.*'
+#     pass
+#     # No return value. Token discarded
+# Alternatively, you can include the prefix "ignore_" in the token declaration to force a token to be ignored. For example:
+# t_ignore_COMMENT = r'\#.*'
 
-'''
+# '''
 
-'''reserved = {
-   'if' : 'IF',
-   'then' : 'THEN',
-   'else' : 'ELSE',
-   'while' : 'WHILE',
-   ...
-}
+# '''
 
-tokens = ['LPAREN','RPAREN',...,'ID'] + list(reserved.values())
+# tokens = ['LPAREN','RPAREN',...,'ID'] + list(reserved.values())
 
-def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')    # Check for reserved words
+# def t_ID(t):
+#     r'[a-zA-Z_][a-zA-Z_0-9]*'
+#     t.type = reserved.get(t.value,'ID')    # Check for reserved words
+#     return t
+
+def t_TkIdent(t):
+	r'[a-zA-Z_][a-zA-Z_0-9]*'
+	return t
+
+def t_TkNum(t):
+	r'\d+'
+	t.value = int(t.value)    
     return t
-'''
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
 # A string containing ignored characters (spaces and tabs)
-# t_ignore  = ' \t'
+t_ignore  = ' \t'
 
 lexer = lex.lex()
 
@@ -143,8 +155,5 @@ lexer.input(finput)
 #      lex.runmain()
 
 # Tokenizar
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print(tok)
+for tok in lexer:
+    print(tok.type, tok.value, tok.lineno, tok.lexpos)
