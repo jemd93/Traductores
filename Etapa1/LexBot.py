@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+#!/usr/bin/env python3  
+
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
@@ -12,8 +14,10 @@
 import sys
 import ply.lex as lex
 
-finput = open(sys.argv[1],'r') # Abre el archivo escrito en el terminal para
+print(sys.argv[1])
+f = open(sys.argv[1],'r') # Abre el archivo escrito en el terminal para
                                # futura lectura
+finput = f.read()
 
 # Nombres de los tokens
 reservadas = {
@@ -100,9 +104,9 @@ t_TkIgual        = r'\='
 # Alternatively, you can include the prefix "ignore_" in the token declaration to force a token to be ignored. For example:
 # t_ignore_COMMENT = r'\#.*'
 
-def t_TkCaracter(t):
-  #hola
-  return t
+# def t_TkCaracter(t):
+#   #hola
+#   return t
 
 def t_TkIdent(t):
   r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -119,7 +123,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-  print("Illegal character '%s'" % t.value[0]) # Esto manda error para caracteres no soportados
+  print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (t.value[0], t.lineno, t.lexpos)) 
   t.lexer.skip(1)
 
 # A string containing ignored characters (spaces and tabs)
@@ -127,21 +131,17 @@ t_ignore  = ' \t'
 
 lexer = lex.lex()
 
-data = '''create
-            int bot contador
-              on activation:
-                store 35.
-              end
-            end
-          execute
-            activate contador.
-          end'''
-
-lexer.input(data)
+lexer.input(finput)
 
 # if __name__ == '__main__':
 #      lex.runmain()
 
 # Tokenizar
 for tok in lexer:
-    print(tok.type, tok.value, tok.lineno, tok.lexpos)
+    if tok.type != 'TkIdent':
+      print(tok.type, tok.value, tok.lineno, tok.lexpos)
+    else:
+      print(tok.type,"(\""+tok.value+"\")", tok.lineno, tok.lexpos)
+
+
+f.close()

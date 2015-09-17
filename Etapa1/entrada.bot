@@ -1,7 +1,7 @@
 create
-	int bot contador
+	int bot /\ \/ contador
 		on activation:
-			store 35.
+			store 35.$
 		end
 	end
 execute
