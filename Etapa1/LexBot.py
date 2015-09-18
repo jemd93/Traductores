@@ -15,11 +15,10 @@
 
 import sys
 import ply.lex as lex
-
-
+  
 f = open(sys.argv[1],'r') # Abre el archivo pasado como parametro por linea de comando
 finput = f.read()
-  
+
 # Palabras reservadas
 reservadas = {
   'int'           : 'TkInt',
@@ -144,14 +143,6 @@ def main() :
 
   lexer = lex.lex()
   lexer.input(finput)
-
-  lista = []
-  # for tok in lexer:
-  #   lista.append(tok)
-
-  # for x in lista:
-  #   print(x)
-
 
   # Este ciclo tokeniza en el lexer 
   for tok in lexer:
