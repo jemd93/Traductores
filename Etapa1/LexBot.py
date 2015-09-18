@@ -2,14 +2,16 @@
 
 #!/usr/bin/env python3  
 
+# -----------------------------------------------
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
 #
 #  Autores: Jorge Marcano   # Carnet 11-10566
-#           Meggie Sanchez  # Carnet 11-10939
+#           Meggie Sánchez  # Carnet 11-10939
 #
 # Proyecto BOT - Etapa 1
+# -----------------------------------------------
 
 import sys
 import ply.lex as lex
@@ -100,30 +102,23 @@ def t_TkComentario(t):
     r'((\$\-([^\-]|(\-)+[^\$])*\-\$)|(\$\$.*))'
     t.lexer.lineno += len(t.value.rsplit('\n')) - 1
 
-# def t_TkCaracter(t):
-#   #hola
-#   return t
+def t_TkCaracter(t):
+    r'\'.*\''
+    return t
 
 def t_TkIdent(t):
-  r'[a-zA-Z_][a-zA-Z_0-9]*'
-  t.type = reservadas.get(t.value,'TkIdent')
-  return t
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reservadas.get(t.value,'TkIdent')
+    return t
 
 def t_TkNum(t):
-  r'\d+'
-  t.value = int(t.value)    
-  return t
+    r'\d+'
+    t.value = int(t.value)    
+    return t
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-
-def t_error(t):
-  print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (t.value[0], t.lineno, t.lexpos)) 
-  t.lexer.skip(1)
-
-# A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t'
 
 # Compute column. 
 #     input is the input text string
@@ -135,19 +130,24 @@ def NumColumna(input,token):
     column = (token.lexpos - last_cr)
     return column
 
+def t_error(t):
+    print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (t.value[0], t.lineno, NumColumna(finput, t))) 
+    t.lexer.skip(1)
+
+# String que ignora caracteres como los espacios y los tab
+t_ignore  = ' \t'
+
 lexer = lex.lex()
 
 lexer.input(finput)
 
-# if __name__ == '__main__':
-#      lex.runmain()
-
-# Tokenizar
+# Este ciclo tokeniza en el lexer
 for tok in lexer:
-    if tok.type != 'TkIdent':
-      print(tok.type, tok.value, tok.lineno, NumColumna(finput, tok))
-    else:
-      print(tok.type,"(\""+tok.value+"\")", tok.lineno, NumColumna(finput, tok))
-
-
+    if (tok.type != 'TkIdent') and (tok.type != 'TkCaracter') and (tok.type != 'TkNum'):
+        print(tok.type, tok.value, tok.lineno, NumColumna(finput, tok))
+    elif (tok.type == 'TkIdent') and (tok.type != 'TkCaracter'):
+        print(tok.type+"(\""+tok.value+"\")", tok.lineno, NumColumna(finput, tok))
+    elif (tok.type != 'TkIdent') and ((tok.type == 'TkCaracter') or (tok.type == 'TkNum')):
+        print(tok.type+"("+str(tok.value)+")", tok.lineno, NumColumna(finput, tok))
+    
 f.close()

@@ -1,12 +1,19 @@
 create
-    int bot contador
+    char bot b
         on activation:
-            store 35.
+            store 'H'. send.
+            store 'e'. send.
+            store 'l'. send.
+            store 'l'. send.
+            store 'o'. send.
+            store ' '. send.
+            store 'B'. send.
+            store 'O'. send.
+            store 'T'. send.
+            store '!'. send.
         end
     end
 
-execute $$on activate
-    $- Asignar al contador
-    el valor 35 -$
-    activate contador.
+execute
+    activate b.
 end
