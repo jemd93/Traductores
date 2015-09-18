@@ -1,9 +1,12 @@
 create
-	int bot /\ \/ true false contador
-		on activation:
-			store 35.$
-		end
-	end
+    int bot contador
+        on activation:
+            store 35.
+        end
+    end
+
 execute
-	activate contador.
+    $- Asignar al contador
+    el valor 35 -$
+    activate contador.
 end

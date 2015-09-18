@@ -96,12 +96,9 @@ t_TkMayor        = r'\>'
 t_TkMayorIgual   = r'\>\=' # ***
 t_TkIgual        = r'\='
 
-# '''def t_COMMENT(t):
-#     r'\#.*'
-#     pass
-#     # No return value. Token discarded
-# Alternatively, you can include the prefix "ignore_" in the token declaration to force a token to be ignored. For example:
-# t_ignore_COMMENT = r'\#.*'
+def t_TkComentario(t):
+    r'\$\-([^\-]|(\-)+[^\$])*\-\$'
+    t.lexer.lineno += len(t.value.rsplit('\n')) - 1
 
 # def t_TkCaracter(t):
 #   #hola
@@ -128,6 +125,16 @@ def t_error(t):
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
+# Compute column. 
+#     input is the input text string
+#     token is a token instance
+def NumColumna(input,token):
+    last_cr = input.rfind('\n',0,token.lexpos)
+    # if last_cr < 0:
+    #   last_cr = -1
+    column = (token.lexpos - last_cr)
+    return column
+
 lexer = lex.lex()
 
 lexer.input(finput)
@@ -138,9 +145,9 @@ lexer.input(finput)
 # Tokenizar
 for tok in lexer:
     if tok.type != 'TkIdent':
-      print(tok.type, tok.value, tok.lineno, tok.lexpos)
+      print(tok.type, tok.value, tok.lineno, NumColumna(finput, tok))
     else:
-      print(tok.type,"(\""+tok.value+"\")", tok.lineno, tok.lexpos)
+      print(tok.type,"(\""+tok.value+"\")", tok.lineno, NumColumna(finput, tok))
 
 
 f.close()
