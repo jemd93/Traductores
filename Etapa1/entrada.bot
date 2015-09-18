@@ -5,7 +5,7 @@ create
         end
     end
 
-execute
+execute $$on activate
     $- Asignar al contador
     el valor 35 -$
     activate contador.

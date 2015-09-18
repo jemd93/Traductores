@@ -97,7 +97,7 @@ t_TkMayorIgual   = r'\>\=' # ***
 t_TkIgual        = r'\='
 
 def t_TkComentario(t):
-    r'\$\-([^\-]|(\-)+[^\$])*\-\$'
+    r'((\$\-([^\-]|(\-)+[^\$])*\-\$)|(\$\$.*))'
     t.lexer.lineno += len(t.value.rsplit('\n')) - 1
 
 # def t_TkCaracter(t):
