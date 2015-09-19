@@ -2,7 +2,7 @@
 
 #!/usr/bin/env python3  
 
-# -----------------------------------------------
+# -------------------------------------------------
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
@@ -10,21 +10,20 @@
 #  Autores: Jorge Marcano   # Carnet 11-10566
 #           Meggie Sánchez  # Carnet 11-10939
 #
-# Proyecto BOT - Etapa 1
-# -----------------------------------------------
+# Proyecto BOT - Etapa 1 - Análisis Lexicográfico
+# -------------------------------------------------
 
+# Librerías utilizadas
 import sys
 import ply.lex as lex
 
-
-# f = open(sys.argv[1],'r') # Abre el archivo pasado como parametro por linea de comando
-# finput = f.read()
-
-
 class MyLexer(object):
 
+  # Clase MyLexer para el análisis lexicográfico del lenguaje BOT
+  
   toks = []
   errors = []
+
   # Palabras reservadas
   reservadas = {
     'int'           : 'TkInt',
@@ -57,7 +56,7 @@ class MyLexer(object):
     'false'         : 'TkFalse',
   }
 
-  # Nombres de los demas tokens
+  # Nombres de los demás tokens
   tokens = [
      'TkIdent',     
      'TkNum',          
@@ -90,73 +89,100 @@ class MyLexer(object):
   t_TkParAbre      = r'\('
   t_TkParCierra    = r'\)'
   t_TkSuma         = r'\+'
-  t_TkResta        = r'\-'   # ***
+  t_TkResta        = r'\-'   
   t_TkMult         = r'\*'
   t_TkDiv          = r'/'
   t_TkMod          = r'\%'
-  t_TkConjuncion   = r'\/\\' # ***
-  t_TkDisyuncion   = r'\\\/' # ***
+  t_TkConjuncion   = r'\/\\' 
+  t_TkDisyuncion   = r'\\\/' 
   t_TkNegacion     = r'\~'
   t_TkMenor        = r'\<'
-  t_TkMenorIgual   = r'\<\=' # ***
+  t_TkMenorIgual   = r'\<\=' 
   t_TkMayor        = r'\>'
-  t_TkMayorIgual   = r'\>\=' # ***
+  t_TkMayorIgual   = r'\>\=' 
   t_TkIgual        = r'\='
 
-  # Funcion para detectar comentarios
   def t_TkComentario(self,t):
+
+    # Descripción: Función para detectar comentarios 
+    # Parámetros: - t: token
+
     r'((\$\-([^\-]|(\-)+[^\$])*\-\$)|(\$\$.*))'
     t.lexer.lineno += len(t.value.rsplit('\n')) - 1
 
-  # Funcion para deteccion de caracteres
   def t_TkCaracter(self,t):
+
+    # Descripción: Función para detección de caracteres
+    # Parámetros: - t: token
+
     r'\'.*\''
     return t
 
-  # Funcion para deteccion de identificadores de variables
   def t_TkIdent(self,t):
+
+    # Descripción: Función para detección de identificadores de variables
+    # Parámetros: - t: token
+
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = self.reservadas.get(t.value,'TkIdent')
     return t
 
-  # Funcion para deteccion de numeros
   def t_TkNum(self,t):
+
+    # Descripción: Función para detección de números
+    # Parámetros: - t: token
+
     r'\d+'
     t.value = int(t.value)    
     return t
 
-  # Funcion para deteccion de saltos de linea
   def t_newline(self,t):
+
+    # Descripción: Función para detección de saltos de línea
+    # Parámetros: - t: token
+
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-  # Funcion para calcular el numero de columna de cada token
   def NumColumna(self,token):
+
+    # Descripción: Función para calcular el número de columna de cada token
+    # Parámetros: - token: token
+
     last_cr = self.lexer.lexdata.rfind('\n',0,token.lexpos)
     column = (token.lexpos - last_cr)
     return column
 
-  # Funcion para deteccion de caracteres ilegales
   def t_error(self,t):
+
+    # Descripción: Función para detección de caracteres ilegales
+    # Parámetros: - t: token
+
     self.errors.append([t.value[0],t.lineno,self.NumColumna(t)])
     t.lexer.skip(1)
 
   # String que ignora caracteres como los espacios y los tab
   t_ignore  = ' \t'
 
-  # Build the lexer
   def build(self,**kwargs):
+
+    # Descripción: Función para construir el lexer
+
     self.lexer = lex.lex(module=self, **kwargs)
 
-  def tokenizar(self) :
+  def tokenizar(self):
+
+    # Descripción: Función para tokenizar todos los tokens existentes
+
     for t in self.lexer:
       self.toks.append([t.value,t.type,t.lineno,self.NumColumna(t)])
 
+def main():
 
-# Funcion principal
-def main() :
+  # Función principal
 
-  f = open(sys.argv[1],'r') # Abre el archivo pasado como parametro por linea de comando
+  f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
+                            # de comando
   finput = f.read()
 
   lex = MyLexer()
@@ -165,28 +191,18 @@ def main() :
 
   lex.tokenizar()
 
-  if (lex.errors == []) : 
-    for tok in lex.toks :
+  if (lex.errors == []): 
+    for tok in lex.toks:
       if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
-        print(tok[1], tok[0], tok[2], tok[3])
+        print(tok[1], tok[2], tok[3])
       elif (tok[1] == 'TkIdent') :
         print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
       elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
         print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
-  else :
-    for err in lex.errors : 
+  else:
+    for err in lex.errors: 
       print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
   
-  
-  # Este ciclo tokeniza en el lexer 
-  # for tok in lex.lexer:
-  #   if (tok.type != 'TkIdent') and (tok.type != 'TkCaracter') and (tok.type != 'TkNum'):
-  #     print(tok.type, tok.value, tok.lineno, lex.NumColumna(tok))
-  #   elif (tok.type == 'TkIdent') :
-  #     print(tok.type+"(\""+tok.value+"\")", tok.lineno, lex.NumColumna(tok))
-  #   elif (tok.type == 'TkCaracter') or (tok.type == 'TkNum'):
-  #     print(tok.type+"("+str(tok.value)+")", tok.lineno, lex.NumColumna(tok))
-      
   f.close()
 
 # Programa principal

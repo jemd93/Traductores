@@ -1,0 +1,5 @@
+1. la salida debe ser exactamente con los tokens separados por coma?
+2. que hace si encuentra <>? error o los dos tokens? igual con <=>
+3. que hace con $-$? da error, resta, error
+4. hay que crear un programa principal que invoque al analizador lexicografico
+   es un main o simplemente tiene que estar en otro archivo
