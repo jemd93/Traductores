@@ -23,6 +23,8 @@ import ply.lex as lex
 
 class MyLexer(object):
 
+  toks = []
+  errors = []
   # Palabras reservadas
   reservadas = {
     'int'           : 'TkInt',
@@ -136,7 +138,7 @@ class MyLexer(object):
 
   # Funcion para deteccion de caracteres ilegales
   def t_error(self,t):
-    print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (t.value[0], t.lineno, self.NumColumna(t))) 
+    self.errors.append([t.value[0],t.lineno,self.NumColumna(t)])
     t.lexer.skip(1)
 
   # String que ignora caracteres como los espacios y los tab
@@ -145,6 +147,11 @@ class MyLexer(object):
   # Build the lexer
   def build(self,**kwargs):
     self.lexer = lex.lex(module=self, **kwargs)
+
+  def tokenizar(self) :
+    for t in self.lexer:
+      self.toks.append([t.value,t.type,t.lineno,self.NumColumna(t)])
+
 
 # Funcion principal
 def main() :
@@ -155,25 +162,30 @@ def main() :
   lex = MyLexer()
   lex.build()
   lex.lexer.input(finput)
-  # lexer = lex.lex()
-  # lexer.input(finput)
 
-  # lista = []
-  # for tok in lex.lexer:
-  #   lista.append(tok)
+  lex.tokenizar()
 
-  # # for x in lista:
-  # #   print(x)
-
-
+  if (lex.errors == []) : 
+    for tok in lex.toks :
+      if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
+        print(tok[1], tok[0], tok[2], tok[3])
+      elif (tok[1] == 'TkIdent') :
+        print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
+      elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
+        print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
+  else :
+    for err in lex.errors : 
+      print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
+  
+  
   # Este ciclo tokeniza en el lexer 
-  for tok in lex.lexer:
-    if (tok.type != 'TkIdent') and (tok.type != 'TkCaracter') and (tok.type != 'TkNum'):
-      print(tok.type, tok.value, tok.lineno, lex.NumColumna(tok))
-    elif (tok.type == 'TkIdent') :
-      print(tok.type+"(\""+tok.value+"\")", tok.lineno, lex.NumColumna(tok))
-    elif (tok.type == 'TkCaracter') or (tok.type == 'TkNum'):
-      print(tok.type+"("+str(tok.value)+")", tok.lineno, lex.NumColumna(tok))
+  # for tok in lex.lexer:
+  #   if (tok.type != 'TkIdent') and (tok.type != 'TkCaracter') and (tok.type != 'TkNum'):
+  #     print(tok.type, tok.value, tok.lineno, lex.NumColumna(tok))
+  #   elif (tok.type == 'TkIdent') :
+  #     print(tok.type+"(\""+tok.value+"\")", tok.lineno, lex.NumColumna(tok))
+  #   elif (tok.type == 'TkCaracter') or (tok.type == 'TkNum'):
+  #     print(tok.type+"("+str(tok.value)+")", tok.lineno, lex.NumColumna(tok))
       
   f.close()
 
