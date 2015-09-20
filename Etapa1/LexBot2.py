@@ -17,7 +17,7 @@
 import sys
 import ply.lex as lex
 
-class MyLexer(object):
+class BotLexer(object):
 
   # Clase MyLexer para el análisis lexicográfico del lenguaje BOT
   
@@ -185,14 +185,14 @@ def main():
                             # de comando
   finput = f.read()
 
-  lex = MyLexer()
-  lex.build()
-  lex.lexer.input(finput)
+  botlex = BotLexer()
+  botlex.build()
+  botlex.lexer.input(finput)
 
-  lex.tokenizar()
+  botlex.tokenizar()
 
-  if (lex.errors == []): 
-    for tok in lex.toks:
+  if (botlex.errors == []): 
+    for tok in botlex.toks:
       if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
         print(tok[1], tok[2], tok[3])
       elif (tok[1] == 'TkIdent') :
@@ -200,7 +200,7 @@ def main():
       elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
         print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
   else:
-    for err in lex.errors: 
+    for err in botlex.errors: 
       print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
   
   f.close()
