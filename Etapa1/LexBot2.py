@@ -123,7 +123,7 @@ class BotLexer(object):
     # Descripción: Función para detección de identificadores de variables
     # Parámetros: - t: token
 
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    r'[a-zA-Z][a-zA-Z0-9]*'
     t.type = self.reservadas.get(t.value,'TkIdent')
     return t
 
