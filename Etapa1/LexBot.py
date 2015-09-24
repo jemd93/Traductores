@@ -2,7 +2,7 @@
 
 #!/usr/bin/env python3  
 
-# -----------------------------------------------
+# -------------------------------------------------
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
@@ -10,149 +10,199 @@
 #  Autores: Jorge Marcano   # Carnet 11-10566
 #           Meggie Sánchez  # Carnet 11-10939
 #
-# Proyecto BOT - Etapa 1
-# -----------------------------------------------
+# Proyecto BOT - Etapa 1 - Análisis Lexicográfico
+# -------------------------------------------------
 
+# Librerías utilizadas
 import sys
 import ply.lex as lex
+
+class BotLexer(object):
+
+  # Clase MyLexer para el análisis lexicográfico del lenguaje BOT
   
-f = open(sys.argv[1],'r') # Abre el archivo pasado como parametro por linea de comando
-finput = f.read()
+  toks = []
+  errors = []
 
-# Palabras reservadas
-reservadas = {
-  'int'           : 'TkInt',
-  'bool'          : 'TkBool',
-  'char'          : 'TkChar',
+  # Palabras reservadas
+  reservadas = {
+    'int'           : 'TkInt',
+    'bool'          : 'TkBool',
+    'char'          : 'TkChar',
 
-  'create'        : 'TkCreate',
-  'bot'           : 'TkBot',
-  'on'            : 'TkOn',
-  'activation'    : 'TkActivation',
-  'store'         : 'TkStore',
-  'end'           : 'TkEnd',
-  'execute'       : 'TkExecute',
-  'activate'      : 'TkActivate',
-  'recieve'       : 'TkRecieve',
-  'avance'        : 'TkAvance',
-  'deactivate'    : 'TkDeactivate',
-  'deactivation'  : 'TkDeactivation',
-  'collect'       : 'TkCollect',
-  'drop'          : 'TkDrop',
-  'default'       : 'TkDefault',
-  'send'          : 'TkSend',
+    'create'        : 'TkCreate',
+    'bot'           : 'TkBot',
+    'on'            : 'TkOn',
+    'activation'    : 'TkActivation',
+    'store'         : 'TkStore',
+    'end'           : 'TkEnd',
+    'execute'       : 'TkExecute',
+    'activate'      : 'TkActivate',
+    'recieve'       : 'TkRecieve',
+    'avance'        : 'TkAvance',
+    'deactivate'    : 'TkDeactivate',
+    'deactivation'  : 'TkDeactivation',
+    'collect'       : 'TkCollect',
+    'drop'          : 'TkDrop',
+    'default'       : 'TkDefault',
+    'send'          : 'TkSend',
 
-  'left'          : 'TkLeft',
-  'right'         : 'TkRight',
-  'up'            : 'TkUp',
-  'down'          : 'TkDown',
+    'left'          : 'TkLeft',
+    'right'         : 'TkRight',
+    'up'            : 'TkUp',
+    'down'          : 'TkDown',
 
-  'true'          : 'TkTrue',
-  'false'         : 'TkFalse',
-}
+    'true'          : 'TkTrue',
+    'false'         : 'TkFalse',
+  }
 
-# Nombres de los demas tokens
-tokens = [
-   'TkIdent',     
-   'TkNum',          
-   'TkCaracter', 
+  # Nombres de los demás tokens
+  tokens = [
+     'TkIdent',     
+     'TkNum',          
+     'TkCaracter', 
 
-   'TkComa',    
-   'TkPunto',
-   'TkDosPuntos',
-   'TkParAbre',
-   'TkParCierra',
-   'TkSuma',
-   'TkResta',
-   'TkMult',
-   'TkDiv',
-   'TkMod',
-   'TkConjuncion',
-   'TkDisyuncion',
-   'TkNegacion',
-   'TkMenor',
-   'TkMenorIgual',
-   'TkMayor',
-   'TkMayorIgual',
-   'TkIgual',
-] + list(reservadas.values())
+     'TkComa',    
+     'TkPunto',
+     'TkDosPuntos',
+     'TkParAbre',
+     'TkParCierra',
+     'TkSuma',
+     'TkResta',
+     'TkMult',
+     'TkDiv',
+     'TkMod',
+     'TkConjuncion',
+     'TkDisyuncion',
+     'TkNegacion',
+     'TkMenor',
+     'TkMenorIgual',
+     'TkMayor',
+     'TkMayorIgual',
+     'TkIgual',
+  ] + list(reservadas.values())
 
-# Reglas de expresiones regulares simples
-t_TkComa         = r'\,'
-t_TkPunto        = r'\.'
-t_TkDosPuntos    = r'\:'
-t_TkParAbre      = r'\('
-t_TkParCierra    = r'\)'
-t_TkSuma         = r'\+'
-t_TkResta        = r'\-'   # ***
-t_TkMult         = r'\*'
-t_TkDiv          = r'/'
-t_TkMod          = r'\%'
-t_TkConjuncion   = r'\/\\' # ***
-t_TkDisyuncion   = r'\\\/' # ***
-t_TkNegacion     = r'\~'
-t_TkMenor        = r'\<'
-t_TkMenorIgual   = r'\<\=' # ***
-t_TkMayor        = r'\>'
-t_TkMayorIgual   = r'\>\=' # ***
-t_TkIgual        = r'\='
+  # Reglas de expresiones regulares simples
+  t_TkComa         = r'\,'
+  t_TkPunto        = r'\.'
+  t_TkDosPuntos    = r'\:'
+  t_TkParAbre      = r'\('
+  t_TkParCierra    = r'\)'
+  t_TkSuma         = r'\+'
+  t_TkResta        = r'\-'   
+  t_TkMult         = r'\*'
+  t_TkDiv          = r'/'
+  t_TkMod          = r'\%'
+  t_TkConjuncion   = r'\/\\' 
+  t_TkDisyuncion   = r'\\\/' 
+  t_TkNegacion     = r'\~'
+  t_TkMenor        = r'\<'
+  t_TkMenorIgual   = r'\<\=' 
+  t_TkMayor        = r'\>'
+  t_TkMayorIgual   = r'\>\=' 
+  t_TkIgual        = r'\='
 
-# Funcion para detectar comentarios
-def t_TkComentario(t):
-  r'((\$\-([^\-]|(\-)+[^\$])*\-\$)|(\$\$.*))'
-  t.lexer.lineno += len(t.value.rsplit('\n')) - 1
+  def t_TkComentario(self,t):
 
-# Funcion para deteccion de caracteres
-def t_TkCaracter(t):
-  r'\'.*\''
-  return t
+    # Descripción: Función para detectar comentarios 
+    # Parámetros: - t: token
 
-# Funcion para deteccion de identificadores de variables
-def t_TkIdent(t):
-  r'[a-zA-Z_][a-zA-Z_0-9]*'
-  t.type = reservadas.get(t.value,'TkIdent')
-  return t
+    r'((\$\-([^\-]|(\-)+[^\$])*\-\$)|(\$\$.*))'
+    t.lexer.lineno += len(t.value.rsplit('\n')) - 1
 
-# Funcion para deteccion de numeros
-def t_TkNum(t):
-  r'\d+'
-  t.value = int(t.value)    
-  return t
+  def t_TkCaracter(self,t):
 
-# Funcion para deteccion de saltos de linea
-def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
+    # Descripción: Función para detección de caracteres
+    # Parámetros: - t: token
 
-# Funcion para calcular el numero de columna de cada token
-def NumColumna(input,token):
-  last_cr = input.rfind('\n',0,token.lexpos)
-  column = (token.lexpos - last_cr)
-  return column
+    r'\'.\''
+    return t
 
-# Funcion para deteccion de caracteres ilegales
-def t_error(t):
-  print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (t.value[0], t.lineno, NumColumna(finput, t))) 
-  t.lexer.skip(1)
+  def t_TkIdent(self,t):
 
-# String que ignora caracteres como los espacios y los tab
-t_ignore  = ' \t'
+    # Descripción: Función para detección de identificadores de variables
+    # Parámetros: - t: token
 
-# Funcion principal
-def main() :
+    r'[a-zA-Z][a-zA-Z0-9]*'
+    t.type = self.reservadas.get(t.value,'TkIdent')
+    return t
 
-  lexer = lex.lex()
-  lexer.input(finput)
+  def t_TkNum(self,t):
 
-  # Este ciclo tokeniza en el lexer 
-  for tok in lexer:
-    if (tok.type != 'TkIdent') and (tok.type != 'TkCaracter') and (tok.type != 'TkNum'):
-      print(tok.type, tok.value, tok.lineno, NumColumna(finput, tok))
-    elif (tok.type == 'TkIdent') :
-      print(tok.type+"(\""+tok.value+"\")", tok.lineno, NumColumna(finput, tok))
-    elif (tok.type == 'TkCaracter') or (tok.type == 'TkNum'):
-      print(tok.type+"("+str(tok.value)+")", tok.lineno, NumColumna(finput, tok))
-      
+    # Descripción: Función para detección de números
+    # Parámetros: - t: token
+
+    r'\d+'
+    t.value = int(t.value)    
+    return t
+
+  def t_newline(self,t):
+
+    # Descripción: Función para detección de saltos de línea
+    # Parámetros: - t: token
+
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+  def NumColumna(self,token):
+
+    # Descripción: Función para calcular el número de columna de cada token
+    # Parámetros: - token: token
+
+    last_cr = self.lexer.lexdata.rfind('\n',0,token.lexpos)
+    column = (token.lexpos - last_cr)
+    return column
+
+  def t_error(self,t):
+
+    # Descripción: Función para detección de caracteres ilegales
+    # Parámetros: - t: token
+
+    self.errors.append([t.value[0],t.lineno,self.NumColumna(t)])
+    t.lexer.skip(1)
+
+  # String que ignora caracteres como los espacios y los tab
+  t_ignore  = ' \t'
+
+  def build(self,**kwargs):
+
+    # Descripción: Función para construir el lexer
+
+    self.lexer = lex.lex(module=self, **kwargs)
+
+  def tokenizar(self):
+
+    # Descripción: Función para tokenizar todos los tokens existentes
+
+    for t in self.lexer:
+      self.toks.append([t.value,t.type,t.lineno,self.NumColumna(t)])
+
+def main():
+
+  # Función principal
+
+  f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
+                            # de comando
+  finput = f.read()
+
+  botlex = BotLexer()
+  botlex.build()
+  botlex.lexer.input(finput)
+
+  botlex.tokenizar()
+
+  if (botlex.errors == []): 
+    for tok in botlex.toks:
+      if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
+        print(tok[1], tok[2], tok[3])
+      elif (tok[1] == 'TkIdent') :
+        print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
+      elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
+        print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
+  else:
+    for err in botlex.errors: 
+      print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
+  
   f.close()
 
 # Programa principal
