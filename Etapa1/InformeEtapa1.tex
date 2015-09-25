@@ -10,14 +10,14 @@
 \author{}
 \date{}
 \pdfinfo{%
-  /Title    (Interprete de BOT - Etapa 1)
-  /Author   (Meggie Sanchez, Jorge Marcano)
+  /Title    (Intérprete de BOT - Etapa 1)
+  /Author   (Meggie Sánchez, Jorge Marcano)
 }
 \begin{document}
 
 \vspace{1.5cm}
  
-\title{ \includegraphics[scale=0.3]{usb}  \\ Interprete de BOT \\ Etapa 1 \\ Analizador Lexicográfico }
+\title{ \includegraphics[scale=0.3]{usb}  \\ Intérprete de BOT \\ Etapa 1 \\ Analizador Lexicográfico }
 
 \author{Meggie Sánchez 11-10939, Jorge Marcano 11-10566} 
 
@@ -28,14 +28,14 @@
 \newpage
 
 \section{Introducción}
-\hspace{0.5cm} 	En el presente proyecto, se nos ha pedido crear un interprete para el lenguaje llamado “BOT”. El desarrollo para el intérprete se dará en 4 etapas: (I) Análisis lexicográfico, (II) Análisis sintáctico y construcción del árbol sintáctico abstracto, (III) Análisis de contexto e (IV) Intérprete final del lenguaje. \\
+\hspace{0.5cm} 	En el presente proyecto, se nos ha pedido crear un intérprete para el lenguaje llamado “BOT”. El desarrollo para el intérprete se dará en 4 etapas: (I) Análisis lexicográfico, (II) Análisis sintáctico y construcción del árbol sintáctico abstracto, (III) Análisis de contexto e (IV) Intérprete final del lenguaje. \\
 
 \hspace{0.5cm} Para la primera etapa, la implementación del analizador lexicográfico para el lenguaje BOT, ha sido realizada en el lenguaje de programación Python (versión 3.4), con la herramienta ofrecida por este mismo llamada PLY. 
 
 \section{Implementación}
 \hspace{0.5cm} Para la implementación del analizador lexicográfico, se utilizó como base los ejemplos mostrados en la documentación de la herramienta PLY. \\
 
-\hspace{0.5cm} Para mayor encapsulamiento y versatilidad, se decidió crear una clase BotLexer, de manera que las instancias de esta clase, sirvan como lexers para el lenguaje. En ésta clase se encuentra una lista de palabras reservadas, en la cual hemos incluido todas las palabras reservadas para operaciones del lenguaje. También se encuentra una lista de tokens, los cuales serán identificados y separados por medio del uso de expresiones regulares que los representen, algunos de estos tokens son simples signos de puntuación, y otros, más complicados, requieren del uso de funciones específicas para su reconocimiento, como es el caso de los identificadores de variables, y por último, tambien se encuentra la variable t\_ignore que ignora todos los tokens especificados en el lenguaje BOT. \\
+\hspace{0.5cm} Para mayor encapsulamiento y versatilidad, se decidió crear una clase BotLexer, de manera que las instancias de esta clase, sirvan como lexers para el lenguaje. En ésta clase se encuentra una lista de palabras reservadas, en la cual hemos incluido todas las palabras reservadas para operaciones del lenguaje. También se encuentra una lista de tokens, los cuales serán identificados y separados por medio del uso de expresiones regulares que los representen, algunos de estos tokens son simples signos de puntuación, y otros, más complicados, requieren del uso de funciones específicas para su reconocimiento, como es el caso por ejemplo de los identificadores de variables, y por último, tambien se encuentra la variable t\_ignore que ignora todos los tokens especificados en el lenguaje BOT. \\
 
 \hspace{0.5cm} Adicionalmente, en la clase BotLexer se ha incluido la función tokenizar(), la cual al ser llamada, tokeniza la entrada que se le dio al lexer e introduce los tokens en la lista toks, y los errores en la lista errors. Se tomó la decisión de hacer esto para poder tener los tokens y errores en estructuras separadas, para de esta manera poder usarlos para lo que sean necesarios, en este caso, imprimirlos.
 
@@ -81,9 +81,9 @@
 \hspace{0.5cm} Por ende, podemos observar que Mdet es el Mmin pedido. Y de forma análoga a la pregunta 8, para L(E1) corresponde el estado final 7,14, para L(E2) corresponde el estado 12,14 y para L(E3) corresponde el estado 14.
  
 \subsection{Pregunta 10}
-\hspace{0.5cm} La relacion entre el analizador lexicografico implementado con Ply y las preguntas respondidas anteriormente, se encuentra en el hecho de que, el funcionamiento interno del analizador lexicografico de Ply podria utilizar el algoritmo usado en las preguntas 1-9 para crear un automata finito determinista minimo que sirva para realizar el \textit{match} entre la entrada pasada al analizador, y las expresiones regulares que representan a cada token.  \\ 
+\hspace{0.5cm} La relación entre el analizador lexicográfico implementado con Ply y las preguntas respondidas anteriormente, se encuentra en el hecho de que, el funcionamiento interno del analizador lexicográfico de Ply podría utilizar el algoritmo usado en las preguntas 1-9 para crear un autómata finito determinista mínimo que sirva para realizar el \textit{match} entre la entrada pasada al analizador, y las expresiones regulares que representan a cada token.  \\ 
 
-\hspace{0.5cm} De esta manera, es posible que en lexer de Ply, realize este proceso de manera interna, siempre recordando que lo hecho en las preguntas 1-9, solo fue aplicado sobre 3 expresiones regulares. En la realidad, el proceso realizado sobre cada expresion regular que represente a cada token del lenguaje, lo cual probablemente genere un automata minimo mucho mas grande al resultante en la pregunta 9.
+\hspace{0.5cm} De esta manera, es posible que en lexer de Ply, realize este proceso de manera interna, siempre recordando que lo hecho en las preguntas 1-9, sólo fue aplicado sobre 3 expresiones regulares. En la realidad, el proceso es realizado sobre cada expresión regular que represente a cada token del lenguaje, lo cual probablemente genere un autómata mínimo mucho más grande al resultante en la pregunta 9.
 
 \newpage
 
