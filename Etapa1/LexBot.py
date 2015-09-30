@@ -123,9 +123,19 @@ class BotLexer(object):
     # Descripción: Función para detección de identificadores de variables
     # Parámetros: - t: token
 
-    r'[a-zA-Z][a-zA-Z0-9]*'
+    r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = self.reservadas.get(t.value,'TkIdent')
     return t
+
+  def t_ignoreTkNumTkIdent(self,t):
+
+    # Descripción: Función para agregar a errores si un ident comienza en 
+    #              números seguido de letras minúsculas o mayúsculas 
+    # Parámetros: - t: token
+
+    r'\d+[a-zA-Z]+'
+    self.errors.append([t.value[0],t.lineno,self.NumColumna(t)])
+    t.lexer.skip(1)
 
   def t_TkNum(self,t):
 
