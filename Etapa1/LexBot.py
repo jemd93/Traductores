@@ -133,7 +133,7 @@ class BotLexer(object):
     #              números seguido de letras minúsculas o mayúsculas 
     # Parámetros: - t: token
 
-    r'\d+[a-zA-Z]+'
+    r'\d+[a-z_A-Z]+'
     self.errors.append([t.value[0],t.lineno,self.NumColumna(t)])
     t.lexer.skip(1)
 
