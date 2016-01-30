@@ -1,0 +1,124 @@
+Created by PLY version 3.6 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    TkLeft
+    TkBot
+    TkRecieve
+    TkDisyuncion
+    TkStore
+    TkNum
+    TkMod
+    TkDeactivate
+    TkAvance
+    TkDefault
+    TkEnd
+    TkIgual
+    TkDown
+    TkFalse
+    TkResta
+    TkCaracter
+    TkNegacion
+    TkIdent
+    TkCollect
+    TkDiv
+    TkActivation
+    TkMenorIgual
+    TkDrop
+    TkPunto
+    TkDeactivation
+    TkMult
+    TkChar
+    TkComa
+    TkExecute
+    TkCreate
+    TkDosPuntos
+    TkUp
+    TkConjuncion
+    TkParAbre
+    TkOn
+    TkMayorIgual
+    TkRight
+    TkSend
+    TkBool
+    TkMenor
+    TkMayor
+    TkParCierra
+    TkTrue
+    TkActivate
+    TkSuma
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression t_TkSuma term
+Rule 2     expression -> expression t_TkResta term
+Rule 3     expression -> term
+Rule 4     term -> term t_TkMult factor
+Rule 5     term -> term t_TkDiv factor
+Rule 6     term -> factor
+Rule 7     factor -> TkInt
+Rule 8     factor -> t_TkParAbre expression t_TkParCierra
+
+Terminals, with rules where they appear
+
+TkActivate           : 
+TkActivation         : 
+TkAvance             : 
+TkBool               : 
+TkBot                : 
+TkCaracter           : 
+TkChar               : 
+TkCollect            : 
+TkComa               : 
+TkConjuncion         : 
+TkCreate             : 
+TkDeactivate         : 
+TkDeactivation       : 
+TkDefault            : 
+TkDisyuncion         : 
+TkDiv                : 
+TkDosPuntos          : 
+TkDown               : 
+TkDrop               : 
+TkEnd                : 
+TkExecute            : 
+TkFalse              : 
+TkIdent              : 
+TkIgual              : 
+TkInt                : 7
+TkLeft               : 
+TkMayor              : 
+TkMayorIgual         : 
+TkMenor              : 
+TkMenorIgual         : 
+TkMod                : 
+TkMult               : 
+TkNegacion           : 
+TkNum                : 
+TkOn                 : 
+TkParAbre            : 
+TkParCierra          : 
+TkPunto              : 
+TkRecieve            : 
+TkResta              : 
+TkRight              : 
+TkSend               : 
+TkStore              : 
+TkSuma               : 
+TkTrue               : 
+TkUp                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 8 0
+factor               : 4 5 6
+t_TkDiv              : 5
+t_TkMult             : 4
+t_TkParAbre          : 8
+t_TkParCierra        : 8
+t_TkResta            : 2
+t_TkSuma             : 1
+term                 : 1 2 3 4 5
+
