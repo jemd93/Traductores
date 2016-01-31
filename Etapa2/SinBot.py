@@ -20,40 +20,64 @@ import ply.yacc as yacc
 from LexBot import BotLexer
 tokens = BotLexer.tokens
 
-def p_binary_operators(p):
-    '''expression : expression TkSuma term
-                  | expression TkResta term
-       term       : term TkMult factor
-                  | term TkDiv factor
-                  | term TkMod factor'''
+precedence = (
+  ('left','TkSuma','TkResta'),
+  ('left','TkDiv','TkMult','TkMod'),
+)
+
+def p_expr(p):
+  '''expr : expr TkSuma expr
+          | expr TkResta expr
+          | expr TkMult expr
+          | expr TkDiv expr
+          | expr TkMod expr
+          | TkParAbre expr TkParCierra
+          | TkNum '''
+
+  if len(p) == 4 :  
     if p[2] == '+':
-        p[0] = p[1] + p[3]
+      p[0] = p[1] + p[3]
+      # print("Operacion : 'Suma'")
     elif p[2] == '-':
-        p[0] = p[1] - p[3]
+      p[0] = p[1] - p[3]
+      # print("Operacion : 'Resta'")
     elif p[2] == '*':
-        p[0] = p[1] * p[3]
+      p[0] = p[1] * p[3]
+      # print("Operacion : 'Multiplicacion'")
     elif p[2] == '/':
-        p[0] = p[1] / p[3]
+      p[0] = p[1] / p[3]
+      # print("Operacion : 'Division'")
     elif p[2] == '%':
-        p[0] = p[1] % p[3]
+      p[0] = p[1] % p[3]
+      # print("Operacion : 'Modulo'")
+    elif p[1] == '(': 
+      p[0] = p[2]
 
-def p_expression_term(p):
-  'expression : term'
-  p[0] = p[1]
+    # if p[1] != '(' :
+    #   print("Operador Izquierdo :" + str(p[1]))
+    #   print("Operador Derecho :" + str(p[3]))
 
-def p_term_factor(p):
-  'term : factor'
-  p[0] = p[1]
+  else : 
+    p[0] = p[1]
 
-def p_factor_num(p):
-  'factor : TkNum'
-  p[0] = p[1]
 
-def p_factor_expr(p):
-  'factor : TkParAbre expression TkParCierra'
-  p[0] = p[2]
+# def p_expression_term(p):
+#   'expression : term'
+#   p[0] = p[1]
 
-# def p_comparador_bin(p):
+# def p_term_factor(p):
+#   'term : factor'
+#   p[0] = p[1]
+
+# def p_factor_num(p):
+#   'factor : TkNum'
+#   p[0] = p[1]
+
+# def p_factor_expr(p):
+#   'factor : TkParAbre expression TkParCierra'
+#   p[0] = p[2]
+
+# def p_comp_bin(p):
 #     '''comp_bin   : factor TkMenor factor
 #                   | factor TkMenorIgual factor
 #                   | factor TkMayor factor
@@ -99,6 +123,8 @@ def p_factor_expr(p):
 #      'TkConjuncion',
 #      'TkDisyuncion',
 #      'TkNegacion',
+
+
 
 # Error rule for syntax errors
 def p_error(p):
