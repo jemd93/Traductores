@@ -2,63 +2,58 @@ Created by PLY version 3.6 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    TkLeft
-    TkBot
-    TkRecieve
-    TkDisyuncion
-    TkStore
-    TkNum
-    TkMod
-    TkDeactivate
-    TkAvance
-    TkDefault
-    TkEnd
-    TkIgual
-    TkDown
-    TkFalse
-    TkResta
-    TkCaracter
-    TkNegacion
-    TkIdent
-    TkCollect
-    TkDiv
-    TkActivation
-    TkMenorIgual
-    TkDrop
-    TkPunto
-    TkDeactivation
-    TkMult
-    TkChar
-    TkComa
-    TkExecute
-    TkCreate
-    TkDosPuntos
-    TkUp
     TkConjuncion
-    TkParAbre
-    TkOn
-    TkMayorIgual
     TkRight
-    TkSend
-    TkBool
-    TkMenor
-    TkMayor
-    TkParCierra
-    TkTrue
+    TkDisyuncion
+    TkPunto
+    TkChar
+    TkLeft
+    TkDown
+    TkDistinto
+    TkNegacion
+    TkExecute
+    TkDefault
+    TkAvance
+    TkEnd
     TkActivate
-    TkSuma
+    TkDosPuntos
+    TkDrop
+    TkDeactivate
+    TkBool
+    TkCollect
+    TkTrue
+    TkStore
+    TkIgual
+    TkComa
+    TkRecieve
+    TkInt
+    TkBot
+    TkCreate
+    TkDeactivation
+    TkSend
+    TkOn
+    TkIdent
+    TkCaracter
+    TkUp
+    TkFalse
+    TkActivation
 
 Grammar
 
 Rule 0     S' -> expression
-Rule 1     expression -> expression t_TkSuma term
-Rule 2     expression -> expression t_TkResta term
-Rule 3     expression -> term
-Rule 4     term -> term t_TkMult factor
-Rule 5     term -> term t_TkDiv factor
-Rule 6     term -> factor
-Rule 7     factor -> TkInt
-Rule 8     factor -> t_TkParAbre expression t_TkParCierra
+Rule 1     expression -> expression TkSuma term
+Rule 2     expression -> expression TkResta term
+Rule 3     term -> term TkMult factor
+Rule 4     term -> term TkDiv factor
+Rule 5     term -> term TkMod factor
+Rule 6     expression -> term
+Rule 7     term -> factor
+Rule 8     factor -> TkNum
+Rule 9     factor -> TkParAbre expression TkParCierra
+Rule 10    comp_bin -> factor TkMenor factor
+Rule 11    comp_bin -> factor TkMenorIgual factor
+Rule 12    comp_bin -> factor TkMayor factor
+Rule 13    comp_bin -> factor TkMayorIgual factor
 
 Terminals, with rules where they appear
 
@@ -76,8 +71,9 @@ TkCreate             :
 TkDeactivate         : 
 TkDeactivation       : 
 TkDefault            : 
+TkDistinto           : 
 TkDisyuncion         : 
-TkDiv                : 
+TkDiv                : 4
 TkDosPuntos          : 
 TkDown               : 
 TkDrop               : 
@@ -86,39 +82,287 @@ TkExecute            :
 TkFalse              : 
 TkIdent              : 
 TkIgual              : 
-TkInt                : 7
+TkInt                : 
 TkLeft               : 
-TkMayor              : 
-TkMayorIgual         : 
-TkMenor              : 
-TkMenorIgual         : 
-TkMod                : 
-TkMult               : 
+TkMayor              : 12
+TkMayorIgual         : 13
+TkMenor              : 10
+TkMenorIgual         : 11
+TkMod                : 5
+TkMult               : 3
 TkNegacion           : 
-TkNum                : 
+TkNum                : 8
 TkOn                 : 
-TkParAbre            : 
-TkParCierra          : 
+TkParAbre            : 9
+TkParCierra          : 9
 TkPunto              : 
 TkRecieve            : 
-TkResta              : 
+TkResta              : 2
 TkRight              : 
 TkSend               : 
 TkStore              : 
-TkSuma               : 
+TkSuma               : 1
 TkTrue               : 
 TkUp                 : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 8 0
-factor               : 4 5 6
-t_TkDiv              : 5
-t_TkMult             : 4
-t_TkParAbre          : 8
-t_TkParCierra        : 8
-t_TkResta            : 2
-t_TkSuma             : 1
-term                 : 1 2 3 4 5
+comp_bin             : 
+expression           : 1 2 9 0
+factor               : 3 4 5 7 10 10 11 11 12 12 13 13
+term                 : 1 2 3 4 5 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . expression TkSuma term
+    (2) expression -> . expression TkResta term
+    (6) expression -> . term
+    (3) term -> . term TkMult factor
+    (4) term -> . term TkDiv factor
+    (5) term -> . term TkMod factor
+    (7) term -> . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    term                           shift and go to state 3
+    factor                         shift and go to state 1
+    expression                     shift and go to state 2
+
+state 1
+
+    (7) term -> factor .
+
+    TkMult          reduce using rule 7 (term -> factor .)
+    TkDiv           reduce using rule 7 (term -> factor .)
+    TkMod           reduce using rule 7 (term -> factor .)
+    TkSuma          reduce using rule 7 (term -> factor .)
+    TkResta         reduce using rule 7 (term -> factor .)
+    $end            reduce using rule 7 (term -> factor .)
+    TkParCierra     reduce using rule 7 (term -> factor .)
+
+
+state 2
+
+    (0) S' -> expression .
+    (1) expression -> expression . TkSuma term
+    (2) expression -> expression . TkResta term
+
+    TkSuma          shift and go to state 6
+    TkResta         shift and go to state 7
+
+
+state 3
+
+    (6) expression -> term .
+    (3) term -> term . TkMult factor
+    (4) term -> term . TkDiv factor
+    (5) term -> term . TkMod factor
+
+    TkParCierra     reduce using rule 6 (expression -> term .)
+    TkSuma          reduce using rule 6 (expression -> term .)
+    TkResta         reduce using rule 6 (expression -> term .)
+    $end            reduce using rule 6 (expression -> term .)
+    TkMult          shift and go to state 8
+    TkDiv           shift and go to state 9
+    TkMod           shift and go to state 10
+
+
+state 4
+
+    (8) factor -> TkNum .
+
+    TkMult          reduce using rule 8 (factor -> TkNum .)
+    TkDiv           reduce using rule 8 (factor -> TkNum .)
+    TkMod           reduce using rule 8 (factor -> TkNum .)
+    TkSuma          reduce using rule 8 (factor -> TkNum .)
+    TkResta         reduce using rule 8 (factor -> TkNum .)
+    $end            reduce using rule 8 (factor -> TkNum .)
+    TkParCierra     reduce using rule 8 (factor -> TkNum .)
+
+
+state 5
+
+    (9) factor -> TkParAbre . expression TkParCierra
+    (1) expression -> . expression TkSuma term
+    (2) expression -> . expression TkResta term
+    (6) expression -> . term
+    (3) term -> . term TkMult factor
+    (4) term -> . term TkDiv factor
+    (5) term -> . term TkMod factor
+    (7) term -> . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    term                           shift and go to state 3
+    factor                         shift and go to state 1
+    expression                     shift and go to state 11
+
+state 6
+
+    (1) expression -> expression TkSuma . term
+    (3) term -> . term TkMult factor
+    (4) term -> . term TkDiv factor
+    (5) term -> . term TkMod factor
+    (7) term -> . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    term                           shift and go to state 12
+    factor                         shift and go to state 1
+
+state 7
+
+    (2) expression -> expression TkResta . term
+    (3) term -> . term TkMult factor
+    (4) term -> . term TkDiv factor
+    (5) term -> . term TkMod factor
+    (7) term -> . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    term                           shift and go to state 13
+    factor                         shift and go to state 1
+
+state 8
+
+    (3) term -> term TkMult . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    factor                         shift and go to state 14
+
+state 9
+
+    (4) term -> term TkDiv . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    factor                         shift and go to state 15
+
+state 10
+
+    (5) term -> term TkMod . factor
+    (8) factor -> . TkNum
+    (9) factor -> . TkParAbre expression TkParCierra
+
+    TkNum           shift and go to state 4
+    TkParAbre       shift and go to state 5
+
+    factor                         shift and go to state 16
+
+state 11
+
+    (9) factor -> TkParAbre expression . TkParCierra
+    (1) expression -> expression . TkSuma term
+    (2) expression -> expression . TkResta term
+
+    TkParCierra     shift and go to state 17
+    TkSuma          shift and go to state 6
+    TkResta         shift and go to state 7
+
+
+state 12
+
+    (1) expression -> expression TkSuma term .
+    (3) term -> term . TkMult factor
+    (4) term -> term . TkDiv factor
+    (5) term -> term . TkMod factor
+
+    TkParCierra     reduce using rule 1 (expression -> expression TkSuma term .)
+    TkSuma          reduce using rule 1 (expression -> expression TkSuma term .)
+    TkResta         reduce using rule 1 (expression -> expression TkSuma term .)
+    $end            reduce using rule 1 (expression -> expression TkSuma term .)
+    TkMult          shift and go to state 8
+    TkDiv           shift and go to state 9
+    TkMod           shift and go to state 10
+
+
+state 13
+
+    (2) expression -> expression TkResta term .
+    (3) term -> term . TkMult factor
+    (4) term -> term . TkDiv factor
+    (5) term -> term . TkMod factor
+
+    TkParCierra     reduce using rule 2 (expression -> expression TkResta term .)
+    TkSuma          reduce using rule 2 (expression -> expression TkResta term .)
+    TkResta         reduce using rule 2 (expression -> expression TkResta term .)
+    $end            reduce using rule 2 (expression -> expression TkResta term .)
+    TkMult          shift and go to state 8
+    TkDiv           shift and go to state 9
+    TkMod           shift and go to state 10
+
+
+state 14
+
+    (3) term -> term TkMult factor .
+
+    TkMult          reduce using rule 3 (term -> term TkMult factor .)
+    TkDiv           reduce using rule 3 (term -> term TkMult factor .)
+    TkMod           reduce using rule 3 (term -> term TkMult factor .)
+    TkSuma          reduce using rule 3 (term -> term TkMult factor .)
+    TkResta         reduce using rule 3 (term -> term TkMult factor .)
+    $end            reduce using rule 3 (term -> term TkMult factor .)
+    TkParCierra     reduce using rule 3 (term -> term TkMult factor .)
+
+
+state 15
+
+    (4) term -> term TkDiv factor .
+
+    TkMult          reduce using rule 4 (term -> term TkDiv factor .)
+    TkDiv           reduce using rule 4 (term -> term TkDiv factor .)
+    TkMod           reduce using rule 4 (term -> term TkDiv factor .)
+    TkSuma          reduce using rule 4 (term -> term TkDiv factor .)
+    TkResta         reduce using rule 4 (term -> term TkDiv factor .)
+    $end            reduce using rule 4 (term -> term TkDiv factor .)
+    TkParCierra     reduce using rule 4 (term -> term TkDiv factor .)
+
+
+state 16
+
+    (5) term -> term TkMod factor .
+
+    TkMult          reduce using rule 5 (term -> term TkMod factor .)
+    TkDiv           reduce using rule 5 (term -> term TkMod factor .)
+    TkMod           reduce using rule 5 (term -> term TkMod factor .)
+    TkSuma          reduce using rule 5 (term -> term TkMod factor .)
+    TkResta         reduce using rule 5 (term -> term TkMod factor .)
+    $end            reduce using rule 5 (term -> term TkMod factor .)
+    TkParCierra     reduce using rule 5 (term -> term TkMod factor .)
+
+
+state 17
+
+    (9) factor -> TkParAbre expression TkParCierra .
+
+    TkMult          reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    TkDiv           reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    TkMod           reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    TkSuma          reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    TkResta         reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    $end            reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
+    TkParCierra     reduce using rule 9 (factor -> TkParAbre expression TkParCierra .)
 

@@ -80,6 +80,7 @@ class BotLexer(object):
      'TkMayor',
      'TkMayorIgual',
      'TkIgual',
+     'TkDistinto',
   ] + list(reservadas.values())
 
   # Reglas de expresiones regulares simples
@@ -101,6 +102,7 @@ class BotLexer(object):
   t_TkMayor        = r'\>'
   t_TkMayorIgual   = r'\>\=' 
   t_TkIgual        = r'\='
+  t_TkDistinto     = r'\/\='
 
   def t_TkComentario(self,t):
 

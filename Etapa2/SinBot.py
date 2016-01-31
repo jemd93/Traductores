@@ -20,25 +20,26 @@ import ply.yacc as yacc
 from LexBot import BotLexer
 tokens = BotLexer.tokens
 
-def p_expression_t_TkSuma(p):
-  'expression : expression TkSuma term'
-  p[0] = p[1] + p[3]
-
-def p_expression_minus(p):
-  'expression : expression TkResta term'
-  p[0] = p[1] - p[3]
+def p_binary_operators(p):
+    '''expression : expression TkSuma term
+                  | expression TkResta term
+       term       : term TkMult factor
+                  | term TkDiv factor
+                  | term TkMod factor'''
+    if p[2] == '+':
+        p[0] = p[1] + p[3]
+    elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        p[0] = p[1] / p[3]
+    elif p[2] == '%':
+        p[0] = p[1] % p[3]
 
 def p_expression_term(p):
   'expression : term'
   p[0] = p[1]
-
-def p_term_times(p):
-  'term : term TkMult factor'
-  p[0] = p[1] * p[3]
-
-def p_term_div(p):
-  'term : term TkDiv factor'
-  p[0] = p[1] / p[3]
 
 def p_term_factor(p):
   'term : factor'
@@ -51,6 +52,53 @@ def p_factor_num(p):
 def p_factor_expr(p):
   'factor : TkParAbre expression TkParCierra'
   p[0] = p[2]
+
+# def p_comparador_bin(p):
+#     '''comp_bin   : factor TkMenor factor
+#                   | factor TkMenorIgual factor
+#                   | factor TkMayor factor
+#                   | factor TkMayorIgual factor''' 
+                  
+#     if p[2] == '<':
+#         p[0] = p[1] < p[3]
+#     elif p[2] == '<=':
+#         p[0] = p[1] <= p[3]
+#     elif p[2] == '>':
+#         p[0] = p[1] > p[3]
+#     elif p[2] == '>=':
+#         p[0] = p[1] >= p[3]
+
+# def p_comparador_bool(p):
+#     '''expression : expression TkIgual expression
+#                   | expression TkDistinto expression'''
+#     if p[2] == '=':
+#         p[0] = p[1] = p[3]
+#     elif p[2] == '/=':
+#         p[0] = p[1] /= p[3] 
+
+# def p_expression_bool(p):
+#     '''bool : bool TkDisyuncion bool     
+#             | bool TkConjuncion bool'''
+#     if p[2] == '\/':
+#         p[0] = p[1] = p[3]
+#     elif p[2] == '/\':
+#         p[0] = p[1] /\ p[3]                
+
+
+# tokens = [
+#      'TkIdent',     
+#      'TkNum',          
+#      'TkCaracter', 
+
+#      'TkComa',    
+#      'TkPunto',
+#      'TkDosPuntos',
+#      'TkParAbre',
+#      'TkParCierra',
+
+#      'TkConjuncion',
+#      'TkDisyuncion',
+#      'TkNegacion',
 
 # Error rule for syntax errors
 def p_error(p):
