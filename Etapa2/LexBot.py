@@ -39,7 +39,7 @@ class BotLexer(object):
     'execute'       : 'TkExecute',
     'activate'      : 'TkActivate',
     'recieve'       : 'TkRecieve',
-    'avance'        : 'TkAvance',
+    'advance'       : 'TkAdvance',
     'deactivate'    : 'TkDeactivate',
     'deactivation'  : 'TkDeactivation',
     'collect'       : 'TkCollect',
@@ -54,6 +54,13 @@ class BotLexer(object):
 
     'true'          : 'TkTrue',
     'false'         : 'TkFalse',
+
+    'if'            : 'TkIf',
+    'else'          : 'TkElse',
+    'while'         : 'TkWhile',
+    'read'          : 'TkRead',
+    'as'            : 'TkAs',
+
   }
 
   # Nombres de los demás tokens

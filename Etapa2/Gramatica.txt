@@ -1,0 +1,86 @@
+# -------------------------------------------------
+#  Universidad Simón Bolívar
+#  Traductores e interpretadores - CI3725
+#  Prof. Ricardo Monascal
+#
+#  Autores: Jorge Marcano   # Carnet 11-10566
+#           Meggie Sánchez  # Carnet 11-10939
+#
+# Proyecto BOT - Etapa 2 - Gramatica
+# -------------------------------------------------
+
+PROGRAM -> TkExecute INST
+		 | TkCreate LIST_DEC TkExecute INST
+
+INST    -> TkActivate ID_LIST
+	     | TkAdvance ID_LIST
+	     | TkDeactivate ID_LIST
+	     | INST_LIST
+	     | TkIf EXPR TkDosPuntos INST TkElse INST TkEnd
+	     | TkIf EXPR TkDosPuntos INST TkEnd
+		 | TkWhile EXPR TkDosPuntos INST TkEnd
+		 | PROGRAM 							# INCORPORACION DE ALCANCE
+		 | TkStore EXPR TkPunto				# PREGUNTAR POR PUNTO
+		 |	TkCollect 
+		 | TkCollect TkAs ID
+		 | TkDrop EXPR
+		 | DIR
+		 | DIR EXPR
+		 | TkRead 
+		 | TkRead TkAs ID
+		 | TkSend 
+
+INST_LIST -> INST_LIST TkComa INST
+		 | INST
+
+DIR -> TkLeft 
+	 | TkRight
+	 | TkUp
+     | TkDown
+
+ID -> TkIdent
+
+ID_LIST -> ID_LIST TkComa TkIdent
+		 | ID
+
+DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
+
+DEC_LIST -> DEC_LIST TkComa DEC
+		 | DEC
+
+COMP -> TkOn EXPR TkDosPuntos INST TkEnd 
+	 | TkOn STATE TkDosPuntos INST TkEnd
+
+COMP_LIST -> COMP_LIST TkComa COMP
+		   | COMP
+
+STATE -> TkActivation
+	   | TkDeactivation
+	   | TkDefault
+
+TIPO -> TkBool
+	  | TkChar
+	  | TkInt
+
+EXPR -> TkNum
+	 | TkIdent
+	 | TkCaracter
+	 | TkParAbre EXPR TkParCierra
+	 | '-' EXPR
+	 | EXPR TkSuma EXPR
+	 | EXPR TkResta EXPR
+	 | EXPR TkMult EXPR
+	 | EXPR TkDiv EXPR
+	 | EXPR TkMod EXPR
+	 | TkTrue
+	 | TkFalse 
+	 | EXPR TkConjuncion EXPR
+	 | EXPR TkDisyuncion EXPR
+	 | TkNegacion EXPR
+	 | EXPR TkIgual EXPR
+	 | EXPR TkMayor EXPR
+	 | EXPR TkMayorIgual EXPR
+	 | EXPR TkMenor EXPR
+	 | EXPR TkMenorIgual EXPR
+	 | EXPR TkDistinto EXPR
+
