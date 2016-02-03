@@ -9,29 +9,37 @@
 # Proyecto BOT - Etapa 2 - Gramatica
 # -------------------------------------------------
 
-PROGRAM -> TkExecute INST
-		 | TkCreate LIST_DEC TkExecute INST
+# Estructura de un programa en bot
 
-INST    -> TkActivate ID_LIST
-	     | TkAdvance ID_LIST
-	     | TkDeactivate ID_LIST
+PROGRAM -> TkCreate DEC_LIST TkExecute INST TkEnd
+		 | TkExecute INST TkEnd
+
+# Instrucciones de Controlador
+
+INST    -> TkActivate ID_LIST TkPunto
+	     | TkAdvance ID_LIST TkPunto
+	     | TkDeactivate ID_LIST TkPunto
 	     | INST_LIST
 	     | TkIf EXPR TkDosPuntos INST TkElse INST TkEnd
 	     | TkIf EXPR TkDosPuntos INST TkEnd
 		 | TkWhile EXPR TkDosPuntos INST TkEnd
 		 | PROGRAM 							# INCORPORACION DE ALCANCE
-		 | TkStore EXPR TkPunto				# PREGUNTAR POR PUNTO
-		 |	TkCollect 
-		 | TkCollect TkAs ID
-		 | TkDrop EXPR
-		 | DIR
-		 | DIR EXPR
-		 | TkRead 
-		 | TkRead TkAs ID
-		 | TkSend 
+
+# Instrucciones de Robot
+
+		 | TkStore EXPR TkPunto				
+		 | TkCollect TkPunto
+		 | TkCollect TkAs ID TkPunto
+		 | TkDrop EXPR TkPunto
+		 | DIR TkPunto
+		 | DIR EXPR TkPunto
+		 | TkRead TkPunto
+		 | TkRead TkAs ID TkPunto
+		 | TkSend TkPunto
+		 | TkRecieve TkPunto
 
 INST_LIST -> INST_LIST TkComa INST
-		 | INST
+		   | INST
 
 DIR -> TkLeft 
 	 | TkRight
@@ -46,13 +54,16 @@ ID_LIST -> ID_LIST TkComa TkIdent
 DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
 
 DEC_LIST -> DEC_LIST TkComa DEC
-		 | DEC
+		  | DEC
 
 COMP -> TkOn EXPR TkDosPuntos INST TkEnd 
-	 | TkOn STATE TkDosPuntos INST TkEnd
+	  | TkOn STATE TkDosPuntos INST TkEnd
 
 COMP_LIST -> COMP_LIST TkComa COMP
 		   | COMP
+		   | LAMBDA
+
+LAMBDA -> 
 
 STATE -> TkActivation
 	   | TkDeactivation
@@ -63,24 +74,26 @@ TIPO -> TkBool
 	  | TkInt
 
 EXPR -> TkNum
-	 | TkIdent
-	 | TkCaracter
-	 | TkParAbre EXPR TkParCierra
-	 | '-' EXPR
-	 | EXPR TkSuma EXPR
-	 | EXPR TkResta EXPR
-	 | EXPR TkMult EXPR
-	 | EXPR TkDiv EXPR
-	 | EXPR TkMod EXPR
-	 | TkTrue
-	 | TkFalse 
-	 | EXPR TkConjuncion EXPR
-	 | EXPR TkDisyuncion EXPR
-	 | TkNegacion EXPR
-	 | EXPR TkIgual EXPR
-	 | EXPR TkMayor EXPR
-	 | EXPR TkMayorIgual EXPR
-	 | EXPR TkMenor EXPR
-	 | EXPR TkMenorIgual EXPR
-	 | EXPR TkDistinto EXPR
+	  | TkIdent
+	  | TkCaracter
+	  | TkParAbre EXPR TkParCierra
+	  | TkNegacion EXPR
+	  | EXPR TkSuma EXPR
+	  | EXPR TkResta EXPR
+	  | EXPR TkMult EXPR
+	  | EXPR TkDiv EXPR
+	  | EXPR TkMod EXPR
+	  | TkTrue
+	  | TkFalse 
+	  | EXPR TkConjuncion EXPR
+	  | EXPR TkDisyuncion EXPR
+	  | EXPR TkIgual EXPR
+	  | EXPR TkMayor EXPR
+	  | EXPR TkMayorIgual EXPR
+	  | EXPR TkMenor EXPR
+	  | EXPR TkMenorIgual EXPR
+	  | EXPR TkDistinto EXPR
 
+# PREGUNTAR POR SI TERMINA EN PUNTO DESPUES DE UNA SECUENCIA DE INSTRUCCIONES
+
+# on EXPR, en condicion del comportamiento de robot, evalua nada más en bool, preguntar
