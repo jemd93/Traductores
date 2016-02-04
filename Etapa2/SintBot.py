@@ -104,7 +104,7 @@ def t_instrucciones(t):
            | TkRead TkPunto
            | TkRead TkAs ID TkPunto
            | TkSend TkPunto
-           | TkRecieve TkPunto '''
+           | TkRecieve EXPR TkPunto '''
 
 # Reglas para cuando existe una lista de instrucciones tanto de controlador 
 # como de robots.

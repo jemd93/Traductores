@@ -36,7 +36,7 @@ INST    -> TkActivate ID_LIST TkPunto
 		 | TkRead TkPunto
 		 | TkRead TkAs ID TkPunto
 		 | TkSend TkPunto
-		 | TkRecieve TkPunto
+		 | TkRecieve EXPR TkPunto
 
 INST_LIST -> INST_LIST TkComa INST
 		   | INST
