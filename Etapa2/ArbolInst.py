@@ -74,65 +74,10 @@ class ArbolRecieve(ArbolInst):
 		self.h1.printArb()
 		self.h2.printArb()
 
-# Árboles para las instrucciones de Movimiento
-# con caso Movimiento y caso Movimiento expresión
-
-# Árbol para la instrucción de movimiento Left
-# con caso left y caso left expresión
-class ArbolLeft(ArbolInst):
-	def __init__(self,h2):
-		self.h1 = ArbolInst('left')
-		if not(h2 is None):
-			self.h2 = h2
-		else:
-			self.h2 = None
-
-	def printArb(self):
-		if self.h2 is None:
-			self.h1.printArb()
-		else:
-			self.h1.printArb()
-			self.h2.printArb()
-
-# Árbol para la instrucción de movimiento Right
-# con caso right y caso right expresión
-class ArbolRight(ArbolInst):
-	def __init__(self,h2):
-		self.h1 = ArbolInst('right')
-		if not(h2 is None):
-			self.h2 = h2
-		else:
-			self.h2 = None
-
-	def printArb(self):
-		if self.h2 is None:
-			self.h1.printArb()
-		else:
-			self.h1.printArb()
-			self.h2.printArb()
-
-# Árbol para la instrucción de movimiento Up
-# con caso up y caso up expresión
-class ArbolUp(ArbolInst):
-	def __init__(self,h2):
-		self.h1 = ArbolInst('up')
-		if not(h2 is None):
-			self.h2 = h2
-		else:
-			self.h2 = None
-
-	def printArb(self):
-		if self.h2 is None:
-			self.h1.printArb()
-		else:
-			self.h1.printArb()
-			self.h2.printArb()
-
-# Árbol para la instrucción de movimiento Down
-# con caso down y caso down expresión
-class ArbolDown(ArbolInst):
-	def __init__(self,h2):
-		self.h1 = ArbolInst('down')
+# Arbol para las instrucciones de movimientos 
+class ArbolMove(ArbolInst):
+	def __init__(self,dir,h2):
+		self.h1 = ArbolInst(dir)
 		if not(h2 is None):
 			self.h2 = h2
 		else:
@@ -174,58 +119,63 @@ class ArbolSend(ArbolInst):
 		self.h1.printArb()
 
 if __name__  == "__main__":
-   x = ArbolBin(1,None,None)
-   y = ArbolBin(3,None,None)
-   z = ArbolBin('+',x,y)
 
-   r = ArbolBin('-',x,y)
-   t = ArbolBin('*',x,y)
-   w = ArbolBin('/',x,y)
-   g = ArbolBin('%',x,y)
 
-   k = ArbolStore(z)
+   # x = ArbolBin(1,None,None)
+   # y = ArbolBin(3,None,None)
+   # z = ArbolBin('+',x,y)
+   # j = ArbolMove('right',z)
 
-   k.printArb()
+   # j.printArb()
 
-   m = ArbolCollect('variable')
-   m.printArb()
+   # r = ArbolBin('-',x,y)
+   # t = ArbolBin('*',x,y)
+   # w = ArbolBin('/',x,y)
+   # g = ArbolBin('%',x,y)
 
-   n = ArbolCollect(None)
-   n.printArb()
+   # k = ArbolStore(z)
 
-   o = ArbolDrop(z)
+   # k.printArb()
 
-   o.printArb()
+   # m = ArbolCollect('variable')
+   # m.printArb()
 
-   ñ = ArbolRecieve(z)
+   # n = ArbolCollect(None)
+   # n.printArb()
 
-   ñ.printArb()
+   # o = ArbolDrop(z)
 
-   up = ArbolUp(None)
-   up2 = ArbolUp(r)
-   up.printArb()
-   up2.printArb()
+   # o.printArb()
 
-   left = ArbolLeft(None)
-   left2 = ArbolLeft(t)
-   left.printArb()
-   left2.printArb()
+   # ñ = ArbolRecieve(z)
 
-   down = ArbolDown(None)
-   down2 = ArbolDown(w)
-   down.printArb()
-   down2.printArb()
+   # ñ.printArb()
 
-   right = ArbolRight(None)
-   right2 = ArbolRight(g)
-   right.printArb()
-   right2.printArb()
+   # up = ArbolUp(None)
+   # up2 = ArbolUp(r)
+   # up.printArb()
+   # up2.printArb()
 
-   f = ArbolRead('variable')
-   f.printArb()
+   # left = ArbolLeft(None)
+   # left2 = ArbolLeft(t)
+   # left.printArb()
+   # left2.printArb()
 
-   d = ArbolRead(None)
-   d.printArb()
+   # down = ArbolDown(None)
+   # down2 = ArbolDown(w)
+   # down.printArb()
+   # down2.printArb()
 
-   s = ArbolSend()
-   s.printArb()
+   # right = ArbolRight(None)
+   # right2 = ArbolRight(g)
+   # right.printArb()
+   # right2.printArb()
+
+   # f = ArbolRead('variable')
+   # f.printArb()
+
+   # d = ArbolRead(None)
+   # d.printArb()
+
+   # s = ArbolSend()
+   # s.printArb()
