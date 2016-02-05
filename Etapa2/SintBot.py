@@ -31,8 +31,7 @@ precedence = (
   ('left','TkIgual','TkDistinto') 
 )
 
-# Reglas de las expresiones aritméticas, booleanas, 
-# posibles en el lenguaje BOT.
+# Reglas de las expresiones aritméticas, booleanas, posibles en el lenguaje BOT.
 def t_expresiones(t):
   ''' EXPR : TkNum
            | TkIdent
@@ -55,7 +54,7 @@ def t_expresiones(t):
            | EXPR TkMenorIgual EXPR
            | EXPR TkDistinto EXPR '''
 
-  if len(t) == 4 :  
+  if len(t) == 4:  
     if t[2] == '+':
       t[0] = t[1] + t[3]
       # print("Operacion : 'Suma'")
@@ -78,39 +77,50 @@ def t_expresiones(t):
     #   print("Operador Izquierdo :" + str(p[1]))
     #   print("Operador Derecho :" + str(p[3]))
 
-  else : 
+  else: 
     t[0] = t[1]
 
+# Regla principal para iniciar el programa en lenguaje BOT.
 def t_programa(t):
-  ''' PROGRAM : TkCreate DEC_LIST TkExecute INST TkEnd 
-              | TkExecute INST TkEnd '''
+  ''' PROGRAM : DEC_LIST INST_EXE TkEnd 
+              | INST_CONT TkEnd '''
 
-# Reglas para instrucciones de controlador e instrucciones de robots.
-def t_instrucciones(t):
-  ''' INST : TkActivate ID_LIST TkPunto
-           | TkAdvance ID_LIST TkPunto
-           | TkDeactivate ID_LIST TkPunto
-           | INST_LIST
-           | TkIf EXPR TkDosPuntos INST TkElse INST TkEnd
-           | TkIf EXPR TkDosPuntos INST TkEnd
-           | TkWhile EXPR TkDosPuntos INST TkEnd
-           | PROGRAM              
-           | TkStore EXPR TkPunto        
-           | TkCollect TkPunto
-           | TkCollect TkAs ID TkPunto
-           | TkDrop EXPR TkPunto
-           | DIR TkPunto
-           | DIR EXPR TkPunto
-           | TkRead TkPunto
-           | TkRead TkAs ID TkPunto
-           | TkSend TkPunto
-           | TkRecieve EXPR TkPunto '''
+# Regla inicial del programa execute para instrucciones de controlador.
+def t_instruccion_execute(t):
+  ''' INST_EXE : TkExecute INST_CONT_LIST TkEnd'''
 
-# Reglas para cuando existe una lista de instrucciones tanto de controlador 
-# como de robots.
-def t_lista_instrucciones(t):
-  ''' INST_LIST : INST_LIST TkComa INST
-                | INST '''
+# Reglas para instrucciones de controlador.
+def t_instrucciones_controlador(t):
+  ''' INST_CONT : TkActivate ID_LIST TkPunto
+                | TkAdvance ID_LIST TkPunto
+                | TkDeactivate ID_LIST TkPunto
+                | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+                | TkIf EXPR TkDosPuntos INST_CONT TkEnd
+                | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
+                | PROGRAM '''      
+
+# Reglas para instrucciones de robots.
+def t_instrucciones_robot(t):
+  ''' INST_BOT : TkStore EXPR TkPunto        
+               | TkCollect TkPunto
+               | TkCollect TkAs ID TkPunto
+               | TkDrop EXPR TkPunto
+               | DIR TkPunto
+               | DIR EXPR TkPunto
+               | TkRead TkPunto
+               | TkRead TkAs ID TkPunto
+               | TkSend TkPunto
+               | TkRecieve EXPR TkPunto '''
+
+# Reglas para lista de instrucciones de controlador.
+def t_lista_instrucciones_controlador(t):
+  ''' INST_CONT_LIST : INST_CONT_LIST TkComa INST_CONT
+                     | INST_CONT '''
+
+# Reglas para lista de instrucciones de robots.
+def t_lista_instrucciones_robots(t):
+  ''' INST_BOT_LIST : INST_BOT_LIST TkComa INST_BOT
+                    | INST_BOT '''
 
 # Reglas de movimiento en las instrucciones de robots.
 def t_direcciones(t):
@@ -129,32 +139,30 @@ def t_identificadores(t):
 
 # Reglas para cuando existen varios identificadores de robots.
 def t_lista_identificadores(t):
-  ''' ID_LIST : ID_LIST TkComa TkIdent
+  ''' ID_LIST : ID_LIST TkComa ID
               | ID '''
 
-# Reglas de declaraciones o definiciones de robots
+# Reglas de declaraciones o definiciones de robots.
 def t_declaraciones(t):
   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
 
-# Reglas para cuando existe una lista de declaraciones o 
-# definiciones de robots
+# Reglas para cuando existe una lista de declaraciones o definiciones de robots.
 def t_lista_declaraciones(t):
   ''' DEC_LIST : DEC_LIST TkComa DEC
-               | DEC '''
+               | TkCreate DEC '''
 
-# Reglas de comportamientos de robots
+# Reglas de comportamientos de robots.
 def t_comportamientos(t):
-  ''' COMP : TkOn EXPR TkDosPuntos INST TkEnd 
-           | TkOn STATE TkDosPuntos INST TkEnd '''
+  ''' COMP : TkOn EXPR TkDosPuntos INST_BOT TkEnd 
+           | TkOn STATE TkDosPuntos INST_BOT TkEnd '''
 
-# Reglas para cuando existe una lista de comportamientos 
-# de robots
+# Reglas para cuando existe una lista de comportamientos de robots.
 def t_lista_comportamientos(t):
   ''' COMP_LIST : COMP_LIST TkComa COMP
-                | COMP '''
+                | COMP 
+                | LAMBDA '''
 
-# Reglas de estados en los que pueden empezar a estar los 
-# robots
+# Reglas de estados en los que pueden empezar a estar los robots.
 def t_estados(t):
   ''' STATE : TkActivation
             | TkDeactivation
@@ -162,7 +170,7 @@ def t_estados(t):
 
   t[0] = t[1]
 
-# Reglas para tipos de robots que pueden crearse
+# Reglas para tipos de robots que pueden crearse.
 def t_tipos(t):
   ''' TIPO : TkBool
            | TkChar
@@ -170,12 +178,12 @@ def t_tipos(t):
 
   t[0] = t[1] 
 
-# Regla para la palabra vacía
+# Regla para la palabra vacía.
 def p_lambda(t):
     ''' LAMBDA : '''
     pass
 
-# Error rule for syntax errors
+# Regla de error para los errores de sintaxis
 def p_error(t):
   print("Syntax error in input!")
 

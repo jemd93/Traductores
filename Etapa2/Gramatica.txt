@@ -6,40 +6,49 @@
 #  Autores: Jorge Marcano   # Carnet 11-10566
 #           Meggie Sánchez  # Carnet 11-10939
 #
-# Proyecto BOT - Etapa 2 - Gramatica
+# Proyecto BOT - Etapa 2 - Gramática
 # -------------------------------------------------
 
 # Estructura de un programa en bot
 
-PROGRAM -> TkCreate DEC_LIST TkExecute INST TkEnd
-		 | TkExecute INST TkEnd
+PROGRAM -> DEC_LIST INST_EXE
+		 | INST_CONT
+
+INST_EXE -> TkExecute INST_CONT_LIST TkEnd
+
+DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
+
+DEC_LIST -> TkCreate DEC
+		  | DEC_LIST TkComa DEC
 
 # Instrucciones de Controlador
 
-INST    -> TkActivate ID_LIST TkPunto
-	     | TkAdvance ID_LIST TkPunto
-	     | TkDeactivate ID_LIST TkPunto
-	     | INST_LIST
-	     | TkIf EXPR TkDosPuntos INST TkElse INST TkEnd
-	     | TkIf EXPR TkDosPuntos INST TkEnd
-		 | TkWhile EXPR TkDosPuntos INST TkEnd
-		 | PROGRAM 							# INCORPORACION DE ALCANCE
+INST_CONT -> TkActivate ID_LIST TkPunto
+	       | TkAdvance ID_LIST TkPunto
+	       | TkDeactivate ID_LIST TkPunto
+	       | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+	       | TkIf EXPR TkDosPuntos INST_CONT TkEnd
+		   | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
+		   | PROGRAM 							
 
 # Instrucciones de Robot
 
-		 | TkStore EXPR TkPunto				
-		 | TkCollect TkPunto
-		 | TkCollect TkAs ID TkPunto
-		 | TkDrop EXPR TkPunto
-		 | DIR TkPunto
-		 | DIR EXPR TkPunto
-		 | TkRead TkPunto
-		 | TkRead TkAs ID TkPunto
-		 | TkSend TkPunto
-		 | TkRecieve EXPR TkPunto
+INST_BOT -> TkStore EXPR TkPunto				
+		  | TkCollect TkPunto
+		  | TkCollect TkAs ID TkPunto
+		  | TkDrop EXPR TkPunto
+		  | DIR TkPunto
+		  | DIR EXPR TkPunto
+		  | TkRead TkPunto
+		  | TkRead TkAs ID TkPunto
+		  | TkSend TkPunto
+		  | TkRecieve EXPR TkPunto
 
-INST_LIST -> INST_LIST TkComa INST
-		   | INST
+INST_CONT_LIST -> INST_CONT_LIST TkComa INST_CONT
+		        | INST_CONT
+
+INST_BOT_LIST -> INST_BOT_LIST TkComa INST_BOT
+		       | INST_BOT
 
 DIR -> TkLeft 
 	 | TkRight
@@ -48,16 +57,11 @@ DIR -> TkLeft
 
 ID -> TkIdent
 
-ID_LIST -> ID_LIST TkComa TkIdent
+ID_LIST -> ID_LIST TkComa ID
 		 | ID
 
-DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
-
-DEC_LIST -> DEC_LIST TkComa DEC
-		  | DEC
-
-COMP -> TkOn EXPR TkDosPuntos INST TkEnd 
-	  | TkOn STATE TkDosPuntos INST TkEnd
+COMP -> TkOn EXPR TkDosPuntos INST_BOT TkEnd 
+	  | TkOn STATE TkDosPuntos INST_BOT TkEnd
 
 COMP_LIST -> COMP_LIST TkComa COMP
 		   | COMP

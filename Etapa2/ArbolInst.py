@@ -24,7 +24,7 @@ class ArbolInst(object):
 	def printArb(self):
 		print(self.inst)
 
-# Arbol para la instruccion if. Considerando el caso if, y el caso if else
+# Árbol para la instruccion if. Considerando el caso if, y el caso if else
 class ArbolIf(ArbolInst):
 	def __init__(self,hexpr,hinst1,hinst2):
 		self.h1 = ArbolInst('if')
@@ -45,7 +45,7 @@ class ArbolIf(ArbolInst):
 			self.h4.printArb()
 			self.h5.printArb()
 
-# Arbol para la instruccion While
+# Árbol para la instruccion While
 class ArbolWhile(ArbolInst):
 	def __init__(self,hexpr,hinst):
 		self.h1 = ArbolInst('while')
@@ -57,7 +57,7 @@ class ArbolWhile(ArbolInst):
 		self.h2.printArb()
 		self.h3.printArb()
 
-# ARBOLES PARA INSTRUCCIONES DE LOS ROBOTS 
+# ÁRBOLES PARA INSTRUCCIONES DE LOS ROBOTS 
 
 # Árbol para la instrucción Store
 class ArbolStore(ArbolInst):
@@ -94,17 +94,7 @@ class ArbolDrop(ArbolInst):
 		self.h1.printArb()
 		self.h2.printArb()
 
-# Árbol para la instrucción Recieve
-class ArbolRecieve(ArbolInst):
-	def __init__(self,h2):
-		self.h1 = ArbolInst('recieve')
-		self.h2 = h2
-
-	def printArb(self):
-		self.h1.printArb()
-		self.h2.printArb()
-
-# Arbol para las instrucciones de movimientos 
+# Árbol para las instrucciones de movimientos 
 class ArbolMove(ArbolInst):
 	def __init__(self,dir,h2):
 		self.h1 = ArbolInst(dir)
@@ -127,6 +117,7 @@ class ArbolRead(ArbolInst):
 			self.h2 = hid
 		else:
 			self.h2 = None
+
 	def printArb(self):
 		self.h1.printArb()
 		if not(self.h2 is None):
