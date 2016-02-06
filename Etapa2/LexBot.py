@@ -26,27 +26,32 @@ class BotLexer(object):
 
   # Palabras reservadas
   reservadas = {
+
+    # Tipos
     'int'           : 'TkInt',
     'bool'          : 'TkBool',
     'char'          : 'TkChar',
 
+    # Palabras reservadas para controlador
     'create'        : 'TkCreate',
-    'bot'           : 'TkBot',
-    'on'            : 'TkOn',
-    'activation'    : 'TkActivation',
-    'store'         : 'TkStore',
-    'end'           : 'TkEnd',
     'execute'       : 'TkExecute',
-    'activate'      : 'TkActivate',
-    'recieve'       : 'TkRecieve',
+    'end'           : 'TkEnd',
+
+    # Condiciones para controlador
+    'if'            : 'TkIf',
+    'else'          : 'TkElse',
+    'while'         : 'TkWhile',
+
+    # Instrucciones de controlador
     'advance'       : 'TkAdvance',
     'deactivate'    : 'TkDeactivate',
-    'deactivation'  : 'TkDeactivation',
-    'collect'       : 'TkCollect',
-    'drop'          : 'TkDrop',
-    'default'       : 'TkDefault',
-    'send'          : 'TkSend',
+    'activate'      : 'TkActivate',
 
+    # Palabras reservadas para robots
+    'bot'           : 'TkBot',
+    'on'            : 'TkOn',
+
+    # Movimientos para robots
     'left'          : 'TkLeft',
     'right'         : 'TkRight',
     'up'            : 'TkUp',
@@ -55,12 +60,19 @@ class BotLexer(object):
     'true'          : 'TkTrue',
     'false'         : 'TkFalse',
 
-    'if'            : 'TkIf',
-    'else'          : 'TkElse',
-    'while'         : 'TkWhile',
-    'read'          : 'TkRead',
-    'as'            : 'TkAs',
+    # Condiciones en instrucciones para robots
+    'deactivation'  : 'TkDeactivation',
+    'activation'    : 'TkActivation',
+    'default'       : 'TkDefault',
 
+    # Instrucciones para robots
+    'store'         : 'TkStore',
+    'recieve'       : 'TkRecieve',
+    'collect'       : 'TkCollect',
+    'drop'          : 'TkDrop',
+    'read'          : 'TkRead',
+    'send'          : 'TkSend',
+    'as'            : 'TkAs',
   }
 
   # Nombres de los demás tokens

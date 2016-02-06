@@ -24,6 +24,82 @@ class ArbolInst(object):
 	def printArb(self):
 		print(self.inst)
 
+# Árbol para el programa principal o los subprogramas
+class ArbolProgram(ArbolInst):
+	def __init__(self,a1,a2):
+		self.a2 = ArbolExecute()
+		if not(a1 is None):
+			self.a1 = ArbolDecList()
+
+	def printArb(self):
+		if not(self.a1 is None):
+			self.a1.printArb()
+			self.a2.printArb()
+		else:
+			self.a2.printArb()
+
+# NOTA : :'(
+# Árbol para la lista de declaraciones para la creación de robots
+class ArbolDecList(ArbolInst):
+	def __init__(self,a1,a2,a3):
+		if not(a1 is None):
+			self.a1 = ArbolInst('create')
+		self.a2 = ArbolDec()
+
+# Árbol para ejecutar las instrucciones de controlador
+class ArbolExecute(ArbolInst):
+	def __init__(self,a2):
+		self.a1 = ArbolInst('execute')
+		self.a2 = ArbolInstContList()
+		self.a3 = ArbolInst('end')
+
+	def printArb(self):
+		self.a1.printArb()
+		self.a2.printArb()
+		self.a3.printArb()
+
+# Árbol para una declaración de robot
+class ArbolDec(ArbolInst):
+	def __init__(self,a1,a5):
+		self.a1 = ArbolTipo()
+		self.a2 = ArbolInst('bot')
+		self.a3 = ArbolIdList()
+		self.a4 = ArbolCompList()
+		self.a5 = ArbolInst('end')
+
+	def printArb(self):
+		self.a1.printArb()
+		self.a2.printArb()
+		self.a3.printArb()
+		self.a4.printArb()
+		self.a5.printArb()
+
+# Árbol para la lista de instrucciones de controlador
+class ArbolInstContList(ArbolInst):
+	def __init__(self,a1):
+		if not(a1 is None):
+			self.a1 = ArbolInstContList()
+		self.a2 = ArbolInstCont()
+
+# Árbol para el tipo del robot a crear
+class ArbolTipo(ArbolInst):
+	def __init__(self, tipo):
+		self.h1 = ArbolInst(tipo)
+
+	def printArb(self):
+		self.h1.printArb()
+
+# class ArbolIdList(ArbolInst):
+# 	def __init__(self,):
+
+# class ArbolCompList(ArbolInst):
+# 	def __init__(self,):
+
+# class ArbolInstCont(ArbolInst):
+# 	def __init__(self,inst):
+# 		self.a1 = ArbolInst(inst)
+# 		self.a2 = ArbolIdList()	
+
 # Árbol para la instruccion if. Considerando el caso if, y el caso if else
 class ArbolIf(ArbolInst):
 	def __init__(self,hexpr,hinst1,hinst2):
@@ -144,9 +220,9 @@ class ArbolRecieve(ArbolInst):
 
 if __name__  == "__main__":
 
-   # x1 = ArbolBin(1,None,None)
-   # y1 = ArbolBin(3,None,None)
-   # z1 = ArbolBin('<',x1,y1)
+   x1 = ArbolBin(1,None,None)
+   y1 = ArbolBin(3,None,None)
+   z1 = ArbolBin('<',x1,y1)
 
    # x2 = ArbolBin(7,None,None)
    # y2 = ArbolBin(5,None,None)
@@ -162,16 +238,16 @@ if __name__  == "__main__":
    # w = ArbolWhile(z1,h1)
    # w.printArb()
 
-   # j = ArbolMove('right',z)
+   # j = ArbolMove('right',z1)
 
    # j.printArb()
 
-   # r = ArbolBin('-',x,y)
-   # t = ArbolBin('*',x,y)
-   # w = ArbolBin('/',x,y)
-   # g = ArbolBin('%',x,y)
+   # r = ArbolBin('-',x1,y1)
+   # t = ArbolBin('*',x1,y1)
+   # w = ArbolBin('/',x1,y1)
+   # g = ArbolBin('%',x1,y1)
 
-   # k = ArbolStore(z)
+   # k = ArbolStore(z1)
 
    # k.printArb()
 
@@ -188,26 +264,6 @@ if __name__  == "__main__":
    # ñ = ArbolRecieve(z)
 
    # ñ.printArb()
-
-   # up = ArbolUp(None)
-   # up2 = ArbolUp(r)
-   # up.printArb()
-   # up2.printArb()
-
-   # left = ArbolLeft(None)
-   # left2 = ArbolLeft(t)
-   # left.printArb()
-   # left2.printArb()
-
-   # down = ArbolDown(None)
-   # down2 = ArbolDown(w)
-   # down.printArb()
-   # down2.printArb()
-
-   # right = ArbolRight(None)
-   # right2 = ArbolRight(g)
-   # right.printArb()
-   # right2.printArb()
 
    # f = ArbolRead('variable')
    # f.printArb()

@@ -18,6 +18,9 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 from LexBot import BotLexer
+from ArbolExpr import *
+from ArbolInst import *
+
 tokens = BotLexer.tokens
 
 # Reglas de precedencia para el parser.
@@ -45,7 +48,7 @@ def t_expresiones(t):
            | EXPR TkMod EXPR
            | TkTrue
            | TkFalse 
-           | EXPR TkConjuncion EXPR
+           | EXPR TkConjuncion EXPR 
            | EXPR TkDisyuncion EXPR
            | EXPR TkIgual EXPR
            | EXPR TkMayor EXPR
@@ -54,36 +57,51 @@ def t_expresiones(t):
            | EXPR TkMenorIgual EXPR
            | EXPR TkDistinto EXPR '''
 
-  if len(t) == 4:  
-    if t[2] == '+':
-      t[0] = t[1] + t[3]
-      # print("Operacion : 'Suma'")
-    elif t[2] == '-':
-      t[0] = t[1] - t[3]
-      # print("Operacion : 'Resta'")
-    elif t[2] == '*':
-      t[0] = t[1] * t[3]
-      # print("Operacion : 'Multiplicacion'")
-    elif t[2] == '/':
-      t[0] = t[1] / t[3]
-      # print("Operacion : 'Division'")
-    elif t[2] == '%':
-      t[0] = t[1] % t[3]
-      # print("Operacion : 'Modulo'")
-    elif t[1] == '(': 
-      t[0] = t[2]
+  if len(t) == 2:
+    t[0] = ArbolExpr(t[1])
 
-    # if p[1] != '(' :
-    #   print("Operador Izquierdo :" + str(p[1]))
-    #   print("Operador Derecho :" + str(p[3]))
+  elif len(t) == 3:
+    t[0] = ArbolUn(t[1], t[2])
+
+  elif len(t) == 4: 
+    t[0] = ArbolBin(t[2], t[1], t[3]) 
+    if t[2] == '+':
+      print("- Operacion: 'Suma'")
+    elif t[2] == '-':
+      print("- Operacion: 'Resta'")
+    elif t[2] == '*':
+      print("- Operacion: 'Multiplicacion'")
+    elif t[2] == '/':
+      print("- Operacion: 'Division'")
+    elif t[2] == '%':
+      print("- Operacion: 'Modulo'")
+    elif t[2] == '/':
+      print("- Operacion: 'Conjuncion'")
+    elif t[2] == '\/':
+      print("- Operacion: 'Disyuncion'")
+    elif t[2] == '<':
+      print("- Operacion: 'Menor que'")
+    elif t[2] == '>':
+      print("- Operacion: 'Mayor que'")
+    elif t[2] == '<=':
+      print("- Operacion: 'Menor o igual que'")
+    elif t[2] == '>=':
+      print("- Operacion: 'Mayor o igual que'")
+    elif t[2] == '/=':
+      print("- Operacion: 'Distinto que'")
+    elif t[2] == '=':
+      print("- Operacion: 'Igual que'")
+
+    print("- Operador izquierdo: " + str(t[1]))
+    print("- Operador derecho: " + str(t[3]))
 
   else: 
-    t[0] = t[1]
+    t[0] = ArbolExpr(t[1])
 
 # Regla principal para iniciar el programa en lenguaje BOT.
 def t_programa(t):
   ''' PROGRAM : DEC_LIST INST_EXE TkEnd 
-              | INST_CONT TkEnd '''
+              | INST_EXE TkEnd '''
 
 # Regla inicial del programa execute para instrucciones de controlador.
 def t_instruccion_execute(t):
