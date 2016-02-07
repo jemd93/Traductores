@@ -23,19 +23,85 @@ from ArbolInst import *
 
 tokens = BotLexer.tokens
 
-# Reglas de precedencia para el parser.
-precedence = (
-  ('left','TkSuma','TkResta'),
-  ('left','TkDiv','TkMult','TkMod'),
-  ('left','TkDisyuncion'),
-  ('left','TkConjuncion'),
-  ('left','TkNegacion'),
-  ('nonassoc','TkMayor','TkMayorIgual','TkMenor','TkMenorIgual'), 
-  ('left','TkIgual','TkDistinto') 
-)
+# Regla principal para iniciar el programa en lenguaje BOT.
+# def t_programa(t):
+#   ''' PROGRAM : DEC_LIST INST_EXE 
+#               | INST_EXE '''
+
+# # Reglas para lista de instrucciones de controlador.
+def p_lista_instrucciones_controlador(p):
+  ''' INST_CONT_LIST : INST_CONT TkComa INST_CONT_LIST
+                     | INST_CONT '''
+  if len(p) == 2 :
+    p[0] = ArbolContList(p[1],None)
+  else :
+    p[0] = ArbolContList(p[1],p[3])
+
+# Reglas para instrucciones de controlador.
+def p_instrucciones_controlador(p):
+  ''' INST_CONT : TkActivate ID_LIST TkPunto
+                | TkAdvance ID_LIST TkPunto
+                | TkDeactivate ID_LIST TkPunto
+                | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+                | TkIf EXPR TkDosPuntos INST_CONT TkEnd
+                | TkWhile EXPR TkDosPuntos INST_CONT TkEnd '''
+                # | PROGRAM '''
+
+  if p[1] == 'activate' :
+    p[0] = ArbolContBot('activate',p[2])
+  elif p[1] == 'advance' :
+    p[0] = ArbolContBot('advance',p[2])
+  elif p[1] == 'deactivate' :
+    p[0] = ArbolContBot('deactivate',p[2])
+  elif p[1] == 'if' :
+    if p[5] == 'else' :
+      p[0] = ArbolIf(p[2],p[4],p[6])
+    else : 
+      p[0] = ArbolIf(p[2],p[4],None)
+  elif p[1] == 'while' :
+    p[0] = ArbolWhile(p[2],p[4])
+  else : # NOTA : Caso program. FALTA
+    p[0] = ArbolInst('program') # <-- Placeholder
+
+# Reglas para instrucciones de robots.
+def p_inst_bot(p):
+  ''' INST_BOT : TkStore EXPR TkPunto        
+               | TkCollect TkPunto
+               | TkCollect TkAs ID TkPunto
+               | TkDrop EXPR TkPunto
+               | DIR TkPunto
+               | DIR EXPR TkPunto
+               | TkRead TkPunto
+               | TkRead TkAs ID TkPunto
+               | TkSend TkPunto
+               | TkRecieve EXPR TkPunto '''
+
+  if p[1] == 'store' :
+    p[0] = ArbolStore(p[2])
+  elif p[1] == 'collect' :
+    if len(p) == 3 : 
+      p[0] = ArbolCollect(None)
+    else :
+      p[0] = ArbolCollect(p[3])
+  elif p[1] == 'drop' :
+    p[0] = ArbolDrop(p[2])
+  elif p[1] == 'read' :
+    if len(p) == 3 :
+      p[0] = ArbolRead()
+    else :
+      p[0] = ArbolRead(p[3])
+  elif p[1] == 'send' :
+    p[0] = ArbolSend()
+  elif p[1] == 'recieve' :
+    p[0] = ArbolRecieve(p[2])
+  else :
+    if len(p) == 3 : 
+      p[0] = ArbolMove(p[1],None)
+    else :
+      p[0] = ArbolMove(p[1],p[2])
 
 # Reglas de las expresiones aritméticas, booleanas, posibles en el lenguaje BOT.
-def t_expresiones(t):
+def p_expr(p):
   ''' EXPR : TkNum
            | TkIdent
            | TkCaracter
@@ -55,164 +121,113 @@ def t_expresiones(t):
            | EXPR TkMayorIgual EXPR
            | EXPR TkMenor EXPR
            | EXPR TkMenorIgual EXPR
-           | EXPR TkDistinto EXPR '''
+           | EXPR TkDistinto EXPR'''
 
-  if len(t) == 2:
-    t[0] = ArbolExpr(t[1])
+  if len(p) == 2:
+    p[0] = ArbolExpr(p[1])
 
-  elif len(t) == 3:
-    t[0] = ArbolUn(t[1], t[2])
+  elif len(p) == 3:
+    p[0] = ArbolUn(p[1], p[2])
 
-  elif len(t) == 4: 
-    t[0] = ArbolBin(t[2], t[1], t[3]) 
-    if t[2] == '+':
-      print("- Operacion: 'Suma'")
-    elif t[2] == '-':
-      print("- Operacion: 'Resta'")
-    elif t[2] == '*':
-      print("- Operacion: 'Multiplicacion'")
-    elif t[2] == '/':
-      print("- Operacion: 'Division'")
-    elif t[2] == '%':
-      print("- Operacion: 'Modulo'")
-    elif t[2] == '/':
-      print("- Operacion: 'Conjuncion'")
-    elif t[2] == '\/':
-      print("- Operacion: 'Disyuncion'")
-    elif t[2] == '<':
-      print("- Operacion: 'Menor que'")
-    elif t[2] == '>':
-      print("- Operacion: 'Mayor que'")
-    elif t[2] == '<=':
-      print("- Operacion: 'Menor o igual que'")
-    elif t[2] == '>=':
-      print("- Operacion: 'Mayor o igual que'")
-    elif t[2] == '/=':
-      print("- Operacion: 'Distinto que'")
-    elif t[2] == '=':
-      print("- Operacion: 'Igual que'")
-
-    print("- Operador izquierdo: " + str(t[1]))
-    print("- Operador derecho: " + str(t[3]))
-
-  else: 
-    t[0] = ArbolExpr(t[1])
-
-# Regla principal para iniciar el programa en lenguaje BOT.
-def t_programa(t):
-  ''' PROGRAM : DEC_LIST INST_EXE TkEnd 
-              | INST_EXE TkEnd '''
+  else :
+    if (p[1] != '(') :
+      p[0] = ArbolBin(p[2], p[1], p[3])
+    else :
+      p[0] = p[2] 
 
 # Regla inicial del programa execute para instrucciones de controlador.
-def t_instruccion_execute(t):
-  ''' INST_EXE : TkExecute INST_CONT_LIST TkEnd'''
+# def t_instruccion_execute(t):
+#   ''' INST_EXE : TkExecute INST_CONT_LIST TkEnd'''
 
-# Reglas para instrucciones de controlador.
-def t_instrucciones_controlador(t):
-  ''' INST_CONT : TkActivate ID_LIST TkPunto
-                | TkAdvance ID_LIST TkPunto
-                | TkDeactivate ID_LIST TkPunto
-                | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
-                | TkIf EXPR TkDosPuntos INST_CONT TkEnd
-                | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
-                | PROGRAM '''      
+# Regla de identificadores de robots.
+def p_id(p):
+  ''' ID : TkIdent '''
 
-# Reglas para instrucciones de robots.
-def t_instrucciones_robot(t):
-  ''' INST_BOT : TkStore EXPR TkPunto        
-               | TkCollect TkPunto
-               | TkCollect TkAs ID TkPunto
-               | TkDrop EXPR TkPunto
-               | DIR TkPunto
-               | DIR EXPR TkPunto
-               | TkRead TkPunto
-               | TkRead TkAs ID TkPunto
-               | TkSend TkPunto
-               | TkRecieve EXPR TkPunto '''
+  p[0] = ArbolExpr(p[1])
 
-# Reglas para lista de instrucciones de controlador.
-def t_lista_instrucciones_controlador(t):
-  ''' INST_CONT_LIST : INST_CONT_LIST TkComa INST_CONT
-                     | INST_CONT '''
+# Reglas para cuando existen varios identificadores de robots.
+def p_id_list(p):
+  ''' ID_LIST : ID TkComa ID_LIST
+              | ID '''
+
+  if len(p) == 2 :
+    p[0] = ArbolIdList(p[1],None)
+  else : 
+    p[0] = ArbolIdList(p[1],p[3])
 
 # Reglas para lista de instrucciones de robots.
-def t_lista_instrucciones_robots(t):
-  ''' INST_BOT_LIST : INST_BOT_LIST TkComa INST_BOT
-                    | INST_BOT '''
+# def t_lista_instrucciones_robots(t):
+#   ''' INST_BOT_LIST : INST_BOT_LIST TkComa INST_BOT
+#                     | INST_BOT '''
 
 # Reglas de movimiento en las instrucciones de robots.
-def t_direcciones(t):
+def p_direcciones(p):
   ''' DIR : TkLeft 
           | TkRight
           | TkUp
           | TkDown '''
 
-  t[0] = t[1]
-
-# Regla de identificadores de robots.
-def t_identificadores(t):
-  ''' ID : TkIdent '''
-
-  t[0] = t[1]
-
-# Reglas para cuando existen varios identificadores de robots.
-def t_lista_identificadores(t):
-  ''' ID_LIST : ID_LIST TkComa ID
-              | ID '''
+  p[0] = ArbolInst(p[1])
 
 # Reglas de declaraciones o definiciones de robots.
-def t_declaraciones(t):
-  ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
+# def t_declaraciones(t):
+#   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
 
-# Reglas para cuando existe una lista de declaraciones o definiciones de robots.
-def t_lista_declaraciones(t):
-  ''' DEC_LIST : DEC_LIST TkComa DEC
-               | TkCreate DEC '''
+# # Reglas para cuando existe una lista de declaraciones o definiciones de robots.
+# def t_lista_declaraciones(t):
+#   ''' DEC_LIST : DEC_LIST TkComa DEC
+#                | TkCreate DEC '''
 
 # Reglas de comportamientos de robots.
-def t_comportamientos(t):
-  ''' COMP : TkOn EXPR TkDosPuntos INST_BOT TkEnd 
-           | TkOn STATE TkDosPuntos INST_BOT TkEnd '''
+# def t_comportamientos(t):
+#   ''' COMP : TkOn EXPR TkDosPuntos INST_BOT TkEnd 
+#            | TkOn STATE TkDosPuntos INST_BOT TkEnd '''
 
 # Reglas para cuando existe una lista de comportamientos de robots.
-def t_lista_comportamientos(t):
-  ''' COMP_LIST : COMP_LIST TkComa COMP
-                | COMP 
-                | LAMBDA '''
+# def t_lista_comportamientos(t):
+#   ''' COMP_LIST : COMP_LIST TkComa COMP
+#                 | COMP 
+#                 | empty '''
 
 # Reglas de estados en los que pueden empezar a estar los robots.
-def t_estados(t):
-  ''' STATE : TkActivation
-            | TkDeactivation
-            | TkDefault '''
+# def t_estados(t):
+#   ''' STATE : TkActivation
+#             | TkDeactivation
+#             | TkDefault '''
 
-  t[0] = t[1]
+#   t[0] = t[1]
 
-# Reglas para tipos de robots que pueden crearse.
-def t_tipos(t):
-  ''' TIPO : TkBool
-           | TkChar
-           | TkInt '''
+# # Reglas para tipos de robots que pueden crearse.
+# def t_tipos(t):
+#   ''' TIPO : TkBool
+#            | TkChar
+#            | TkInt '''
 
-  t[0] = t[1] 
+#   t[0] = t[1] 
 
 # Regla para la palabra vacía.
-def p_lambda(t):
-    ''' LAMBDA : '''
+def p_empty(p):
+    'empty :'
     pass
 
 # Regla de error para los errores de sintaxis
-def p_error(t):
+def p_error(p):
   print("Syntax error in input!")
 
-# f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
-#                             # de comando
-# finput = f.read()
+# Reglas de precedencia para el parser.
+precedence = (
+  ('left','TkSuma','TkResta'),
+  ('left','TkDiv','TkMult','TkMod'),
+  ('left','TkDisyuncion'),
+  ('left','TkConjuncion'),
+  ('left','TkNegacion'),
+  ('nonassoc','TkMayor','TkMayorIgual','TkMenor','TkMenorIgual'), 
+  ('left','TkIgual','TkDistinto'),
+)
+
 
 botlex = BotLexer()
 botlex.build()
-# botlex.lexer.input(finput)
-# Build the parser
 parser = yacc.yacc()
 
 # try:
@@ -224,9 +239,8 @@ parser = yacc.yacc()
 f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
                         # de comando
 finput = f.read()
-
 result = parser.parse(finput, lexer=botlex.lexer)
 
-print(result)
+result.printArb()
 
 f.close()

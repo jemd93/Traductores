@@ -16,8 +16,11 @@
 # para las hojas, que sera usualmente un ID,
 # un número o un booleano.
 class ArbolExpr(object):
-    def __init__(self, x):
-        self.elem = x
+	def __init__(self, x):
+		self.elem = x
+
+	def printArb(self):
+		print(self.elem)
 
 # Árbol unario para el operador de negación
 # o el negativo unario aritmético

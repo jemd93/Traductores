@@ -121,17 +121,6 @@ class ArbolIf(ArbolInst):
 			self.h4.printArb()
 			self.h5.printArb()
 
-# Árbol para la instruccion While
-class ArbolWhile(ArbolInst):
-	def __init__(self,hexpr,hinst):
-		self.h1 = ArbolInst('while')
-		self.h2 = hexpr
-		self.h3 = hinst
-
-	def printArb(self):
-		self.h1.printArb()
-		self.h2.printArb()
-		self.h3.printArb()
 
 # ÁRBOLES PARA INSTRUCCIONES DE LOS ROBOTS 
 
@@ -172,8 +161,8 @@ class ArbolDrop(ArbolInst):
 
 # Árbol para las instrucciones de movimientos 
 class ArbolMove(ArbolInst):
-	def __init__(self,dir,h2):
-		self.h1 = ArbolInst(dir)
+	def __init__(self,h1,h2):
+		self.h1 = h1
 		if not(h2 is None):
 			self.h2 = h2
 		else:
@@ -218,11 +207,84 @@ class ArbolRecieve(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb()
 
-if __name__  == "__main__":
+class ArbolIdList(ArbolInst): 
+	def __init__(self,arbId,arbList):
+		self.h1 = arbId
+		if not(arbList is None):
+			self.h2 = arbList
+		else :
+			self.h2 = None
 
-   x1 = ArbolBin(1,None,None)
-   y1 = ArbolBin(3,None,None)
-   z1 = ArbolBin('<',x1,y1)
+	def printArb(self):
+		self.h1.printArb()
+		if not(self.h2 is None) :
+			self.h2.printArb()
+
+# ARBOLES PARA INSTRUCCIONES DEL CONTROLADOR 
+
+# Arbol para la instrucciones activate, deactivate y advance
+# NOTA : Hecho de la misma forma que la parte de left,right,etc,
+# no ando claro si vaa funcionar siempre, pero por ahora si.
+class ArbolContBot(ArbolInst):
+	def __init__(self,inst,idList):
+		self.h1 = ArbolInst(inst)
+		self.h2 = idList
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+
+# Arbol para la instruccion if y if-else
+class ArbolIf(ArbolInst):
+	def __init__(self,expr,inst1,inst2):
+		self.h1 = ArbolInst('if')
+		self.h2 = expr
+		self.h3 = inst1
+		if not(inst2 is None) :
+			self.h4  = ArbolInst('else')
+			self.h5 = inst2
+		else :
+			self.h4 = None
+			self.h5 = None
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+		self.h3.printArb()
+		if not(self.h4 is None) : 
+			self.h4.printArb()
+			self.h5.printArb()
+
+class ArbolWhile(ArbolInst):
+	def __init__(self,expr,inst):
+		self.h1 = ArbolInst('while')
+		self.h2 = expr
+		self.h3 = inst
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+		self.h3.printArb()
+
+class ArbolContList(ArbolInst):
+	def __init__(self,contInst,instList):
+		self.h1 = contInst
+		if not(instList is None) :
+			self.h2 = instList
+		else :
+			self.h2 = None
+
+
+	def printArb(self):
+		self.h1.printArb()
+		if not(self.h2 is None) :
+			self.h2.printArb()
+
+# if __name__  == "__main__":
+
+   # x1 = ArbolBin(1,None,None)
+   # y1 = ArbolBin(3,None,None)
+   # z1 = ArbolBin('<',x1,y1)
 
    # x2 = ArbolBin(7,None,None)
    # y2 = ArbolBin(5,None,None)
@@ -265,7 +327,7 @@ if __name__  == "__main__":
 
    # ñ.printArb()
 
-   # f = ArbolRead('variable')
+   # f = ArbolRead(ArbolExpr('variable'))
    # f.printArb()
 
    # d = ArbolRead(None)
@@ -273,3 +335,6 @@ if __name__  == "__main__":
 
    # s = ArbolSend()
    # s.printArb()
+
+   # t = ArbolIdList([ArbolExpr('var1'),ArbolExpr('var2'),ArbolExpr('var3')])
+   # t.printArb()
