@@ -11,104 +11,89 @@
 
 # Estructura de un programa en bot
 
-PROGRAM -> DEC_LIST INST_EXE
-		 | INST_EXE
+PROGRAM : DEC_LIST_INIT INST_EXE 
+        | INST_EXE
 
-INST_EXE -> TkExecute INST_CONT_LIST TkEnd
+DEC_LIST_INIT : TkCreate DEC_LIST
 
-DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
+DEC_LIST : DEC DEC_LIST
+         | DEC
 
-DEC_LIST -> TkCreate DEC
-		  | DEC TkComa DEC_LIST
+DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd
 
-# Instrucciones de Controlador
+TIPO : TkBool
+     | TkChar
+     | TkInt
 
-INST_CONT -> TkActivate ID_LIST TkPunto
-	       | TkAdvance ID_LIST TkPunto
-	       | TkDeactivate ID_LIST TkPunto
-	       | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
-	       | TkIf EXPR TkDosPuntos INST_CONT TkEnd
-		   | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
-		   | PROGRAM 							
+ID_LIST : ID TkComa ID_LIST
+        | ID
 
-# Instrucciones de Robot
+ID : TkIdent
 
-INST_BOT -> TkStore EXPR TkPunto
-		  | TkStore TkMe EXPR TkPunto				
-		  | TkCollect TkPunto
-		  | TkCollect TkMe TkPunto
-		  | TkCollect TkAs ID TkPunto
-		  | TkCollect TkMe TkAs ID TkPunto
-		  | TkDrop EXPR TkPunto
-		  | TkDrop TkMe EXPR TkPunto
-		  | DIR TkPunto
-		  | DIR TkMe TkPunto
-		  | DIR EXPR TkPunto
-		  | DIR TkMe EXPR TkPunto
-		  | TkRead TkPunto
-		  | TkRead TkMe TkPunto
-		  | TkRead TkAs ID TkPunto
-		  | TkRead TkMe TkAs ID TkPunto
-		  | TkSend TkPunto
-		  | TkSend TkMe TkPunto
-		  | TkRecieve TkPunto
-		  | TkRecieve EXPR TkPunto
-		  | TkRecieve TkMe EXPR TkPunto
+COMP_LIST : COMP COMP_LIST 
+          | empty 
 
-INST_CONT_LIST -> INST_CONT TkComa INST_CONT_LIST
-		        | INST_CONT
+COMP : TkOn EXPR TkDosPuntos INST_BOT_LIST TkEnd 
+     | TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd
 
-INST_BOT_LIST -> INST_BOT TkComa INST_BOT_LIST
-		       | INST_BOT
+STATE : TkActivation
+      | TkDeactivation
+      | TkDefault
 
-DIR -> TkLeft 
-	 | TkRight
-	 | TkUp
-     | TkDown
+INST_BOT_LIST : INST_BOT INST_BOT_LIST
+              | INST_BOT
 
-ID -> TkIdent
+INST_BOT : TkStore EXPR TkPunto        
+         | TkCollect TkPunto
+         | TkCollect TkAs ID TkPunto
+         | TkDrop EXPR TkPunto
+         | DIR TkPunto
+         | DIR EXPR TkPunto
+         | TkRead TkPunto
+         | TkRead TkAs ID TkPunto
+         | TkSend TkPunto
+         | TkRecieve TkPunto
+         | TkRecieve EXPR TkPunto
 
-ID_LIST -> ID TkComa ID_LIST
-		 | ID
+DIR : TkLeft 
+    | TkRight
+    | TkUp
+    | TkDown
 
-COMP -> TkOn EXPR TkDosPuntos INST_BOT TkEnd 
-	  | TkOn STATE TkDosPuntos INST_BOT TkEnd
+INST_EXE : TkExecute INST_CONT_LIST TkEnd
 
-COMP_LIST -> COMP TkComa COMP_LIST
-		   | COMP
-		   | empty
+INST_CONT_LIST : INST_CONT INST_CONT_LIST
+               | INST_CONT
 
-empty -> 
+INST_CONT : TkActivate ID_LIST TkPunto
+          | TkAdvance ID_LIST TkPunto
+          | TkDeactivate ID_LIST TkPunto
+          | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+          | TkIf EXPR TkDosPuntos INST_CONT TkEnd
+          | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
+          | PROGRAM
 
-STATE -> TkActivation
-	   | TkDeactivation
-	   | TkDefault
+EXPR : TkNum
+     | TkIdent
+     | TkCaracter
+     | TkMe
+     | TkParAbre EXPR TkParCierra
+     | TkNegacion EXPR
+     | TkResta EXPR %prec TkRestaUn
+     | EXPR TkSuma EXPR
+     | EXPR TkResta EXPR
+     | EXPR TkMult EXPR
+     | EXPR TkDiv EXPR
+     | EXPR TkMod EXPR
+     | TkTrue
+     | TkFalse 
+     | EXPR TkConjuncion EXPR 
+     | EXPR TkDisyuncion EXPR
+     | EXPR TkIgual EXPR
+     | EXPR TkMayor EXPR
+     | EXPR TkMayorIgual EXPR
+     | EXPR TkMenor EXPR
+     | EXPR TkMenorIgual EXPR
+     | EXPR TkDistinto EXPR '''
 
-TIPO -> TkBool
-	  | TkChar
-	  | TkInt
-
-EXPR -> TkNum
-	  | TkIdent
-	  | TkCaracter
-	  | TkParAbre EXPR TkParCierra
-	  | TkNegacion EXPR
-	  | EXPR TkSuma EXPR
-	  | EXPR TkResta EXPR
-	  | EXPR TkMult EXPR
-	  | EXPR TkDiv EXPR
-	  | EXPR TkMod EXPR
-	  | TkTrue
-	  | TkFalse 
-	  | EXPR TkConjuncion EXPR
-	  | EXPR TkDisyuncion EXPR
-	  | EXPR TkIgual EXPR
-	  | EXPR TkMayor EXPR
-	  | EXPR TkMayorIgual EXPR
-	  | EXPR TkMenor EXPR
-	  | EXPR TkMenorIgual EXPR
-	  | EXPR TkDistinto EXPR
-
-# PREGUNTAR POR SI TERMINA EN PUNTO DESPUES DE UNA SECUENCIA DE INSTRUCCIONES
-
-# on EXPR, en condicion del comportamiento de robot, evalua nada más en bool, preguntar
+empty : lambda

@@ -48,23 +48,3 @@ class ArbolBin(ArbolExpr):
 			self.hizq.printArb()
 		if self.hder is not None:
 			self.hder.printArb()
-
-if __name__  == "__main__":
-   x = ArbolBin(1,None,None)
-   y = ArbolBin(3,None,None)
-   z = ArbolBin('+',x,y)
-
-   p = ArbolBin(2,None,None)
-   k = ArbolBin('*',p,z)
-
-   i = ArbolBin(True,None,None)
-   j = ArbolBin(False,None,None)
-   l = ArbolBin('/\\',i,j)
-
-   l.printArb()
-
-   m = ArbolUn(2,None)
-   n = ArbolUn('-',m)
-
-   d = ArbolBin('*',z,n)
-   d.printArb()
