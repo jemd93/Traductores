@@ -271,10 +271,30 @@ class ArbolInstContList(ArbolInst):
 
 ################# INSTRUCCIONES DEL CONTROLADOR ###########################
 
-# Árbol para la instrucciones activate, deactivate y advance
-class ArbolContBot(ArbolInst):
-	def __init__(self,inst,idList):
-		self.h1 = ArbolInst(inst)
+# Arbol para la instruccion activate 
+class ArbolActivate(ArbolInst):
+	def __init__(self,idList):
+		self.h1 = ArbolInst('activate')
+		self.h2 = idList
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+
+# Arbol para la instruccion advance
+class ArbolAdvance(ArbolInst):
+	def __init__(self,idList):
+		self.h1 = ArbolInst('advance')
+		self.h2 = idList
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+
+# Arbol para la instruccion deactivate
+class ArbolDeactivate(ArbolInst):
+	def __init__(self,idList):
+		self.h1 = ArbolInst('deactivate')
 		self.h2 = idList
 
 	def printArb(self):

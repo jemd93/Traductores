@@ -191,11 +191,11 @@ def p_inst_cont(p):
                 | PROGRAM '''
 
   if p[1] == 'activate' :
-    p[0] = ArbolContBot('activate',p[2])
+    p[0] = ArbolActivate(p[2])
   elif p[1] == 'advance' :
-    p[0] = ArbolContBot('advance',p[2])
+    p[0] = ArbolAdvance(p[2])
   elif p[1] == 'deactivate' :
-    p[0] = ArbolContBot('deactivate',p[2])
+    p[0] = ArbolDeactivate(p[2])
   elif p[1] == 'if' :
     if p[5] == 'else' :
       p[0] = ArbolIf(p[2],p[4],p[6])
