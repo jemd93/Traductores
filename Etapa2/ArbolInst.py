@@ -30,20 +30,14 @@ class ArbolInst(object):
 
 # Árbol para la instrucción Store
 class ArbolStore(ArbolInst):
-	def __init__(self,h2,h3):
+	def __init__(self,h2):
 		self.h1 = ArbolInst('store')
-		self.h3 = h3
-		if not(h2 is None):
-			self.h2 = h2
-		else:
-			self.h2 = None 
+		self.h2 = h2
+
 
 	def printArb(self):
 		self.h1.printArb()
-		if not(self.h2 is None):
-			self.h2.printArb()
-
-		self.h3.printArb()
+		self.h2.printArb()
 
 # Árbol para la instrucción Collect
 # con caso Collect y caso Collect as ID
@@ -62,19 +56,13 @@ class ArbolCollect(ArbolInst):
 
 # Árbol para la instrucción Drop
 class ArbolDrop(ArbolInst):
-	def __init__(self,h2,h3):
+	def __init__(self,h2):
 		self.h1 = ArbolInst('drop')
-		self.h3 = h3
-		if not(h2 is None):
-			self.h2 = h2
-		else:
-			self.h2 = None
+		self.h2 = h2
 
 	def printArb(self):
 		self.h1.printArb()
-		if not(self.h2 is None):
-			self.h2.printArb()
-		self.h3.printArb()
+		self.h2.printArb()
 
 # Árbol para las instrucciones de movimientos 
 class ArbolMove(ArbolInst):
@@ -192,62 +180,70 @@ class ArbolWhile(ArbolInst):
 # Árbol para el programa principal o los subprogramas
 class ArbolProgram(ArbolInst):
 	def __init__(self,decList,execute):
-		self.a2 = execute
+		self.h2 = execute
 		if not(decList is None):
-			self.a1 = decList
+			self.h1 = decList
 		else:
-			self.a1 = None
+			self.h1 = None
 
 	def printArb(self):
-		if not(self.a1 is None):
-			self.a1.printArb()
-			self.a2.printArb()
+		if not(self.h1 is None):
+			self.h1.printArb()
+			self.h2.printArb()
 		else:
-			self.a2.printArb()
+			self.h2.printArb()
 
 # Árbol para ejecutar las instrucciones de controlador
 class ArbolExecute(ArbolInst):
 	def __init__(self,contList):
-		self.a1 = ArbolInst('execute')
-		self.a2 = contList
+		self.h1 = ArbolInst('execute')
+		self.h2 = contList
 
 	def printArb(self):
-		self.a1.printArb()
-		self.a2.printArb()
-		self.a3.printArb()
+		self.h1.printArb()
+		self.h2.printArb()
+
+# Arbol para el inicio de las listas de declaraciones
+class ArbolDecListInit(ArbolInst) :
+	def __init__(self,decList):
+		self.h1 = ArbolInst('create')
+		self.h2 = decList
+
+
+	def printArb(self):
+		self.h1.printArb()
+		self.h2.printArb()
+
 
 # Árbol para una declaración de robot
 class ArbolDec(ArbolInst):
-	def __init__(self,tipo,idList,compList):
-		self.a1 = ArbolInst(tipo)
-		self.a2 = ArbolInst('bot')
-		self.a3 = idList
-		self.a4 = compList
+	def __init__(self,arbTipo,idList,compList):
+		self.h1 = arbTipo
+		self.h2 = ArbolInst('bot')
+		self.h3 = idList
+		self.h4 = compList
 
 	def printArb(self):
-		self.a1.printArb()
-		self.a2.printArb()
-		self.a3.printArb()
-		self.a4.printArb()
-		self.a5.printArb()
+		self.h1.printArb()
+		self.h2.printArb()
+		self.h3.printArb()
+		self.h4.printArb()
 
 # Árbol para la lista de declaraciones para la creación de robots
 class ArbolDecList(ArbolInst):
 	def __init__(self,dec,decList):
-		self.a1 = ArbolInst('create')
-		self.a2 = dec
+		self.h1 = dec
 		if not(decList is None):
-			self.a3 = decList
+			self.h2 = decList
 		else:
-			self.a3 = None
+			self.h2 = None
 
 	def printArb(self):
-		if not(self.a3 is None):
-			self.a2.printArb()
-			self.a3.printArb()
+		if not(self.h2 is None):
+			self.h1.printArb()
+			self.h2.printArb()
 		else:
-			self.a1.printArb()
-			self.a2.printArb()	
+			self.h1.printArb()	
 
 # Árbol de la lista de identificadores
 class ArbolIdList(ArbolInst): 
@@ -274,58 +270,57 @@ class ArbolTipo(ArbolInst):
 # Árbol para la lista de robots
 class ArbolBotList(ArbolInst):
 	def __init__(self,inst,instList):
-		self.a1 = ArbolInst(inst)
+		self.h1 = inst
 		if not(instList is None):
-			self.a2 = instList
+			self.h2 = instList
 		else:
-			self.a2 = None
+			self.h2 = None
 
 	def printArb(self):
-		self.a1.printArb()
-		if not(self.a2 is None):
-			self.a2.printArb()
+		self.h1.printArb()
+		if not(self.h2 is None):
+			self.h2.printArb()
 
 # NOTA: NO ESTOY SEGURA AQUI EN EXPSTA, PUEDE SER UNA EXPR O UN STATE
 # Árbol para comportamiento de un robot
 class ArbolComp(ArbolInst):
 	def __init__(self, expsta, inst):
-		self.a1 = ArbolInst('on')
-		self.a2 = expsta
-		self.a3 = ArbolInst(inst)
+		self.h1 = ArbolInst('on')
+		self.h2 = expsta
+		self.h3 = inst
 
 	def printArb(self):
-		self.a1.printArb()
-		self.a2.printArb()
-		self.a3.printArb()
-		self.a4.printArb()
+		self.h1.printArb()
+		self.h2.printArb()
+		self.h3.printArb()
 
 # Árbol para la lista de comportamientos de un robot
 class ArbolCompList(ArbolInst):
 	def __init__(self,comp,compList):
 		if (not(comp is None) and not(compList is None)):
-			self.a1 = comp
-			self.a2 = compList
+			self.h1 = comp
+			self.h2 = compList
 		elif ((compList is None) and not(comp is None)):
-			self.a1 = comp
-			self.a2 = None
+			self.h1 = comp
+			self.h2 = None
 		else:
-			self.a1 = None
-			self.a2 = None
+			self.h1 = None
+			self.h2 = None
 
 	def printArb(self):
-		if (not(self.a1 is None) and not(self.a2 is None)):
-			self.a1.printArb()
-			self.a2.printArb()
-		elif ((self.a2 is None) and not(self.a1 is None)):
-			self.a1.printArb()
+		if (not(self.h1 is None) and not(self.h2 is None)):
+			self.h1.printArb()
+			self.h2.printArb()
+		elif ((self.h2 is None) and not(self.h1 is None)):
+			self.h1.printArb()
 
 # Árbol de estados en los que puede estar un robot
 class ArbolState(ArbolInst):
 	def __init__(self,state):
-		self.a1 = ArbolInst(state)
+		self.h1 = ArbolInst(state)
 
 	def printArb(self):
-		self.a1.printArb()
+		self.h1.printArb()
 
 ################################################################################
 

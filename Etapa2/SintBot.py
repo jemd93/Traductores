@@ -25,13 +25,19 @@ tokens = BotLexer.tokens
 
 # Regla principal para iniciar el programa en lenguaje BOT.
 def p_programa(p):
-  ''' PROGRAM : DEC_LIST INST_EXE 
+  ''' PROGRAM : DEC_LIST_INIT INST_EXE 
               | INST_EXE '''
 
   if len(p) == 3:
   	p[0] = ArbolProgram(p[1],p[2])
   else: 
   	p[0] = ArbolProgram(None,p[1])
+
+# Regla para el inicio de la lista de declaraciones.
+def p_dec_list_init(p):
+  ' DEC_LIST_INIT : TkCreate DEC_LIST '
+
+  p[0] = ArbolDecListInit(p[2])
 
 # Regla inicial del programa execute para instrucciones de controlador.
 def p_instruccion_execute(p):
@@ -41,12 +47,12 @@ def p_instruccion_execute(p):
 
 # Reglas para lista de instrucciones de controlador.
 def p_lista_instrucciones_controlador(p):
-  ''' INST_CONT_LIST : INST_CONT TkComa INST_CONT_LIST
+  ''' INST_CONT_LIST : INST_CONT INST_CONT_LIST
                      | INST_CONT '''
   if len(p) == 2 :
     p[0] = ArbolContList(p[1],None)
   else :
-    p[0] = ArbolContList(p[1],p[3])
+    p[0] = ArbolContList(p[1],p[2])
 
 # Reglas para instrucciones de controlador.
 def p_instrucciones_controlador(p):
@@ -76,12 +82,10 @@ def p_instrucciones_controlador(p):
 
 # Reglas para instrucciones de robots.
 def p_inst_bot(p):
-  ''' INST_BOT : TkStore EXPR TkPunto 
-  			 | TkStore TkMe EXPR TkPunto	       
+  ''' INST_BOT : TkStore EXPR TkPunto        
                | TkCollect TkPunto
                | TkCollect TkAs ID TkPunto
                | TkDrop EXPR TkPunto
-               | TkDrop TkMe EXPR TkPunto
                | DIR TkPunto
                | DIR EXPR TkPunto
                | TkRead TkPunto
@@ -91,20 +95,14 @@ def p_inst_bot(p):
                | TkRecieve EXPR TkPunto '''
 
   if p[1] == 'store':
-  	if p[2] == 'me':
-  	  p[0] = ArbolStore(p[2],p[3])
-  	else:
-  	  p[0] = ArbolStore(None,p[2])
+  	 p[0] = ArbolStore(p[2])
   elif p[1] == 'collect':
     if len(p) == 3: 
       p[0] = ArbolCollect(None)
     else:
       p[0] = ArbolCollect(p[3])
   elif p[1] == 'drop':
-  	if p[2] == 'me':
-  	  p[0] = ArbolDrop(p[2],p[3])
-  	else:
-  	  p[0] = ArbolDrop(None,p[2])
+  	 p[0] = ArbolDrop(p[2])
   elif p[1] == 'read':
     if len(p) == 3:
       p[0] = ArbolRead(None)
@@ -128,8 +126,10 @@ def p_expr(p):
   ''' EXPR : TkNum
            | TkIdent
            | TkCaracter
+           | TkMe
            | TkParAbre EXPR TkParCierra
            | TkNegacion EXPR
+           | TkResta EXPR %prec TkRestaUn
            | EXPR TkSuma EXPR
            | EXPR TkResta EXPR
            | EXPR TkMult EXPR
@@ -176,13 +176,13 @@ def p_id_list(p):
 
 # Reglas para lista de instrucciones de robots.
 def p_lista_instrucciones_robots(p):
-  ''' INST_BOT_LIST : INST_BOT TkComa INST_BOT_LIST
+  ''' INST_BOT_LIST : INST_BOT INST_BOT_LIST
                     | INST_BOT '''
 
   if len(p) == 2:
   	p[0] = ArbolBotList(p[1],None)
   else:
-  	p[0] = ArbolBotList(p[1],p[3])
+  	p[0] = ArbolBotList(p[1],p[2])
 
 # Reglas de movimiento en las instrucciones de robots.
 def p_direcciones(p):
@@ -201,30 +201,29 @@ def p_declaraciones(p):
 
 # Reglas para cuando existe una lista de declaraciones o definiciones de robots.
 def p_lista_declaraciones(p):
-  ''' DEC_LIST : DEC TkComa DEC_LIST
-               | TkCreate DEC '''
-  if len(p) == 3:
-  	p[0] = ArbolDecList(p[2],None)
+  ''' DEC_LIST : DEC DEC_LIST
+               | DEC '''
+  if len(p) == 2:
+  	p[0] = ArbolDecList(p[1],None)
   else:
-  	p[0] = ArbolDecList(p[1],p[3])
+  	p[0] = ArbolDecList(p[1],p[2])
 
 # Reglas de comportamientos de robots.
 def p_comportamientos(p):
-  ''' COMP : TkOn EXPR TkDosPuntos INST_BOT TkEnd 
-           | TkOn STATE TkDosPuntos INST_BOT TkEnd '''
+  ''' COMP : TkOn EXPR TkDosPuntos INST_BOT_LIST TkEnd 
+           | TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd '''
   
   p[0] = ArbolComp(p[2],p[4])
 
 # Reglas para cuando existe una lista de comportamientos de robots.
 def p_lista_comportamientos(p):
-  ''' COMP_LIST : COMP TkComa COMP_LIST
-                | COMP 
+  ''' COMP_LIST : COMP COMP_LIST 
                 | empty '''
 
   if len(p) == 2:
   	p[0] = ArbolCompList(p[1],None)
-  elif len(p) == 4:
-  	p[0] = ArbolCompList(p[1],p[3])
+  elif len(p) == 3:
+  	p[0] = ArbolCompList(p[1],p[2])
   else:
   	p[0] = ArbolCompList(None,None)
 
@@ -257,6 +256,7 @@ def p_error(p):
 precedence = (
   ('left','TkSuma','TkResta'),
   ('left','TkDiv','TkMult','TkMod'),
+  ('right','TkRestaUn'),
   ('left','TkDisyuncion'),
   ('left','TkConjuncion'),
   ('left','TkNegacion'),
