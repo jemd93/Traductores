@@ -50,7 +50,7 @@ class ArbolStore(ArbolInst):
 class ArbolCollect(ArbolInst):
 	def __init__(self,hid):
 		self.h1 = ArbolInst('collect')
-		if not(id is None):
+		if not(hid is None):
 			self.h2 = hid
 		else:
 			self.h2 = None
@@ -210,7 +210,6 @@ class ArbolExecute(ArbolInst):
 	def __init__(self,contList):
 		self.a1 = ArbolInst('execute')
 		self.a2 = contList
-		self.a3 = ArbolInst('end')
 
 	def printArb(self):
 		self.a1.printArb()
@@ -223,8 +222,7 @@ class ArbolDec(ArbolInst):
 		self.a1 = ArbolInst(tipo)
 		self.a2 = ArbolInst('bot')
 		self.a3 = idList
-		self.a4 = CompList
-		self.a5 = ArbolInst('end')
+		self.a4 = compList
 
 	def printArb(self):
 		self.a1.printArb()
@@ -294,7 +292,6 @@ class ArbolComp(ArbolInst):
 		self.a1 = ArbolInst('on')
 		self.a2 = expsta
 		self.a3 = ArbolInst(inst)
-		self.a4 = ArbolInst('end')
 
 	def printArb(self):
 		self.a1.printArb()
@@ -392,11 +389,28 @@ if __name__  == "__main__":
    # s = ArbolSend()
    # s.printArb()
 
-   # t = ArbolIdList([ArbolExpr('var1'),ArbolExpr('var2'),ArbolExpr('var3')])
-   # t.printArb()
-
    # h = ArbolProgram(None,ArbolInst('activate'))
    # h.printArb()
 
    # k2 = ArbolState('activation')
    # k2.printArb()
+
+   # h6 = ArbolComp(z1,'recieve')
+   # h6.printArb()
+
+   # h7 = ArbolComp(k2,'recieve')
+   # h7.printArb()
+
+   # h8 = ArbolCompList(h6, None)
+   # h8.printArb()
+
+   # h81 = ArbolCompList(h6, h7)
+
+   # h9 = ArbolCompList(h6, h81)
+   # h9.printArb()
+
+   # h10 = ArbolTipo('bool')
+   # h10.printArb()
+
+   # h11 = ArbolDec(h10,ArbolIdList(ArbolExpr('var0'),None), h8)
+   # h11.printArb()

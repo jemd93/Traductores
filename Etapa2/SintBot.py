@@ -77,7 +77,7 @@ def p_instrucciones_controlador(p):
 # Reglas para instrucciones de robots.
 def p_inst_bot(p):
   ''' INST_BOT : TkStore EXPR TkPunto 
-  			   | TkStore TkMe EXPR TkPunto	       
+  			 | TkStore TkMe EXPR TkPunto	       
                | TkCollect TkPunto
                | TkCollect TkAs ID TkPunto
                | TkDrop EXPR TkPunto
@@ -107,7 +107,7 @@ def p_inst_bot(p):
   	  p[0] = ArbolDrop(None,p[2])
   elif p[1] == 'read':
     if len(p) == 3:
-      p[0] = ArbolRead()
+      p[0] = ArbolRead(None)
     else:
       p[0] = ArbolRead(p[3])
   elif p[1] == 'send':
@@ -152,8 +152,8 @@ def p_expr(p):
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2])
 
-  else :
-    if (p[1] != '(') :
+  else:
+    if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3])
     else :
       p[0] = p[2] 
@@ -169,7 +169,7 @@ def p_id_list(p):
   ''' ID_LIST : ID TkComa ID_LIST
               | ID '''
 
-  if len(p) == 2 :
+  if len(p) == 2:
     p[0] = ArbolIdList(p[1],None)
   else : 
     p[0] = ArbolIdList(p[1],p[3])
@@ -246,8 +246,8 @@ def p_tipos(p):
 
 # Regla para la palabra vacía.
 def p_empty(p):
-    'empty :'
-    pass
+  'empty :'
+  pass
 
 # Regla de error para los errores de sintaxis
 def p_error(p):
