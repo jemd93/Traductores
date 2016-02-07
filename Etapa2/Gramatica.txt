@@ -19,7 +19,7 @@ INST_EXE -> TkExecute INST_CONT_LIST TkEnd
 DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd
 
 DEC_LIST -> TkCreate DEC
-		  | DEC_LIST TkComa DEC
+		  | DEC TkComa DEC_LIST
 
 # Instrucciones de Controlador
 
@@ -33,21 +33,32 @@ INST_CONT -> TkActivate ID_LIST TkPunto
 
 # Instrucciones de Robot
 
-INST_BOT -> TkStore EXPR TkPunto				
+INST_BOT -> TkStore EXPR TkPunto
+		  | TkStore TkMe EXPR TkPunto				
 		  | TkCollect TkPunto
+		  | TkCollect TkMe TkPunto
 		  | TkCollect TkAs ID TkPunto
+		  | TkCollect TkMe TkAs ID TkPunto
 		  | TkDrop EXPR TkPunto
+		  | TkDrop TkMe EXPR TkPunto
 		  | DIR TkPunto
+		  | DIR TkMe TkPunto
 		  | DIR EXPR TkPunto
+		  | DIR TkMe EXPR TkPunto
 		  | TkRead TkPunto
+		  | TkRead TkMe TkPunto
 		  | TkRead TkAs ID TkPunto
+		  | TkRead TkMe TkAs ID TkPunto
 		  | TkSend TkPunto
+		  | TkSend TkMe TkPunto
+		  | TkRecieve TkPunto
 		  | TkRecieve EXPR TkPunto
+		  | TkRecieve TkMe EXPR TkPunto
 
-INST_CONT_LIST -> INST_CONT_LIST TkComa INST_CONT
+INST_CONT_LIST -> INST_CONT TkComa INST_CONT_LIST
 		        | INST_CONT
 
-INST_BOT_LIST -> INST_BOT_LIST TkComa INST_BOT
+INST_BOT_LIST -> INST_BOT TkComa INST_BOT_LIST
 		       | INST_BOT
 
 DIR -> TkLeft 
@@ -57,17 +68,17 @@ DIR -> TkLeft
 
 ID -> TkIdent
 
-ID_LIST -> ID_LIST TkComa ID
+ID_LIST -> ID TkComa ID_LIST
 		 | ID
 
 COMP -> TkOn EXPR TkDosPuntos INST_BOT TkEnd 
 	  | TkOn STATE TkDosPuntos INST_BOT TkEnd
 
-COMP_LIST -> COMP_LIST TkComa COMP
+COMP_LIST -> COMP TkComa COMP_LIST
 		   | COMP
-		   | LAMBDA
+		   | empty
 
-LAMBDA -> 
+empty -> 
 
 STATE -> TkActivation
 	   | TkDeactivation
