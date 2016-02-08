@@ -11,6 +11,8 @@
 
 from ArbolExpr import *
 
+cont = 0
+
 # ArbolInst inicial. Como todas las hojas
 # son instrucciones (palabras reservadas) o 
 # variables, aquí entran todos esos casos.
@@ -32,17 +34,16 @@ class ArbolProgram(ArbolInst):
 
 	def printArb(self,tabs):
 		if not(self.h1 is None):
-			self.h1.printArb(0)
+			#self.h1.printArb(0)
 			self.h2.printArb(tabs+1)
 		else:
 			self.h2.printArb(tabs+1)
 
 # Arbol para el inicio de las listas de declaraciones
-class ArbolDecListInit(ArbolInst) :
+class ArbolDecListInit(ArbolInst):
 	def __init__(self,decList):
 		self.h1 = ArbolInst('create')
 		self.h2 = decList
-
 
 	def printArb(self,tabs):
 		self.h1.printArb(0)
@@ -156,14 +157,13 @@ class ArbolInstBotList(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(0)
 
-################# INSTRUCCIONES DE LOS ROBOTS ########################### 
+######################## INSTRUCCIONES DE LOS ROBOTS ########################### 
 
 # Árbol para la instrucción Store
 class ArbolStore(ArbolInst):
 	def __init__(self,h2):
 		self.h1 = ArbolInst('store')
 		self.h2 = h2
-
 
 	def printArb(self,tabs):
 		self.h1.printArb(0)
@@ -231,7 +231,7 @@ class ArbolRecieve(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(0)
 
-################# FIN DE LAS INSTRUCCIONES DEL ROBOT ###########################
+##################### FIN DE LAS INSTRUCCIONES DEL ROBOT #######################
 
 # Árbol para las instrucciones de movimientos 
 class ArbolDir(ArbolInst):
@@ -274,7 +274,7 @@ class ArbolInstContList(ArbolInst):
 
 ################# INSTRUCCIONES DEL CONTROLADOR ###########################
 
-# Arbol para la instruccion activate 
+# Árbol para la instrucción activate 
 class ArbolActivate(ArbolInst):
 	def __init__(self,idList):
 		self.h1 = ArbolInst('activate')
@@ -286,7 +286,7 @@ class ArbolActivate(ArbolInst):
 		# self.h1.printArb(0)
 		self.h2.printArb(tabs+1)
 
-# Arbol para la instruccion advance
+# Árbol para la instrucción advance
 class ArbolAdvance(ArbolInst):
 	def __init__(self,idList):
 		self.h1 = ArbolInst('advance')
@@ -297,17 +297,19 @@ class ArbolAdvance(ArbolInst):
 		# self.h1.printArb(0)
 		self.h2.printArb(tabs)
 
-# Arbol para la instruccion deactivate
+# Árbol para la instrucción deactivate
 class ArbolDeactivate(ArbolInst):
 	def __init__(self,idList):
 		self.h1 = ArbolInst('deactivate')
 		self.h2 = idList
 
 	def printArb(self,tabs):
-		self.h1.printArb(0)
-		self.h2.printArb(0)
+		print("\t"*tabs,end="")
+		print("DESACTIVACION")
+		# self.h1.printArb(0)
+		self.h2.printArb(tabs+1)
 
-# Arbol para la instruccion if y if-else
+# Árbol para la instrucción if y if-else
 class ArbolIf(ArbolInst):
 	def __init__(self,expr,inst1,inst2):
 		self.h1 = ArbolInst('if')
@@ -330,10 +332,11 @@ class ArbolIf(ArbolInst):
 		print("\t"*(tabs+1),end="")
 		print("- exito: ",end="")
 		self.h3.printArb(tabs+2)
-		if not(self.h4 is None): 
-			self.h4.printArb(0)
-			self.h5.printArb(0)
+		# if not(self.h4 is None): 
+		# 	self.h4.printArb(0)
+		# 	self.h5.printArb(0)
 
+# Árbol para la instrucción while
 class ArbolWhile(ArbolInst):
 	def __init__(self,expr,inst):
 		self.h1 = ArbolInst('while')
@@ -341,8 +344,14 @@ class ArbolWhile(ArbolInst):
 		self.h3 = inst
 
 	def printArb(self,tabs):
-		self.h1.printArb(0)
-		self.h2.printArb(0)
-		self.h3.printArb(0)
+		print("\t"*tabs,end="")
+		print("ITERACION INDETERMINADA")
+		# self.h1.printArb(0)
+		print("\t"*(tabs+1),end="")
+		print("- guardia: ",end="")
+		self.h2.printArb(tabs+2)
+		print("\t"*(tabs+1),end="")
+		print("- exito: ",end="")
+		self.h3.printArb(tabs+2)
 
-################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR ###########################
+################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR #####################

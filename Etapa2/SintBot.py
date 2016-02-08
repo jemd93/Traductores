@@ -35,7 +35,7 @@ def p_programa(p):
 
 # Regla para el inicio de la lista de declaraciones.
 def p_dec_list_init(p):
-  ' DEC_LIST_INIT : TkCreate DEC_LIST '
+  ''' DEC_LIST_INIT : TkCreate DEC_LIST '''
 
   p[0] = ArbolDecListInit(p[2])
 
@@ -185,7 +185,7 @@ def p_inst_cont(p):
   ''' INST_CONT : TkActivate ID_LIST TkPunto
                 | TkAdvance ID_LIST TkPunto
                 | TkDeactivate ID_LIST TkPunto
-                | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+                | TkIf EXPR TkDosPuntos INST_CONT TkElse TkDosPuntos INST_CONT TkEnd
                 | TkIf EXPR TkDosPuntos INST_CONT TkEnd
                 | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
                 | PROGRAM '''
@@ -198,7 +198,7 @@ def p_inst_cont(p):
     p[0] = ArbolDeactivate(p[2])
   elif p[1] == 'if' :
     if p[5] == 'else' :
-      p[0] = ArbolIf(p[2],p[4],p[6])
+      p[0] = ArbolIf(p[2],p[4],p[7])
     else : 
       p[0] = ArbolIf(p[2],p[4],None)
   elif p[1] == 'while' :

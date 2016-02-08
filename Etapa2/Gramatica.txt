@@ -68,7 +68,7 @@ INST_CONT_LIST : INST_CONT INST_CONT_LIST
 INST_CONT : TkActivate ID_LIST TkPunto
           | TkAdvance ID_LIST TkPunto
           | TkDeactivate ID_LIST TkPunto
-          | TkIf EXPR TkDosPuntos INST_CONT TkElse INST_CONT TkEnd
+          | TkIf EXPR TkDosPuntos INST_CONT TkElse TkDosPuntos INST_CONT TkEnd
           | TkIf EXPR TkDosPuntos INST_CONT TkEnd
           | TkWhile EXPR TkDosPuntos INST_CONT TkEnd
           | PROGRAM
