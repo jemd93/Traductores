@@ -19,7 +19,7 @@ class ArbolExpr(object):
 	def __init__(self, x):
 		self.elem = x
 
-	def printArb(self):
+	def printArb(self,tabs):
 		print(self.elem)
 
 # Árbol unario para el operador de negación
@@ -29,10 +29,10 @@ class ArbolUn(ArbolExpr):
 		self.elem = elem
 		self.hijo = a1
 
-	def printArb(self):
+	def printArb(self,tabs):
 		print(self.elem)
 		if self.hijo is not None:
-			self.hijo.printArb()
+			self.hijo.printArb(0)
 				
 # Árbol binario para el resto de las
 # expresiones, tanto aritméticas como booleanas
@@ -42,9 +42,20 @@ class ArbolBin(ArbolExpr):
 		self.hizq = a1
 		self.hder = a2
 
-	def printArb(self):
-		print(self.elem)
+	def printArb(self,tabs):
+		print("EXPRESION BINARIA")
+		# print(self.elem)
+		print("\t"*tabs,end="")
+		print("- operacion : ",end="")
+		if (self.elem == '+') : 
+			print("Suma")
+		if (self.elem == '>') :
+			print("'Mayor que'")
 		if self.hizq is not None:
-			self.hizq.printArb()
+			print("\t"*tabs,end="")
+			print("- operador izquierdo : ",end="")
+			self.hizq.printArb(0)
+			print("\t"*tabs,end="")
+			print("- operador derecho : ",end="")
 		if self.hder is not None:
-			self.hder.printArb()
+			self.hder.printArb(0)

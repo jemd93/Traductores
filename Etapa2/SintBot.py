@@ -254,13 +254,13 @@ def p_error(p):
 
 # Reglas de precedencia para el parser.
 precedence = (
+  ('nonassoc','TkMayor','TkMayorIgual','TkMenor','TkMenorIgual'),
   ('left','TkSuma','TkResta'),
   ('left','TkDiv','TkMult','TkMod'),
   ('right','TkRestaUn'),
   ('left','TkDisyuncion'),
   ('left','TkConjuncion'),
-  ('left','TkNegacion'),
-  ('nonassoc','TkMayor','TkMayorIgual','TkMenor','TkMenorIgual'), 
+  ('left','TkNegacion'), 
   ('left','TkIgual','TkDistinto'),
 )
 
@@ -273,6 +273,7 @@ f = open(sys.argv[1],'r')
 finput = f.read()
 result = parser.parse(finput, lexer=botlex.lexer)
 
-result.printArb()
+if (result != None) :
+  result.h2.printArb(0)
 
 f.close()
