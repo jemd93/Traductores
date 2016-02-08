@@ -20,7 +20,7 @@ import ply.lex as lex
 class BotLexer(object):
 
   # Clase MyLexer para el análisis lexicográfico del lenguaje BOT
-  
+
   toks = []
   errors = []
 
@@ -208,35 +208,3 @@ class BotLexer(object):
 
     for t in self.lexer:
       self.toks.append([t.value,t.type,t.lineno,self.NumColumna(t)])
-
-def main():
-
-  # Función principal
-
-  f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
-                            # de comando
-  finput = f.read()
-
-  botlex = BotLexer()
-  botlex.build()
-  botlex.lexer.input(finput)
-
-  botlex.tokenizar()
-
-  if (botlex.errors == []): 
-    for tok in botlex.toks:
-      if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
-        print(tok[1], tok[2], tok[3])
-      elif (tok[1] == 'TkIdent') :
-        print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
-      elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
-        print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
-  else:
-    for err in botlex.errors: 
-      print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
-  
-  f.close()
-
-# Programa principal
-if __name__ == "__main__":
-  main()

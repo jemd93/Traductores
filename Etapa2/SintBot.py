@@ -17,7 +17,7 @@ import sys
 import ply.lex as lex
 import ply.yacc as yacc
 
-from LexBot import BotLexer
+from LexBot import *
 from ArbolExpr import *
 from ArbolInst import *
 
@@ -248,9 +248,16 @@ def p_empty(p):
   'empty :'
   pass
 
-# Regla de error para los errores de sintaxis
+# Regla de error para los errores sintácticos
 def p_error(p):
-  print("Syntax error in input!")
+  if not(p is None):
+    mensaje = "Existe un error sintáctico: " + str(p.value) + " en la línea "
+    mensaje += str(p.lineno) + ", en la columna " + str(p.lexpos)
+    print(mensaje)
+    exit(1)
+
+    #str(botlex.t_newline(p))
+    #str(botlex.NumColumna(p))
 
 # Reglas de precedencia para el parser.
 precedence = (
@@ -264,16 +271,46 @@ precedence = (
   ('left','TkIgual','TkDistinto'),
 )
 
-botlex = BotLexer()
-botlex.build()
-parser = yacc.yacc()
+def main():
 
-f = open(sys.argv[1],'r') 
+  if (len(sys.argv) != 2):
+    print("Error, faltan argumentos de entrada")
+    sys.exit(1)
 
-finput = f.read()
-result = parser.parse(finput, lexer=botlex.lexer)
+  f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
+                            # de comando  
+  finput = f.read()
 
-if (result != None) :
-  result.h2.printArb(0)
+  # ANALIZADOR LEXICOGRÁFICO
 
-f.close()
+  botlex = BotLexer()
+  botlex.build()
+  botlex.lexer.input(finput)
+  botlex.tokenizar()
+
+  if (botlex.errors == []):
+    pass 
+    # for tok in botlex.toks:
+    #   if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
+    #     print(tok[1], tok[2], tok[3])
+    #   elif (tok[1] == 'TkIdent'):
+    #     print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
+    #   elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
+    #     print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
+  else:
+    for err in botlex.errors: 
+      print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
+  
+  # ANALIZADOR SINTÁCTICO
+
+  parser = yacc.yacc()
+  result = parser.parse(finput, lexer=botlex.lexer)
+
+  if (result != None):
+    result.h2.printArb(0)
+
+  f.close()
+
+# Programa principal
+if __name__ == "__main__":
+  main()
