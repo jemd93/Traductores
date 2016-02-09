@@ -273,7 +273,7 @@ precedence = (
   ('left','TkNegacion'), 
   ('left','TkIgual','TkDistinto'),
 )
-
+  
 def main():
   global numLines
   numLines = 0
@@ -298,13 +298,6 @@ def main():
 
   if (botlex.errors == []):
     pass 
-    # for tok in botlex.toks:
-    #   if (tok[1] != 'TkIdent') and (tok[1] != 'TkCaracter') and (tok[1] != 'TkNum'):
-    #     print(tok[1], tok[2], tok[3])
-    #   elif (tok[1] == 'TkIdent'):
-    #     print(tok[1]+"(\""+tok[0]+"\")", tok[2], tok[3])
-    #   elif (tok[1] == 'TkCaracter') or (tok[1] == 'TkNum'):
-    #     print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
   else:
     for err in botlex.errors: 
       print("Error Lexico: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 

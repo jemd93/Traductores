@@ -50,7 +50,6 @@ class ArbolBin(ArbolExpr):
 
 	def printArb(self,tabs,userTabs):
 		print("EXPRESION BINARIA")
-		# print(self.elem)
 		print("\t"*tabs,end="")
 		print("- operacion: ",end="")
 		if (self.elem == '+'): 
