@@ -34,7 +34,6 @@ class ArbolProgram(ArbolInst):
 
 	def printArb(self,tabs):
 		if not(self.h1 is None):
-			#self.h1.printArb(0)
 			self.h2.printArb(tabs+1)
 		else:
 			self.h2.printArb(tabs+1)
@@ -243,9 +242,9 @@ class ArbolDir(ArbolInst):
 			self.h2 = None
 
 	def printArb(self,tabs):
-		self.h1.printArb(0)
+		self.h1.printArb(tabs)
 		if not(self.h2 is None):
-			self.h2.printArb(0)
+			self.h2.printArb(tabs)
 
 # Árbol para ejecutar las instrucciones de controlador
 class ArbolInstExe(ArbolInst):
@@ -283,7 +282,6 @@ class ArbolActivate(ArbolInst):
 	def printArb(self,tabs):
 		print("\t"*tabs,end="")
 		print("ACTIVACION")
-		# self.h1.printArb(0)
 		self.h2.printArb(tabs+1)
 
 # Árbol para la instrucción advance
@@ -294,7 +292,6 @@ class ArbolAdvance(ArbolInst):
 
 	def printArb(self,tabs):
 		print("AVANCE")
-		# self.h1.printArb(0)
 		self.h2.printArb(tabs)
 
 # Árbol para la instrucción deactivate
@@ -306,7 +303,6 @@ class ArbolDeactivate(ArbolInst):
 	def printArb(self,tabs):
 		print("\t"*tabs,end="")
 		print("DESACTIVACION")
-		# self.h1.printArb(0)
 		self.h2.printArb(tabs+1)
 
 # Árbol para la instrucción if y if-else
@@ -325,16 +321,16 @@ class ArbolIf(ArbolInst):
 	def printArb(self,tabs):
 		print("\t"*tabs,end="")
 		print("CONDICIONAL")
-		# self.h1.printArb(0)
 		print("\t"*(tabs+1),end="")
 		print("- guardia: ",end="")
 		self.h2.printArb(tabs+2)
 		print("\t"*(tabs+1),end="")
 		print("- exito: ",end="")
 		self.h3.printArb(tabs+2)
-		# if not(self.h4 is None): 
-		# 	self.h4.printArb(0)
-		# 	self.h5.printArb(0)
+		if not(self.h4 is None):
+			print("\t"*(tabs+1),end="")
+			print("- fracaso: ",end="") 
+			self.h5.printArb(tabs)
 
 # Árbol para la instrucción while
 class ArbolWhile(ArbolInst):

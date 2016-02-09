@@ -82,7 +82,7 @@ execute
 		if hola + 3: 
 			advance holis. 
 		else:
-			advance holis.
+			deactivate holis.
 		end
 		while holis > 0: 
 			advance holis.
