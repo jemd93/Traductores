@@ -34,6 +34,7 @@ class ArbolProgram(ArbolInst):
 
 	def printArb(self,tabs,usarTabs):
 		if not(self.h1 is None):
+			# self.h1.printArb(tabs,usarTabs)
 			self.h2.printArb(tabs,usarTabs)
 		else:
 			self.h2.printArb(tabs,usarTabs)

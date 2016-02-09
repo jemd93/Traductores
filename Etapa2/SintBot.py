@@ -249,15 +249,18 @@ def p_empty(p):
   pass
 
 # Regla de error para los errores sintácticos
+# Cabe destacar que el numero de columna cuenta la columna contando
+# cada tab ('\t') como UN solo espacio. Si se quiere ver el 
+# numero de columna correctamente, es necesario usar espacios en vez
+# de tabs en el archivo de entrada.
 def p_error(p):
   if not(p is None):
-    mensaje = "Existe un error sintáctico: " + str(p.value) + " en la línea "
-    mensaje += str(p.lineno) + ", en la columna " + str(p.lexpos)
+    last_cr = botlex.lexer.lexdata.rfind('\n',0,p.lexpos)
+    column = (p.lexpos - last_cr)
+    mensaje = "Existe un error sintáctico: '" + str(p.value) + "' en la línea "
+    mensaje += str((p.lineno+1)-numLines) + ", en la columna " + str(column)
     print(mensaje)
     exit(1)
-
-    # str(botlex.t_newline(p))
-    # str(botlex.NumColumna(p))
 
 # Reglas de precedencia para el parser.
 precedence = (
@@ -272,6 +275,8 @@ precedence = (
 )
 
 def main():
+  global numLines
+  numLines = 0
 
   if (len(sys.argv) != 2):
     print("Error, faltan argumentos de entrada")
@@ -280,9 +285,12 @@ def main():
   f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
                             # de comando  
   finput = f.read()
+  
+  numLines = len(finput.split('\n'))
 
   # ANALIZADOR LEXICOGRÁFICO
 
+  global botlex
   botlex = BotLexer()
   botlex.build()
   botlex.lexer.input(finput)
@@ -299,7 +307,7 @@ def main():
     #     print(tok[1]+"("+str(tok[0])+")", tok[2], tok[3])
   else:
     for err in botlex.errors: 
-      print("Error: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
+      print("Error Lexico: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
   
   # ANALIZADOR SINTÁCTICO
 
