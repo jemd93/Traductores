@@ -84,8 +84,10 @@ execute
 		else:
 			deactivate holis.
 		end
-		while holis > 0: 
+		while holis /= 0: 
 			advance holis.
 		end
 	end
+
+	deactivate hol2, hol3, holis.
 end

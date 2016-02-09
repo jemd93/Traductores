@@ -256,8 +256,8 @@ def p_error(p):
     print(mensaje)
     exit(1)
 
-    #str(botlex.t_newline(p))
-    #str(botlex.NumColumna(p))
+    # str(botlex.t_newline(p))
+    # str(botlex.NumColumna(p))
 
 # Reglas de precedencia para el parser.
 precedence = (
@@ -307,7 +307,7 @@ def main():
   result = parser.parse(finput, lexer=botlex.lexer)
 
   if (result != None):
-    result.h2.printArb(0)
+    result.h2.printArb(0,True)
 
   f.close()
 
