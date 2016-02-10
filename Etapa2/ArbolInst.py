@@ -256,6 +256,10 @@ class ArbolInstExe(ArbolInst):
 		if usarTabs : 
 			print("\t"*tabs,end="")
 		print("EXECUTE")
+		if not(self.h2.h2 == None):
+			if usarTabs : 
+				print("\t"*tabs,end="")
+			print("SECUENCIACION")
 		self.h2.printArb(tabs+1,True)
 
 # Árbol para la lista de instrucciones de controlador
@@ -332,11 +336,19 @@ class ArbolIf(ArbolInst):
 		self.h2.printArb(tabs+2,True)
 		print("\t"*(tabs+1),end="")
 		print("- exito: ",end="")
-		self.h3.printArb(tabs+1,False)
+		if not(self.h3.h2 == None):
+			print("SECUENCIACION")
+			self.h3.printArb(tabs+2,True)
+		else :
+			self.h3.printArb(tabs+1,False)
 		if not(self.h4 is None):
 			print("\t"*(tabs+1),end="")
 			print("- fracaso: ",end="") 
-			self.h5.printArb(tabs+1,False)
+			if not(self.h5.h2 == None):
+				print("SECUENCIACION")
+				self.h5.printArb(tabs+2,True)
+			else :
+				self.h5.printArb(tabs+1,False)
 
 # Árbol para la instrucción while
 class ArbolWhile(ArbolInst):
@@ -354,5 +366,10 @@ class ArbolWhile(ArbolInst):
 		self.h2.printArb(tabs+2,True)
 		print("\t"*(tabs+1),end="")
 		print("- exito: ",end="")
-		self.h3.printArb(tabs+1,False)
+		if not(self.h3.h2 == None) :
+			print("SECUENCIACION")
+			self.h3.printArb(tabs+2,True)
+		else : 
+			self.h3.printArb(tabs+1,False)
+
 ################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR #####################

@@ -36,6 +36,7 @@ execute
 		end
 		while holis /= 0: 
 			advance holis.
+			deactivate holis.
 		end
 	end
 

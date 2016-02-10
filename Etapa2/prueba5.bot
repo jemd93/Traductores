@@ -64,6 +64,7 @@ execute
 		advance hola. 
 	else:
 		advance hola1.
+		deactivate hola1.
 	end
 	while hola > hola1: 
 		advance hola.
