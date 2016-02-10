@@ -255,7 +255,7 @@ class ArbolInstExe(ArbolInst):
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
 			print("\t"*tabs,end="")
-		print("SECUENCIACION")
+		print("EXECUTE")
 		self.h2.printArb(tabs+1,True)
 
 # Árbol para la lista de instrucciones de controlador
