@@ -27,9 +27,12 @@ class ArbolUn(ArbolExpr):
 		self.hijo = a1
 
 	def printArb(self,tabs,userTabs):
-		print("EXPRESION UNARIA")
 		# print(self.elem)
 		if self.hijo is not None:
+			if (self.elem == '-'): 
+				print("EXP UNARIA ARITMETICA")
+			elif (self.elem == '~'):
+				print("EXP UNARIA BOOLEANA")
 			print("\t"*tabs,end="")
 			print("- operacion : ",end="")
 			if (self.elem == '-'):
@@ -49,7 +52,17 @@ class ArbolBin(ArbolExpr):
 		self.hder = a2
 
 	def printArb(self,tabs,userTabs):
-		print("EXPRESION BINARIA")
+		if ((self.elem == '+') or (self.elem == '-') 
+		or (self.elem == '*') or (self.elem == '/') 
+		or (self.elem == '%')) :
+			print("EXP BINARIA ARITMETICA")
+		elif ((self.elem == '/\\') or (self.elem == '\/')) :
+			print("EXP BINARIA ARITMETICA")
+		elif ((self.elem == '=') or (self.elem == '/=') 
+		or (self.elem == '<') or (self.elem == '>')
+		or (self.elem == '<=') or (self.elem == '>=')) :
+			print("EXP BINARIA RELACIONAL")
+
 		print("\t"*tabs,end="")
 		print("- operacion: ",end="")
 		if (self.elem == '+'): 

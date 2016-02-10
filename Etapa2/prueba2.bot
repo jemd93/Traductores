@@ -27,7 +27,8 @@ create
 	
 execute
 	activate n, f.
-	while n <= 0:
+	while -(9+8):
 		advance n, f.
 	end
+
 end
