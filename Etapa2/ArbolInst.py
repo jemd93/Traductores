@@ -257,10 +257,11 @@ class ArbolInstExe(ArbolInst):
 			print("\t"*tabs,end="")
 		print("EXECUTE")
 		if not(self.h2.h2 == None):
-			if usarTabs : 
-				print("\t"*tabs,end="")
+			print("\t"*(tabs+1),end="")
 			print("SECUENCIACION")
-		self.h2.printArb(tabs+1,True)
+			self.h2.printArb(tabs+2,True)
+		else : 
+			self.h2.printArb(tabs+1,True)
 
 # Árbol para la lista de instrucciones de controlador
 class ArbolInstContList(ArbolInst):

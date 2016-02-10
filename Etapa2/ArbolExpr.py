@@ -57,7 +57,7 @@ class ArbolBin(ArbolExpr):
 		or (self.elem == '%')) :
 			print("EXP BINARIA ARITMETICA")
 		elif ((self.elem == '/\\') or (self.elem == '\/')) :
-			print("EXP BINARIA ARITMETICA")
+			print("EXP BINARIA BOOLEANA")
 		elif ((self.elem == '=') or (self.elem == '/=') 
 		or (self.elem == '<') or (self.elem == '>')
 		or (self.elem == '<=') or (self.elem == '>=')) :
