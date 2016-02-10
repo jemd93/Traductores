@@ -268,9 +268,9 @@ class ArbolInstContList(ArbolInst):
 			self.h2 = None
 
 	def printArb(self,tabs,usarTabs):
-		self.h1.printArb(tabs,True)
+		self.h1.printArb(tabs,usarTabs)
 		if not(self.h2 is None):
-			self.h2.printArb(tabs,True)
+			self.h2.printArb(tabs,usarTabs)
 
 ################# INSTRUCCIONES DEL CONTROLADOR ###########################
 

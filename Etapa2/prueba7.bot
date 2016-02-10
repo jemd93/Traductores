@@ -6,6 +6,7 @@ create
 	end
 
 execute
+	deactivate hol2.
 	activate hola3,hola4.
     if (1+1) < 2: 
 		advance hola.
@@ -13,3 +14,4 @@ execute
 		advance hola1.
 	end
 end
+
