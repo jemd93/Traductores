@@ -261,6 +261,9 @@ def p_error(p):
     mensaje += str((p.lineno+1)-numLines) + ", en la columna " + str(column)
     print(mensaje)
     exit(1)
+  else : 
+    print("Error sintáctico.")
+    exit(1)
 
 # Reglas de precedencia para el parser.
 precedence = (
