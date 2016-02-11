@@ -73,7 +73,7 @@ class BotLexer(object):
     'read'          : 'TkRead',
     'send'          : 'TkSend',
     'as'            : 'TkAs',
-    'me'			: 'TkMe',
+    'me'			      : 'TkMe',
   }
 
   # Nombres de los demás tokens

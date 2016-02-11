@@ -23,8 +23,11 @@ from ArbolInst import *
 
 tokens = BotLexer.tokens
 
-# Regla principal para iniciar el programa en lenguaje BOT.
 def p_programa(p):
+
+  # Descripción: Regla principal para iniciar el programa en lenguaje BOT.
+  # Parámetros: - p: token
+
   ''' PROGRAM : DEC_LIST_INIT INST_EXE 
               | INST_EXE '''
 
@@ -33,37 +36,54 @@ def p_programa(p):
   else: 
   	p[0] = ArbolProgram(None,p[1])
 
-# Regla para el inicio de la lista de declaraciones.
 def p_dec_list_init(p):
+
+  # Descripción: Regla para el inicio de la lista de declaraciones.
+  # Parámetros: - p: token
+
   ''' DEC_LIST_INIT : TkCreate DEC_LIST '''
 
   p[0] = ArbolDecListInit(p[2])
 
-# Reglas para cuando existe una lista de declaraciones o definiciones de robots.
 def p_dec_list(p):
+
+  # Descripción: Reglas para cuando existe una lista de declaraciones o 
+  # definiciones de robots.
+  # Parámetros: - p: token
+
   ''' DEC_LIST : DEC DEC_LIST
                | DEC '''
+
   if len(p) == 2:
     p[0] = ArbolDecList(p[1],None)
   else:
     p[0] = ArbolDecList(p[1],p[2])
 
-# Reglas de declaraciones o definiciones de robots.
 def p_dec(p):
+
+  # Descripción: Reglas de declaraciones o definiciones de robots.
+  # Parámetros: - p: token
+
   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
 
   p[0] = ArbolDec(p[1],p[3],p[4])
 
-# Reglas para tipos de robots que pueden crearse.
 def p_tipo(p):
+
+  # Descripción: Reglas para tipos de robots que pueden crearse.
+  # Parámetros: - p: token
+
   ''' TIPO : TkBool
            | TkChar
            | TkInt '''
 
   p[0] = ArbolInst(p[1])
 
-# Reglas para cuando existen varios identificadores de robots.
 def p_id_list(p):
+
+  # Descripción: Reglas para cuando existen varios identificadores de robots.
+  # Parámetros: - p: token
+
   ''' ID_LIST : ID TkComa ID_LIST
               | ID '''
 
@@ -72,14 +92,22 @@ def p_id_list(p):
   else : 
     p[0] = ArbolIdList(p[1],p[3])
 
-# Regla de identificadores de robots.
+
 def p_id(p):
+
+  # Descripción: Regla de identificadores de robots.
+  # Parámetros: - p: token
+
   ''' ID : TkIdent '''
 
   p[0] = ArbolExpr(p[1])
 
-# Reglas para cuando existe una lista de comportamientos de robots.
 def p_comp_list(p):
+
+  # Descripción: Reglas para cuando existe una lista de comportamientos de 
+  # robots.
+  # Parámetros: - p: token
+
   ''' COMP_LIST : COMP COMP_LIST 
                 | empty '''
 
@@ -90,23 +118,32 @@ def p_comp_list(p):
   else:
     p[0] = ArbolCompList(None,None)
 
-# Reglas de comportamientos de robots.
 def p_comp(p):
+
+  # Descripción: Reglas de comportamientos de robots.
+  # Parámetros: - p: token
+
   ''' COMP : TkOn EXPR TkDosPuntos INST_BOT_LIST TkEnd 
            | TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd '''
   
   p[0] = ArbolComp(p[2],p[4])
 
-# Reglas de estados en los que pueden empezar a estar los robots.
 def p_state(p):
+
+  # Descripción: Reglas de estados en los que pueden empezar a estar los robots.
+  # Parámetros: - p: token
+
   ''' STATE : TkActivation
             | TkDeactivation
             | TkDefault '''
 
   p[0] = ArbolInst(p[1])
 
-# Reglas para lista de instrucciones de robots.
 def p_inst_bot_list(p):
+
+  # Descripción: Reglas para lista de instrucciones de robots.
+  # Parámetros: - p: token
+
   ''' INST_BOT_LIST : INST_BOT INST_BOT_LIST
                     | INST_BOT '''
 
@@ -115,8 +152,11 @@ def p_inst_bot_list(p):
   else:
     p[0] = ArbolInstBotList(p[1],p[2])
 
-# Reglas para instrucciones de robots.
 def p_inst_bot(p):
+
+  # Descripción: Reglas para instrucciones de robots.
+  # Parámetros: - p: token
+
   ''' INST_BOT : TkStore EXPR TkPunto        
                | TkCollect TkPunto
                | TkCollect TkAs ID TkPunto
@@ -156,8 +196,11 @@ def p_inst_bot(p):
     else:
       p[0] = ArbolDir(p[1],p[2])
 
-# Reglas de movimiento en las instrucciones de robots.
 def p_dir(p):
+
+  # Descripción: Reglas de movimiento en las instrucciones de robots.
+  # Parámetros: - p: token
+
   ''' DIR : TkLeft 
           | TkRight
           | TkUp
@@ -165,23 +208,34 @@ def p_dir(p):
 
   p[0] = ArbolInst(p[1])
 
-# Regla inicial del programa execute para instrucciones de controlador.
 def p_inst_exe(p):
+
+  # Descripción: Regla inicial del programa execute para instrucciones de 
+  # controlador.
+  # Parámetros: - p: token
+
   ''' INST_EXE : TkExecute INST_CONT_LIST TkEnd '''
 
   p[0] = ArbolInstExe(p[2])
 
-# Reglas para lista de instrucciones de controlador.
 def p_inst_cont_list(p):
+
+  # Descripción: Reglas para lista de instrucciones de controlador.
+  # Parámetros: - p: token
+
   ''' INST_CONT_LIST : INST_CONT INST_CONT_LIST
                      | INST_CONT '''
+
   if len(p) == 2 :
     p[0] = ArbolInstContList(p[1],None)
   else :
     p[0] = ArbolInstContList(p[1],p[2])
 
-# Reglas para instrucciones de controlador.
 def p_inst_cont(p):
+
+  # Descripción: Reglas para instrucciones de controlador.
+  # Parámetros: - p: token
+
   ''' INST_CONT : TkActivate ID_LIST TkPunto
                 | TkAdvance ID_LIST TkPunto
                 | TkDeactivate ID_LIST TkPunto
@@ -206,8 +260,12 @@ def p_inst_cont(p):
   else : 
     p[0] = p[1]
 
-# Reglas de las expresiones aritméticas, booleanas, posibles en el lenguaje BOT.
 def p_expr(p):
+
+  # Descripción: Reglas de las expresiones aritméticas, booleanas, posibles en 
+  # el lenguaje BOT.
+  # Parámetros: - p: token
+
   ''' EXPR : TkNum
            | TkIdent
            | TkCaracter
@@ -243,17 +301,23 @@ def p_expr(p):
     else :
       p[0] = p[2] 
 
-# Regla para la palabra vacía.
 def p_empty(p):
+
+  # Descripción: Regla para la palabra vacía.
+  # Parámetros: - p: token
+
   'empty :'
   pass
 
-# Regla de error para los errores sintácticos
-# Cabe destacar que el numero de columna cuenta la columna contando
-# cada tab ('\t') como UN solo espacio. Si se quiere ver el 
-# numero de columna correctamente, es necesario usar espacios en vez
-# de tabs en el archivo de entrada.
 def p_error(p):
+
+  # Descripción: Regla de error para los errores sintácticos.
+  # Cabe destacar que el número de columna cuenta la columna contando
+  # cada tab ('\t') como UN solo espacio. Si se quiere ver el 
+  # número de columna correctamente, es necesario usar espacios en vez
+  # de tabs en el archivo de entrada.
+  # Parámetros: - p: token
+
   if not(p is None):
     last_cr = botlex.lexer.lexdata.rfind('\n',0,p.lexpos)
     column = (p.lexpos - last_cr)
@@ -278,9 +342,13 @@ precedence = (
 )
   
 def main():
+
+  # Descripción: Función del programa principal
+  
   global numLines
   numLines = 0
 
+  # Verificación de parámetros de entrada
   if (len(sys.argv) != 2):
     print("Error, faltan argumentos de entrada")
     sys.exit(1)
