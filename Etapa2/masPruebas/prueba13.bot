@@ -1,0 +1,25 @@
+$$ Deberia dar error por 'H.'
+create
+   char bot act
+      on activation:
+        send.
+        send.
+        left 'H'.
+        right.
+        up 'H.'.
+      end
+      on default :
+        send.
+      end
+    end
+
+execute
+	activate hola,chao.
+  if 'H' < 'i'+'o'-'C':
+    activate act.
+    advance endo.
+  else :
+    activate endo.
+    deactivate endo.
+  end
+end

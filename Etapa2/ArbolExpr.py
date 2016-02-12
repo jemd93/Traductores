@@ -66,16 +66,16 @@ class ArbolBin(ArbolExpr):
 		print("\t"*tabs,end="")
 		print("- operacion: ",end="")
 		if (self.elem == '+'): 
-			print("Suma")
+			print("'Suma'")
 
 		if (self.elem == '-'):
 			print("'Resta'")
 
 		if (self.elem == '*'):
-			print("'Multiplica'")
+			print("'Multiplicacion'")
 
 		if (self.elem == '/'):
-			print("'Divide'")
+			print("'Division'")
 
 		if (self.elem == '%'):
 			print("'Modulo'")

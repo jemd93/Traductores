@@ -1,0 +1,17 @@
+$$ Deberia dar error porque el bot se llama end.
+create
+   char bot end :
+      on activation :
+        store 'D'.
+        store 'U'.
+        store 'B'.
+        store 'I'.
+      end
+      on default :
+        send.
+      end
+    end
+
+execute
+	activate hola,chao.
+end

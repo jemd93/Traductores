@@ -1,0 +1,24 @@
+$$ Deberia funcionar
+create
+   char bot endo
+      on activation:
+        store 'D'.
+        store 'U'.
+        store 'B'.
+        store 'I'.
+      end
+      on default :
+        send.
+      end
+    end
+
+execute
+	activate hola,chao.
+  if 'H' < 'i' :
+    activate endo.
+    advance endo.
+  else :
+    activate endo.
+    deactivate endo.
+  end
+end

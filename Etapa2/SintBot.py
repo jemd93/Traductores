@@ -372,6 +372,7 @@ def main():
   else:
     for err in botlex.errors: 
       print("Error Lexico: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
+    exit(1)
   
   # ANALIZADOR SINTÁCTICO
 

@@ -1,0 +1,35 @@
+$$ Deberia funcionar
+create
+   int bot hola 
+       on activation:
+          store 1/\2.
+          store 3.
+          left. 
+       end
+   end 
+
+   bool bot chao
+   		on default:
+   			left 5.
+   			right 2.
+   			up 3.
+   			down 1.
+   		end
+   	end
+execute
+	$- $$ if 1 < 2 :
+	$$ 		activate hola, chao.
+	$$ end -$
+	activate hola,chao.
+	if (hola < me) >= (true \/ false) :
+		deactivate hola.
+	else :
+		deactivate chao.
+		advance hola.
+	end $$ TRATA DE QUITAR ESTE END A VER QUE PASA.
+	$$ A MI ME DA ERROR SINTACTICO COMO CUANDO PONES SOLO CREATE.
+
+	while chao+hola :
+		advance hola.
+	end
+end
