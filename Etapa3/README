@@ -1,0 +1,46 @@
+# -------------------------------------------------
+#  Universidad Simón Bolívar
+#  Traductores e interpretadores - CI3725
+#  Prof. Ricardo Monascal
+#
+#  Autores: Jorge Marcano   # Carnet 11-10566
+#           Meggie Sánchez  # Carnet 11-10939
+#
+# Proyecto BOT - Etapa 2 - Análisis Sintáctico
+# -------------------------------------------------
+
+Este archivo contiene algunos detalles extras respecto a la etapa 2 del proyecto.
+
+El Script SintBot es un bash script que se encarga de correr el programa 
+principal del proyecto con un archivo de texto como parámetro. De manera que, 
+./SintBot <Archivo> corre el programa principal del proyecto con <Archivo> como 
+entrada.
+
+Dicho script correrá el programa SintBot.py que es donde se encuentra todo el 
+código de esta etapa del proyecto.
+
+Notese que el Script SintBot utiliza el comando python3 debido a que la versión 
+de python utilizada para la ejecución del proyecto es python 3.4. En el 
+supuesto de que se utilizara una versión anterior (2.x) de python para correr el
+programa, éste devolvera la salida correcta, pero en formato incorrecto. 
+
+Adicionalmente, se encuentran en el directorio los archivos ArbolExpr.py, 
+ArbolInst.py y LexBot.py.
+
+El archivo ArbolExpr.py contiene la clase ArbolExpr, usada como árbol sintáctico
+abstracto para expresiones del lenguaje BOT. 
+
+El archivo ArbolInst.py contiene la clase ArbolInst, usada como árbol sintáctico
+abstracto para las instrucciones del lenguaje BOT.
+
+Los detalles sobre estos dos archivos se encuentran en el informe y en los 
+comentarios de cada archivo.
+
+El archivo LexBot.py contiene el analizador léxico creado en la primera etapa 
+del proyecto y usado en esta antes de iniciar el análisis sintáctico.
+
+Es importante mencionar que si el archivo de entrada que se pasa como parámetro,
+si está vacío lanzará un mensaje de "error sintáctico".
+
+Por último, el informe junto con la resolución de las preguntas 
+teórico-prácticas se encuentran en el archivo InformeEtapa2.pdf.
