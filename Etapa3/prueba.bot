@@ -1,10 +1,28 @@
 create
-    int bot bar 
+    int bot bot1, bot2 
         on activation: 
             store 3.
         end
     end
 
+    char bot bot4
+    	on activation :
+    		store 'h'.
+    	end
+    end
+
 execute
-    activate contador.
+    activate bot1.
+
+    create 
+    	bool bot bot3
+    		on default:
+    			store 'x'.
+    			send.
+    		end
+    	end
+
+    execute 
+    	deactivate bot3.
+    end
 end 

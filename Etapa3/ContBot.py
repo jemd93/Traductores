@@ -28,7 +28,6 @@ def p_programa(p):
 
   # Descripción: Regla principal para iniciar el programa en lenguaje BOT.
   # Parámetros: - p: token
-
   ''' PROGRAM : DEC_LIST_INIT INST_EXE 
               | INST_EXE '''
 
@@ -55,10 +54,17 @@ def p_dec_list(p):
   ''' DEC_LIST : DEC DEC_LIST
                | DEC '''
 
+
+  global simTabActual
+  # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
+  simTabActual = SimTab(simTabActual)
+
   if len(p) == 2:
     p[0] = ArbolDecList(p[1],None)
+    simTabActual.agregarDecList(p[1],None)
   else:
     p[0] = ArbolDecList(p[1],p[2])
+    simTabActual.agregarDecList(p[1],p[2])
 
 def p_dec(p):
 
@@ -66,6 +72,9 @@ def p_dec(p):
   # Parámetros: - p: token
 
   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
+
+  # global simTabActual
+  # simTabActual.agregarListaId(p[3],p[1].inst,p[4])
 
   p[0] = ArbolDec(p[1],p[3],p[4])
 
@@ -345,7 +354,6 @@ precedence = (
 def main():
 
   # Descripción: Función del programa principal
-  
   global numLines
   numLines = 0
 
@@ -387,6 +395,7 @@ def main():
   if (result != None):
     result.h2.printArb(0,True)
 
+  simTabActual.imprimir()
   f.close()
 
   # ANALIZADOR DE CONTEXTO
