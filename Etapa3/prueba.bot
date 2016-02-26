@@ -1,0 +1,10 @@
+create
+    int bot bar 
+        on activation: 
+            store 3.
+        end
+    end
+
+execute
+    activate contador.
+end 
