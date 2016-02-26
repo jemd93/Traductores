@@ -341,45 +341,6 @@ precedence = (
   ('left','TkNegacion'), 
   ('left','TkIgual','TkDistinto'),
 )
-  
-
-def generarArb(archivo) :
-  global numLines
-  numLines = 0
-
-  # # Verificación de parámetros de entrada
-  # if (len(sys.argv) != 2):
-  #   print("Error, faltan argumentos de entrada")
-  #   sys.exit(1)
-
-  f = open(archivo,'r') # Abre el archivo pasado como parámetro por línea 
-                            # de comando  
-  finput = f.read()
-  
-  numLines = len(finput.split('\n'))
-
-  # ANALIZADOR LEXICOGRÁFICO
-
-  global botlex
-  botlex = BotLexer()
-  botlex.build()
-  botlex.lexer.input(finput)
-  botlex.tokenizar()
-
-  if (botlex.errors == []):
-    pass 
-  else:
-    for err in botlex.errors: 
-      print("Error Lexico: Caracter inesperado \"%s\" en la fila %d, columna %d " % (err[0], err[1], err[2])) 
-    exit(1)
-  
-  # ANALIZADOR SINTÁCTICO
-
-  parser = yacc.yacc()
-  result = parser.parse(finput, lexer=botlex.lexer)
-
-  f.close()
-  return result
 
 def main():
 
@@ -388,15 +349,15 @@ def main():
   global numLines
   numLines = 0
 
+  # Variable global para indicar tabla de símbolos actual
+  global simTabActual
+  simTabActual = SimTab()
+
   # Verificación de parámetros de entrada
   if (len(sys.argv) != 2):
     print("Error, faltan argumentos de entrada")
     sys.exit(1)
 
-  result = generarArb(sys.argv[1])
-  
-  if (result != None):
-    result.h2.printArb(0,True)
   f = open(sys.argv[1],'r') # Abre el archivo pasado como parámetro por línea 
                             # de comando  
   finput = f.read()

@@ -21,28 +21,27 @@ class SimTab(object):
 		self.tabhash = dict()
 		self.papa = papa
 
-	def insertar(self,bot,tipo,comportamientos):
+	def insertar(self,clave,tipo,comportamientos=None):
 
-		if not (bot in self.tabhash):
-			self.tabhash[bot] = [tipo,comportamientos]
+		self.tabhash[clave] = [tipo,comportamientos]
 
-	def modificar(self,bot,tipo,comportamientos):
+	# def modificar(self,clave,tipo,comportamientos=None):
 
-		if bot in self.tabhash:
-			self.tabhash[bot] = [tipo,comportamientos]
+	# 	if clave in self.tabhash:
+	# 		self.tabhash[clave] = [tipo,comportamientos]
+	# 	else:
+	# 		if (self.papa != None):
+	# 			self.papa.actualizar(clave,tipo,comportamientos)
+
+	def obtener(self,clave):
+
+		if clave in self.tabhash:
+			return self.tabhash[clave]
 		else:
 			if (self.papa != None):
-				self.papa.actualizar(bot,tipo,comportamientos)
-
-	def obtener(self,bot):
-
-		if bot in self.tabhash:
-			return self.tabhash[bot]
-		else:
-			if (self.papa != None):
-				return self.papa.obtener(bot)
+				return self.papa.obtener(clave)
 			else:
-				print(" Error de contexto: no ha sido realizada la declaración de: " + bot)
+				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
 
 def main():
 
@@ -53,21 +52,27 @@ def main():
 	bot5 = "jejeps"
 	activation = 3
 	default = 0
+	store = 3
 
-	tabhash = SimTab(None)
+	tabhash = SimTab()
+	tab2 = SimTab()
+
+	tab2.insertar(default, store)
+
 	tabhash.insertar(bot1, "int", activation)
 	tabhash.insertar(bot2, "int", activation)
 	tabhash.insertar(bot3, "int", activation)
-	tabhash.insertar(bot4, "int", activation)
+	tabhash.insertar(bot4, "int", tab2)
 
 	print(tabhash.obtener(bot1))
-	print(tabhash.obtener(bot2))
+	print(tabhash.obtener(bot4))
+	print(tab2.obtener(default))
 	tabhash.obtener(bot3)
 	tabhash.obtener(bot5)
 
-	tabhash.modificar(bot1, "int", default)
+	#tabhash.modificar(bot1, "int", default)
 
-	print(tabhash.obtener(bot1))
+	#print(tabhash.obtener(bot1))
 
 # Programa principal
 if __name__ == "__main__":
