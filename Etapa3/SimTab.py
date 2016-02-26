@@ -52,7 +52,7 @@ class SimTab(object):
 	# Agrega todos los ids de una listaId con sus respectivos tipos y comportamientos
 	# a la tabla de hash.
 	def agregarListaId(self,lista,tipo,comps) :
-		self.tabhash[lista.h1.elem] = [tipo,comps] 
+		self.tabhash[lista.h1.elem] = [tipo.inst,comps] 
 		if (lista.h2 != None) :
 			self.agregarListaId(lista.h2,tipo,comps)
 
