@@ -46,8 +46,8 @@ def p_dec_list_init(p):
   global simTabActual
   # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
   simTabActual = SimTab(simTabActual)
-
   simTabActual.agregarDecInit(p[2])
+  
   p[0] = ArbolDecListInit(p[2])
 
 def p_dec_list(p):

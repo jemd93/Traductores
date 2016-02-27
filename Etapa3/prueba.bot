@@ -23,6 +23,6 @@ execute
     	end
 
     execute 
-    	deactivate bot3.
+    	activate bot3.
     end
 end 
