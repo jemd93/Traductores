@@ -43,6 +43,12 @@ class SimTab(object):
 			else:
 				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
 
+	def agregarDecInit(self,lista) :
+		if (lista.h2 != None) :
+			self.agregarDecList(lista.h1,lista.h2)
+		else :
+			self.agregarDecList(lista.h1,None)
+
 	# Agrega todas las declaraciones de una DecList en la tabla de simbolos.
 	def agregarDecList(self,dec,lista) :
 		self.agregarListaId(dec.h3,dec.h1,dec.h4)

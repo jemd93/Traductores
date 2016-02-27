@@ -43,6 +43,11 @@ def p_dec_list_init(p):
 
   ''' DEC_LIST_INIT : TkCreate DEC_LIST '''
 
+  global simTabActual
+  # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
+  simTabActual = SimTab(simTabActual)
+
+  simTabActual.agregarDecInit(p[2])
   p[0] = ArbolDecListInit(p[2])
 
 def p_dec_list(p):
@@ -54,17 +59,10 @@ def p_dec_list(p):
   ''' DEC_LIST : DEC DEC_LIST
                | DEC '''
 
-
-  global simTabActual
-  # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
-  simTabActual = SimTab(simTabActual)
-
   if len(p) == 2:
     p[0] = ArbolDecList(p[1],None)
-    simTabActual.agregarDecList(p[1],None)
   else:
     p[0] = ArbolDecList(p[1],p[2])
-    simTabActual.agregarDecList(p[1],p[2])
 
 def p_dec(p):
 
