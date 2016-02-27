@@ -43,6 +43,9 @@ class SimTab(object):
 			else:
 				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
 
+	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS
+
+	# Agrega la lista de declaraciones de DecListInit a la tabla de simbolos.
 	def agregarDecInit(self,lista) :
 		if (lista.h2 != None) :
 			self.agregarDecList(lista.h1,lista.h2)

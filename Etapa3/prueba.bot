@@ -14,29 +14,7 @@ create
 execute
     activate bot1.
 
-    create 
-    	bool bot bot3
-    		on default:
-    			store 'x'.
-    			send.
-    		end
-    	end
-
-    execute 
-    	execute 
-    		activate bot3.
-    	end
-    end
-
-    create 
-    	bool bot bot5
-    		on default:
-    			store 'x'.
-    			send.
-    		end
-    	end
-
-    execute 
-    	activate bot5.
+    if 1 > 2 :
+        deactivate bot4.
     end
 end 
