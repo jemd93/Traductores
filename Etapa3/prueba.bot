@@ -14,7 +14,7 @@ create
 execute
     activate bot1.
 
-    if 1 > 2 :
+    if bot2 <= (bot1 + bot2) :
         deactivate bot4.
     end
 end 

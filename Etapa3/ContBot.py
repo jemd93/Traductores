@@ -312,16 +312,18 @@ def p_expr(p):
       p[0] = ArbolExChar(p[1])
     elif type(p[1]) is str :
       p[0] = ArbolExId(p[1])
-
-    # p[0] = ArbolExpr(p[1])
-
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2])
 
   else:
     if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3])
-      if (p[2] == '>'):
+      if ((p[2] == '/\\') or (p[2] == '\/')
+      or (p[2] == '=') or (p[2] == '/=')
+      or (p[2] == '<') or (p[2] == '>')
+      or (p[2] == '<=') or (p[2] == '>=')) :
+        p[0].check("bool",simTabActual)
+      else :
         p[0].check("int",simTabActual)
     else :
       p[0] = p[2] 

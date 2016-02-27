@@ -119,13 +119,42 @@ class ArbolBin(ArbolExpr):
 		self.hder = a2
 
 	def check(self,tipo,simTab) :
-		if (self.hizq.check(tipo,simTab) 
-			and self.hder.check(tipo,simTab)) :
-			return True
-		else :
-			print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo "+tipo)
-			exit(1)
+		if ((self.elem == '+') or (self.elem == '-') 
+		or (self.elem == '*') or (self.elem == '/') 
+		or (self.elem == '%')) :
+			if (self.hizq.check("int",simTab)
+			and self.hder.check("int",simTab)
+			and tipo == "int") :
+				return True
+			else :
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				exit(1)
+		elif ((self.elem == '>') or (self.elem == '<')
+		or (self.elem == '<=') or (self.elem == '>=')) : 
+			if (self.hizq.check("int",simTab) 
+			and self.hder.check("int",simTab)
+			and tipo == "bool") :
+				return True
+			else :
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				exit(1)
+		elif ((self.elem == '/\\') or (self.elem == '\/')) :
+			if (self.hizq.check("bool",simTab)
+			and self.hder.check("bool",simTab)
+			and tipo=="bool") :
+				return True
+			else :
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool")
+				exit(1)
+		elif ((self.elem == '=') or (self.elem == '/=')) :
+			for t in ["int","bool","char"] :
+				if (self.hizq.check(t,simTab)
+				and self.hder.check(t,simTab)
+				and tipo=="bool") :
+					return True
 
+			print("Error, los operadores de la operacion "+self.elem+" deben ser del mismo tipo")
+			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		if ((self.elem == '+') or (self.elem == '-') 
