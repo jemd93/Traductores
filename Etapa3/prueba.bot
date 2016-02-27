@@ -23,6 +23,20 @@ execute
     	end
 
     execute 
-    	activate bot3.
+    	execute 
+    		activate bot3.
+    	end
+    end
+
+    create 
+    	bool bot bot5
+    		on default:
+    			store 'x'.
+    			send.
+    		end
+    	end
+
+    execute 
+    	activate bot5.
     end
 end 

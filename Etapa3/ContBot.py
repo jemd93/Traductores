@@ -31,6 +31,12 @@ def p_programa(p):
   ''' PROGRAM : DEC_LIST_INIT INST_EXE 
               | INST_EXE '''
 
+  global simTabActual
+  simTabActual.imprimir()
+  if len(p) == 3 :
+    simTabActual = simTabActual.papa
+  print("-----------------------------------------")
+
   if len(p) == 3:
     p[0] = ArbolProgram(p[1],p[2])
   else: 
@@ -43,11 +49,12 @@ def p_dec_list_init(p):
 
   ''' DEC_LIST_INIT : TkCreate DEC_LIST '''
 
+
   global simTabActual
   # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
   simTabActual = SimTab(simTabActual)
   simTabActual.agregarDecInit(p[2])
-  
+
   p[0] = ArbolDecListInit(p[2])
 
 def p_dec_list(p):
@@ -70,9 +77,6 @@ def p_dec(p):
   # Parámetros: - p: token
 
   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
-
-  # global simTabActual
-  # simTabActual.agregarListaId(p[3],p[1].inst,p[4])
 
   p[0] = ArbolDec(p[1],p[3],p[4])
 
@@ -351,6 +355,7 @@ precedence = (
 
 def main():
 
+  print(" ")
   # Descripción: Función del programa principal
   global numLines
   numLines = 0

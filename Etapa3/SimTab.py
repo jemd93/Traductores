@@ -43,6 +43,10 @@ class SimTab(object):
 			else:
 				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
 
+	def agregarProgram(self,lista) :
+		# h2 porque h1 es TkCreate
+		self.agregarDecInit(lista.h2)
+
 	def agregarDecInit(self,lista) :
 		if (lista.h2 != None) :
 			self.agregarDecList(lista.h1,lista.h2)
