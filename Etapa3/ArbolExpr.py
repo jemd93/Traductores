@@ -16,6 +16,73 @@ class ArbolExpr(object):
 	def __init__(self, x):
 		self.elem = x
 
+	def check(self,tipo,simTab) :
+		return True
+
+	def printArb(self,tabs,userTabs):
+		print(self.elem)
+
+
+class ArbolExInt(ArbolExpr):
+	def __init__(self,x):
+		self.elem = x
+
+	def check(self,tipo,simTab):
+		if tipo == "int" :
+			return True
+		else : 
+			return False
+	def printArb(self,tabs,userTabs):
+		print(self.elem)
+
+class ArbolExBool(ArbolExpr):
+	def __init__(self,x):
+		self.elem = x
+
+	def check(self,tipo,simTab):
+		if tipo == "bool" :
+			return True
+		else : 
+			return False
+	def printArb(self,tabs,userTabs):
+		print(self.elem)
+
+class ArbolExChar(ArbolExpr):
+	def __init__(self,x):
+		self.elem = x
+
+	def check(self,tipo,simTab):
+		if tipo == "char" :
+			return True
+		else : 
+			return False
+
+	def printArb(self,tabs,userTabs):
+		print(self.elem)
+
+class ArbolExId(ArbolExpr):
+	def __init__(self,x):
+		self.elem = x
+
+	def check(self,tipo,simTab):
+		if simTab.obtener(self.elem)[0] == tipo :
+			return True
+		else : 
+			return False
+
+	def printArb(self,tabs,userTabs):
+		print(self.elem)
+
+class ArbolExMe(ArbolExpr):
+	def __init__(self,x):
+		self.elem = x
+
+	def check(self,tipo,simTab):
+		if tipo == "me" :
+			return True
+		else : 
+			return False
+
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
@@ -50,6 +117,15 @@ class ArbolBin(ArbolExpr):
 		self.elem = elem
 		self.hizq = a1
 		self.hder = a2
+
+	def check(self,tipo,simTab) :
+		if (self.hizq.check(tipo,simTab) 
+			and self.hder.check(tipo,simTab)) :
+			return True
+		else :
+			print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo "+tipo)
+			exit(1)
+
 
 	def printArb(self,tabs,userTabs):
 		if ((self.elem == '+') or (self.elem == '-') 

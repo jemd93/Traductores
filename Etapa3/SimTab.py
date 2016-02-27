@@ -42,6 +42,7 @@ class SimTab(object):
 				return self.papa.obtener(clave)
 			else:
 				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
+				exit(1)
 
 	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS
 

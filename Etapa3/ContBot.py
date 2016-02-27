@@ -302,7 +302,18 @@ def p_expr(p):
            | EXPR TkDistinto EXPR '''
 
   if len(p) == 2:
-    p[0] = ArbolExpr(p[1])
+    if type(p[1]) is int :
+      p[0] = ArbolExInt(p[1])
+    elif p[1] == "true" or p[1] == "false" :
+      p[0] = ArbolExBool(p[1])
+    elif p[1] == "me" :
+      p[0] = ArbolExMe(p[1])
+    elif p[1][0] == '\'' :
+      p[0] = ArbolExChar(p[1])
+    elif type(p[1]) is str :
+      p[0] = ArbolExId(p[1])
+
+    # p[0] = ArbolExpr(p[1])
 
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2])
@@ -310,6 +321,8 @@ def p_expr(p):
   else:
     if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3])
+      if (p[2] == '>'):
+        p[0].check("int",simTabActual)
     else :
       p[0] = p[2] 
 

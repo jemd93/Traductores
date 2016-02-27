@@ -7,7 +7,7 @@ create
 
     char bot bot4
     	on activation :
-    		store 'h'.
+    		store true.
     	end
     end
 
