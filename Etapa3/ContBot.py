@@ -112,7 +112,7 @@ def p_id(p):
 
   ''' ID : TkIdent '''
 
-  p[0] = ArbolExpr(p[1])
+  p[0] = ArbolExId(p[1])
 
 def p_comp_list(p):
 
@@ -258,6 +258,7 @@ def p_inst_cont(p):
 
   if p[1] == 'activate' :
     p[0] = ArbolActivate(p[2])
+    p[0].check(simTabActual)
   elif p[1] == 'advance' :
     p[0] = ArbolAdvance(p[2])
   elif p[1] == 'deactivate' :
@@ -265,10 +266,16 @@ def p_inst_cont(p):
   elif p[1] == 'if' :
     if p[5] == 'else' :
       p[0] = ArbolIf(p[2],p[4],p[7])
-    else : 
+      p[0].check("int",simTabActual)
+      p[0].check("bool",simTabActual)
+    else: 
       p[0] = ArbolIf(p[2],p[4],None)
+      p[0].check("int",simTabActual)
+      p[0].check("bool",simTabActual)
   elif p[1] == 'while' :
     p[0] = ArbolWhile(p[2],p[4])
+    p[0].check("int",simTabActual)
+    p[0].check("bool",simTabActual)
   else : 
     p[0] = p[1]
 
@@ -314,6 +321,10 @@ def p_expr(p):
       p[0] = ArbolExId(p[1])
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2])
+    if p[1] == '-':
+      p[0].check("int",simTabActual)
+    else:
+      p[0].check("bool",simTabActual)
 
   else:
     if (p[1] != '('):

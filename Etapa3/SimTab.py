@@ -21,6 +21,7 @@ class SimTab(object):
 		self.tabhash = {}
 		self.papa = papa
 
+	# Función para insertar en la tabla de símbolos
 	def insertar(self,clave,tipo,comps=None):
 
 		self.tabhash[clave] = [tipo,comps]
@@ -33,6 +34,7 @@ class SimTab(object):
 	# 		if (self.papa != None):
 	# 			self.papa.actualizar(clave,tipo,comportamientos)
 
+	# Función para obtener la tupla de un identificador en la tabla de símbolos
 	def obtener(self,clave):
 
 		if clave in self.tabhash:
@@ -43,6 +45,11 @@ class SimTab(object):
 			else:
 				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
 				exit(1)
+
+	# Función para obtener la clave en una tabla de símbolos
+	def obtenerclave(self,clave):
+		if clave in self.tabhash:
+			return clave
 
 	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS
 

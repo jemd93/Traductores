@@ -5,16 +5,22 @@ create
         end
     end
 
-    char bot bot4
+    int bot bot4
     	on activation :
-    		store true.
+    		store 3.
     	end
     end
 
-execute
-    activate bot1.
+    char bot bot5
+        on activation:
+            store 'H'.
+        end
+    end
 
-    if bot2 <= (bot1 + bot2) :
-        deactivate bot4.
+execute
+    activate bot5.
+
+    if bot1 > bot2:
+        activate bot4.
     end
 end 

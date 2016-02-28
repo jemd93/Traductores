@@ -1,0 +1,32 @@
+create
+	int bot hola
+		on activation:
+			left 10.
+		end
+	end
+
+execute
+
+	if 2<3 :
+		execute
+			activate hola.
+			if hola > 3:
+				deactivate hola.
+			end
+			deactivate hola.
+			execute
+				activate hola.
+				while 3 > 4:
+					activate hola.
+				end
+				execute
+					activate hola.
+					if hola = hola3:
+						activate hola.
+					end
+					deactivate hola.
+				end
+			end
+		end
+	end
+end

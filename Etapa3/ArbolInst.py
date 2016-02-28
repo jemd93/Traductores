@@ -10,6 +10,7 @@
 # -------------------------------------------------
 
 from ArbolExpr import *
+from SimTab import *
 
 cont = 0
 
@@ -285,6 +286,24 @@ class ArbolActivate(ArbolInst):
 		self.h1 = ArbolInst('activate')
 		self.h2 = idList
 
+	def check(self,simTab):
+		if self.h2.h2 != None:
+			#self.h2 = self.h2.h2
+			clave = self.h2.h1.elem
+			print("HEY")
+			print(clave)
+		else:
+			clave = self.h2.h1.elem
+			print("hey2")
+			print(clave)
+		#print(clave)
+		#print(simTab.obtenerclave(clave))
+		if clave == simTab.obtenerclave(clave):
+			return True
+		else:
+			print("Error de contexto: no ha sido realizada la declaración de: " + clave)
+			exit(1)
+
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
 			print("\t"*tabs,end="")
@@ -328,6 +347,28 @@ class ArbolIf(ArbolInst):
 			self.h4 = None
 			self.h5 = None
 
+	def check(self,tipo,simTab):
+		if tipo == "int":
+			if ((self.h2.elem == '>') or (self.h2.elem == '<')
+			or (self.h2.elem == '<=') or (self.h2.elem == '>=')
+			or (self.h2.elem == '=') or (self.h2.elem == '/=')): 
+				if ((self.h2.hizq.check("int",simTab)) 
+				and (self.h2.hder.check("int",simTab))):
+					return True
+			else:
+				print("Error, no esta permitido el operador " +self.h2.elem+ " en un condicional")
+				exit(1)
+
+		elif tipo == "bool":
+			if ((self.h2.elem == '=') or (self.h2.elem == '/=')):
+				for t in ["int","bool","char"] :
+					if ( (self.h2.hizq.check(t,simTab))
+					and (self.h2.hder.check(t,simTab)) ):
+						return True
+			elif ((self.h2.elem == '/\\') or (self.h2.elem == '\/')) :
+				print("Error, no esta permitido el operador " +self.h2.elem+ " en un condicional")
+				exit(1)
+
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :
 			print("\t"*tabs,end="")
@@ -357,6 +398,28 @@ class ArbolWhile(ArbolInst):
 		self.h1 = ArbolInst('while')
 		self.h2 = expr
 		self.h3 = inst
+
+	def check(self,tipo,simTab):
+		if tipo == "int":
+			if ((self.h2.elem == '>') or (self.h2.elem == '<')
+			or (self.h2.elem == '<=') or (self.h2.elem == '>=')
+			or (self.h2.elem == '=') or (self.h2.elem == '/=')): 
+				if ((self.h2.hizq.check("int",simTab)) 
+				and (self.h2.hder.check("int",simTab))):
+					return True
+			else:
+				print("Error, no esta permitido el operador " +self.h2.elem+ " en un condicional")
+				exit(1)
+
+		elif tipo == "bool":
+			if ((self.h2.elem == '=') or (self.h2.elem == '/=')):
+				for t in ["int","bool","char"] :
+					if ( (self.h2.hizq.check(t,simTab))
+					and (self.h2.hder.check(t,simTab)) ):
+						return True
+			elif ((self.h2.elem == '/\\') or (self.h2.elem == '\/')) :
+				print("Error, no esta permitido el operador " +self.h2.elem+ " en un condicional")
+				exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :

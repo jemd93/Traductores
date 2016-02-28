@@ -93,6 +93,21 @@ class ArbolUn(ArbolExpr):
 		self.elem = elem
 		self.hijo = a1
 
+	def check(self,tipo,simTab):
+		if (self.elem == '-'):
+			if self.hijo.check("int",simTab) and (tipo == "int"):
+				return True
+			else:
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				exit(1)
+
+		elif (self.elem == '~'):
+			if self.hijo.check("bool", simTab) and (tipo == "bool"):
+				return True
+			else:
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				exit(1)		
+
 	def printArb(self,tabs,userTabs):
 		# print(self.elem)
 		if self.hijo is not None:
@@ -108,7 +123,7 @@ class ArbolUn(ArbolExpr):
 				print("Negacion")
 			print("\t"*tabs,end="")
 			print("- operador : ",end="")
-			self.hijo.printArb(tabs+1,True)
+			self.hijo.printArb(tabs+1,True)		
 				
 # Árbol binario para el resto de las
 # expresiones, tanto aritméticas como booleanas
