@@ -56,6 +56,7 @@ def p_dec_list_init(p):
   simTabActual.agregarDecInit(p[2])
 
   p[0] = ArbolDecListInit(p[2])
+  p[0].check(simTabActual)
 
 def p_dec_list(p):
 
@@ -256,13 +257,17 @@ def p_inst_cont(p):
                 | TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd
                 | PROGRAM '''
 
+  global simTabActual
+
   if p[1] == 'activate' :
     p[0] = ArbolActivate(p[2])
     p[0].check(simTabActual)
   elif p[1] == 'advance' :
     p[0] = ArbolAdvance(p[2])
+    p[0].check(simTabActual)
   elif p[1] == 'deactivate' :
     p[0] = ArbolDeactivate(p[2])
+    p[0].check(simTabActual)
   elif p[1] == 'if' :
     if p[5] == 'else' :
       p[0] = ArbolIf(p[2],p[4],p[7])

@@ -21,6 +21,9 @@ class ArbolInst(object):
 	def __init__(self,inst):
 		self.inst = inst
 
+	# def check(self,simTab) :
+	# 	return True
+
 	def printArb(self,tabs,usarTabs):
 		print(self.inst)
 
@@ -45,6 +48,9 @@ class ArbolDecListInit(ArbolInst):
 		self.h1 = ArbolInst('create')
 		self.h2 = decList
 
+	def check(self,simTab) :
+		self.h2.check(simTab)
+
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		self.h2.printArb(0,True)
@@ -57,6 +63,11 @@ class ArbolDecList(ArbolInst):
 			self.h2 = decList
 		else:
 			self.h2 = None
+
+	def check(self,simTab):
+		self.h1.check(simTab)
+		if (self.h2 != None) :
+			self.h2.check(simTab)
 
 	def printArb(self,tabs,usarTabs):
 		if not(self.h2 is None):
@@ -72,6 +83,9 @@ class ArbolDec(ArbolInst):
 		self.h2 = ArbolInst('bot')
 		self.h3 = idList
 		self.h4 = compList
+
+	def check(self,simTab) :
+		self.h4.check(self.h1.inst,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -96,6 +110,11 @@ class ArbolIdList(ArbolInst):
 		else:
 			self.h2 = None
 
+	def check(self,simTab) :
+		simTab.obtenerClave(self.h1.elem)
+		if (self.h2 != None) :
+			self.h2.check(simTab)
+
 	def printArb(self,tabs,usarTabs):
 		print("\t"*tabs,end="")
 		print("- var: ",end="")
@@ -116,6 +135,12 @@ class ArbolCompList(ArbolInst):
 			self.h1 = None
 			self.h2 = None
 
+	def check(self,tipo,simTab) :
+		if (self.h1 != None) :
+			self.h1.check(tipo,simTab)
+		if (self.h2 != None) :
+			self.h2.check(tipo,simTab)
+
 	def printArb(self,tabs,usarTabs):
 		if (not(self.h1 is None) and not(self.h2 is None)):
 			self.h1.printArb(0,True)
@@ -129,6 +154,9 @@ class ArbolComp(ArbolInst):
 		self.h1 = ArbolInst('on')
 		self.h2 = expsta
 		self.h3 = inst
+
+	def check(self,tipo,simTab) :
+		self.h3.check(tipo,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -152,6 +180,11 @@ class ArbolInstBotList(ArbolInst):
 		else:
 			self.h2 = None
 
+	def check(self,tipo,simTab) :
+		self.h1.check(tipo,simTab)
+		if (self.h2 != None) :
+			self.h2.check(tipo,simTab)
+
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		if not(self.h2 is None):
@@ -164,6 +197,9 @@ class ArbolStore(ArbolInst):
 	def __init__(self,h2):
 		self.h1 = ArbolInst('store')
 		self.h2 = h2
+
+	def check(self,tipo,simTab) :
+		self.h2.check(tipo,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -179,6 +215,10 @@ class ArbolCollect(ArbolInst):
 		else:
 			self.h2 = None
 
+	def check(self,tipo,simTab):
+		if (self.h2 != None) :
+			self.h2.check(tipo,simTab)
+
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		if not(self.h2 is None):
@@ -189,6 +229,9 @@ class ArbolDrop(ArbolInst):
 	def __init__(self,h2):
 		self.h1 = ArbolInst('drop')
 		self.h2 = h2
+
+	def check(self,tipo,simTab):
+		self.h2.check(tipo,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -204,6 +247,10 @@ class ArbolRead(ArbolInst):
 		else:
 			self.h2 = None
 
+	def check(self,tipo,simTab) :
+		if (self.h2 != None):
+			self.h2.check(tipo,simTab)
+
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		if not(self.h2 is None):
@@ -213,6 +260,9 @@ class ArbolRead(ArbolInst):
 class ArbolSend(ArbolInst):
 	def __init__(self):
 		self.h1 = ArbolInst('send')
+
+	def check(self,tipo,simTab):
+		return True
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -225,6 +275,10 @@ class ArbolRecieve(ArbolInst):
 			self.h2 = h2
 		else:
 			self.h2 = None
+
+	def check(self,tipo,simTab):
+		if (self.h2 != None):
+			self.h2.check(tipo,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -241,6 +295,10 @@ class ArbolDir(ArbolInst):
 			self.h2 = h2
 		else:
 			self.h2 = None
+
+	def check(self,tipo,simTab) :
+		if (self.h2 != None) :
+			self.h2.check(tipo,simTab)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(tabs,True)
@@ -287,12 +345,7 @@ class ArbolActivate(ArbolInst):
 		self.h2 = idList
 
 	def check(self,simTab):
-		clave = self.h2.h1.elem
-		simTab.obtenerclave(clave)
-		while self.h2.h2 != None:
-			self.h2 = self.h2.h2
-			clave = self.h2.h1.elem
-			simTab.obtenerclave(clave)
+		self.h2.check(simTab)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
@@ -306,6 +359,9 @@ class ArbolAdvance(ArbolInst):
 		self.h1 = ArbolInst('advance')
 		self.h2 = idList
 
+	def check(self,simTab):
+		self.h2.check(simTab)
+
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
 			print("\t"*tabs,end="")
@@ -317,6 +373,9 @@ class ArbolDeactivate(ArbolInst):
 	def __init__(self,idList):
 		self.h1 = ArbolInst('deactivate')
 		self.h2 = idList
+
+	def check(self,simTab):
+		self.h2.check(simTab)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 

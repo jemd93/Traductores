@@ -28,7 +28,6 @@ class SimTab(object):
 
 	# Función para obtener la tupla de un identificador en la tabla de símbolos
 	def obtener(self,clave):
-
 		if clave in self.tabhash:
 			return self.tabhash[clave]
 		else:
@@ -39,12 +38,15 @@ class SimTab(object):
 				exit(1)
 
 	# Función para obtener la clave en una tabla de símbolos
-	def obtenerclave(self,clave):
+	def obtenerClave(self,clave):
 		if clave in self.tabhash:
 			return clave
 		else:
-			print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
-			exit(1)
+			if (self.papa != None):
+				return self.papa.obtenerClave(clave)
+			else :
+				print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
+				exit(1)
 
 	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS
 
@@ -64,9 +66,13 @@ class SimTab(object):
 	# Agrega todos los ids de una listaId con sus respectivos tipos y comportamientos
 	# a la tabla de hash.
 	def agregarListaId(self,lista,tipo,comps) :
-		self.tabhash[lista.h1.elem] = [tipo.inst,comps] 
-		if (lista.h2 != None) :
-			self.agregarListaId(lista.h2,tipo,comps)
+		if lista.h1.elem in self.tabhash:
+			print("Error : la variable "+lista.h1.elem+" ya fue declarada anteriormente")
+			exit(1)
+		else :
+			self.tabhash[lista.h1.elem] = [tipo.inst,comps] 
+			if (lista.h2 != None) :
+				self.agregarListaId(lista.h2,tipo,comps)
 
 	def imprimir(self) :
 		print(self.tabhash)

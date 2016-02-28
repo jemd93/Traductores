@@ -31,7 +31,9 @@ class ArbolExInt(ArbolExpr):
 		if tipo == "int" :
 			return True
 		else : 
-			return False
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			exit(1)
+			
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
@@ -43,7 +45,9 @@ class ArbolExBool(ArbolExpr):
 		if tipo == "bool" :
 			return True
 		else : 
-			return False
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			exit(1)
+
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
@@ -55,7 +59,8 @@ class ArbolExChar(ArbolExpr):
 		if tipo == "char" :
 			return True
 		else : 
-			return False
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
@@ -68,7 +73,8 @@ class ArbolExId(ArbolExpr):
 		if simTab.obtener(self.elem)[0] == tipo :
 			return True
 		else : 
-			return False
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
