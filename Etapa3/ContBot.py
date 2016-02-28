@@ -271,16 +271,13 @@ def p_inst_cont(p):
   elif p[1] == 'if' :
     if p[5] == 'else' :
       p[0] = ArbolIf(p[2],p[4],p[7])
-      p[0].check("int",simTabActual)
-      p[0].check("bool",simTabActual)
+      p[0].check(simTabActual)
     else: 
       p[0] = ArbolIf(p[2],p[4],None)
-      p[0].check("int",simTabActual)
-      p[0].check("bool",simTabActual)
+      p[0].check(simTabActual)
   elif p[1] == 'while' :
     p[0] = ArbolWhile(p[2],p[4])
-    p[0].check("int",simTabActual)
-    p[0].check("bool",simTabActual)
+    p[0].check(simTabActual)
   else : 
     p[0] = p[1]
 
