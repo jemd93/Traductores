@@ -26,14 +26,6 @@ class SimTab(object):
 
 		self.tabhash[clave] = [tipo,comps]
 
-	# def modificar(self,clave,tipo,comportamientos=None):
-
-	# 	if clave in self.tabhash:
-	# 		self.tabhash[clave] = [tipo,comportamientos]
-	# 	else:
-	# 		if (self.papa != None):
-	# 			self.papa.actualizar(clave,tipo,comportamientos)
-
 	# Función para obtener la tupla de un identificador en la tabla de símbolos
 	def obtener(self,clave):
 
@@ -50,6 +42,9 @@ class SimTab(object):
 	def obtenerclave(self,clave):
 		if clave in self.tabhash:
 			return clave
+		else:
+			print(" Error de contexto: no ha sido realizada la declaración de: " + clave)
+			exit(1)
 
 	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS
 

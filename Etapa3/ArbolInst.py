@@ -278,7 +278,7 @@ class ArbolInstContList(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(tabs,usarTabs)
 
-################# INSTRUCCIONES DEL CONTROLADOR ###########################
+###################### INSTRUCCIONES DEL CONTROLADOR ###########################
 
 # Árbol para la instrucción activate 
 class ArbolActivate(ArbolInst):
@@ -287,22 +287,12 @@ class ArbolActivate(ArbolInst):
 		self.h2 = idList
 
 	def check(self,simTab):
-		if self.h2.h2 != None:
-			#self.h2 = self.h2.h2
+		clave = self.h2.h1.elem
+		simTab.obtenerclave(clave)
+		while self.h2.h2 != None:
+			self.h2 = self.h2.h2
 			clave = self.h2.h1.elem
-			print("HEY")
-			print(clave)
-		else:
-			clave = self.h2.h1.elem
-			print("hey2")
-			print(clave)
-		#print(clave)
-		#print(simTab.obtenerclave(clave))
-		if clave == simTab.obtenerclave(clave):
-			return True
-		else:
-			print("Error de contexto: no ha sido realizada la declaración de: " + clave)
-			exit(1)
+			simTab.obtenerclave(clave)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 

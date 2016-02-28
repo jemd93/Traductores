@@ -18,9 +18,10 @@ create
     end
 
 execute
-    activate bot5.
+    activate bot2,bot4,bot5,bot1.
 
-    if bot1 > bot2:
-        activate bot4.
-    end
+    activate bot2.
+        execute
+            activate bot2,bot5,bot1.
+        end
 end 

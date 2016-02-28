@@ -21,7 +21,7 @@ execute
 				end
 				execute
 					activate hola.
-					if hola = hola3:
+					if hola = hola:
 						activate hola.
 					end
 					deactivate hola.
