@@ -70,7 +70,8 @@ class SimTab(object):
 			print("Error : la variable "+lista.h1.elem+" ya fue declarada anteriormente")
 			exit(1)
 		else :
-			self.tabhash[lista.h1.elem] = [tipo.inst,comps] 
+			diccComps = comps.generarTablaComps({})
+			self.tabhash[lista.h1.elem] = [tipo.inst,diccComps] 
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
 

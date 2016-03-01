@@ -45,7 +45,7 @@ execute
     end
     activate bot2,bot4,bot5,bot1.
 
-    if 1 /\ bot1 : 
+    if bot2 > 2 : 
         deactivate bot5.
     end
     advance bot2.

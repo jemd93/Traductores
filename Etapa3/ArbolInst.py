@@ -143,6 +143,18 @@ class ArbolCompList(ArbolInst):
 		if (self.h2 != None) :
 			self.h2.check(tipo,simTab,self.linea)
 
+	def generarTablaComps(self,tabla):
+		if tabla == {} and self.h1 != None and self.h2 != None :
+			if self.h1.h2.inst == 'default' :
+				print("El comportamiento 'default' debe estar ") 
+				print("declarado de ultimo en la lista de comportamientos")
+				exit(1)
+		if (self.h1 != None):
+			self.h1.agregarATabla(tabla)
+		if (self.h2 != None):
+			self.h2.generarTablaComps(tabla)
+		return tabla
+
 	def printArb(self,tabs,usarTabs):
 		if (not(self.h1 is None) and not(self.h2 is None)):
 			self.h1.printArb(0,True)
@@ -160,6 +172,12 @@ class ArbolComp(ArbolInst):
 
 	def check(self,tipo,simTab,linea) :
 		self.h3.check(tipo,simTab,self.linea)
+
+	def agregarATabla(self,tabla):
+		if self.h2.inst in tabla : 
+			print("Error : No es posible declarar dos veces un comportamiento")
+			exit(1)
+		tabla[self.h2.inst] = self.h3
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
