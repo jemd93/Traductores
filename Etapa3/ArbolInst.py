@@ -85,9 +85,9 @@ class ArbolDec(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea) :
-		simTab.tabhash["me"] = [self.h1.inst,{}]
+		simTab.insertar("me",self.h1.inst,{})
 		self.h4.check(self.h1.inst,simTab,self.linea)
-		del simTab.tabhash["me"]
+		simTab.eliminar("me")
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -174,6 +174,7 @@ class ArbolComp(ArbolInst):
 
 	def check(self,tipo,simTab,linea) :
 		self.h3.check(tipo,simTab,self.linea)
+		simTab.clean() # AUN NO FUNCIONA. CHEQUEAR.
 
 	def agregarATabla(self,tabla):
 		if self.h2.inst in tabla : 
@@ -244,6 +245,7 @@ class ArbolCollect(ArbolInst):
 
 	def check(self,tipo,simTab,linea):
 		if (self.h2 != None) :
+			simTab.insertar(self.h2.elem,tipo,'clean')
 			self.h2.check(tipo,simTab,self.linea)
 
 	def printArb(self,tabs,usarTabs):
@@ -278,9 +280,8 @@ class ArbolRead(ArbolInst):
 
 	def check(self,tipo,simTab,linea) :
 		if (self.h2 != None):
-			# simTab.tabhash[self.h2.elem] = [tipo,{}]
+			simTab.insertar(self.h2.elem,tipo,'clean')
 			self.h2.check(tipo,simTab,self.linea)
-			# del simTab.tabhash[self.h2.elem] = [tipo,{}]
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)

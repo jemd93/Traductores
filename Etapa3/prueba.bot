@@ -1,49 +1,22 @@
 create
-    int bot bot1, bot2
-        on default :
-            recieve 1.
-            send.
-            read as bot1.
-        end
-    end
-
     int bot bot4
     	on activation :
-    		left me+1.
+    		left.
     	end
     end
 
     char bot bot5
-        on activation:
-            drop '1'.
+        on 1>2:
+            drop 'h'.
         end
     end
 
 execute
 
-    create
-        bool bot bot1
-            on activation:
-                read.
-            end
-        end
+    activate bot4,bot5.
 
-        int bot bot2
-            on default:
-                right 1.
-            end
-        end
-    execute 
-        activate bot1,bot2,bot5.
-
-        if bot1:
-            deactivate bot2.
-        end
-    end
-    activate bot2,bot4,bot5,bot1.
-
-    if bot2 > 2 : 
+    if 1 > 2 : 
         deactivate bot5.
     end
-    advance bot2.
+    advance bot4.
 end 

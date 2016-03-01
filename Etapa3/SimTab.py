@@ -26,6 +26,9 @@ class SimTab(object):
 
 		self.tabhash[clave] = [tipo,comps]
 
+	def eliminar(self,clave):
+		del self.tabhash[clave]
+
 	# Función para obtener la tupla de un identificador en la tabla de símbolos
 	def obtener(self,clave):
 		if clave in self.tabhash:
@@ -74,6 +77,15 @@ class SimTab(object):
 			self.tabhash[lista.h1.elem] = [tipo.inst,diccComps] 
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
+
+	def clean(self):
+		listaElim = []
+		for elem in self.tabhash:
+			if self.tabhash[elem][1] == 'clean' :
+				listaElim.append(elem)
+
+		for elem in listaElim :
+			del self.tabhash[elem]
 
 	def imprimir(self) :
 		print(self.tabhash)

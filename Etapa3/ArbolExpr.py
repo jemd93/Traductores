@@ -154,37 +154,48 @@ class ArbolBin(ArbolExpr):
 		if ((self.elem == '+') or (self.elem == '-') 
 		or (self.elem == '*') or (self.elem == '/') 
 		or (self.elem == '%')) :
-			if (self.hizq.check("int",simTab,self.linea)
-			and self.hder.check("int",simTab,self.linea)
-			and tipo == "int") :
-				return True
+			if tipo == "int":
+				if (self.hizq.check("int",simTab,self.linea)
+				and self.hder.check("int",simTab,self.linea)) :
+					return True
+				else :
+					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					exit(1)
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+				print("El tipo de la operacion debe ser "+tipo+" pero es int")
 				exit(1)
 		elif ((self.elem == '>') or (self.elem == '<')
 		or (self.elem == '<=') or (self.elem == '>=')) : 
-			if (self.hizq.check("int",simTab,self.linea) 
-			and self.hder.check("int",simTab,self.linea)
-			and tipo == "bool") :
-				return True
+			if tipo == "bool" :
+				if (self.hizq.check("int",simTab,self.linea) 
+				and self.hder.check("int",simTab,self.linea)) :
+					return True
+				else :
+					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					exit(1)
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+				print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
 				exit(1)
 		elif ((self.elem == '/\\') or (self.elem == '\/')) :
-			if (self.hizq.check("bool",simTab,self.linea)
-			and self.hder.check("bool",simTab,self.linea)
-			and tipo=="bool") :
-				return True
+			if tipo=="bool" :
+				if (self.hizq.check("bool",simTab,self.linea)
+				and self.hder.check("bool",simTab,self.linea)) :
+					return True
+				else :
+					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					exit(1)
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+				print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
 				exit(1)
 		elif ((self.elem == '=') or (self.elem == '/=')) :
 			for t in ["int","bool","char"] :
-				if (self.hizq.check(t,simTab,self.linea)
-				and self.hder.check(t,simTab,self.linea)
-				and tipo=="bool") :
-					return True
-
+				if tipo=="bool" :
+					if (self.hizq.check(t,simTab,self.linea)
+					and self.hder.check(t,simTab,self.linea)) :
+						return True
+				else :
+					print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
+					exit(1)			
 			print("Error, los operadores de la operacion "+self.elem+" deben ser del mismo tipo. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 
