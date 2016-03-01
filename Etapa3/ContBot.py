@@ -331,13 +331,13 @@ def p_expr(p):
   else:
     if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3], p.lineno(2))
-      if ((p[2] == '/\\') or (p[2] == '\/')
-      or (p[2] == '=') or (p[2] == '/=')
-      or (p[2] == '<') or (p[2] == '>')
-      or (p[2] == '<=') or (p[2] == '>=')) :
-        p[0].check("bool",simTabActual,p.lineno(1))
-      else :
-        p[0].check("int",simTabActual,p.lineno(1))
+      # if ((p[2] == '/\\') or (p[2] == '\/')
+      # or (p[2] == '=') or (p[2] == '/=')
+      # or (p[2] == '<') or (p[2] == '>')
+      # or (p[2] == '<=') or (p[2] == '>=')) :
+        # p[0].check("bool",simTabActual,p.lineno(1))
+      # else :
+        # p[0].check("int",simTabActual,p.lineno(1))
     else :
       p[0] = p[2] 
 

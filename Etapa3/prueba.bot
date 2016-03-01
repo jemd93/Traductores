@@ -9,7 +9,7 @@ create
 
     int bot bot4
     	on activation :
-    		left 1.
+    		left me+1.
     	end
     end
 
@@ -30,7 +30,7 @@ execute
 
         int bot bot2
             on default:
-                right 1+2.
+                right 2.
             end
         end
     execute 

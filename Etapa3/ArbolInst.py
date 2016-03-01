@@ -85,7 +85,9 @@ class ArbolDec(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea) :
+		simTab.tabhash["me"] = [self.h1.inst,{}]
 		self.h4.check(self.h1.inst,simTab,self.linea)
+		del simTab.tabhash["me"]
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)

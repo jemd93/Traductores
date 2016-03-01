@@ -92,10 +92,11 @@ class ArbolExMe(ArbolExpr):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea):
-		if tipo == "me" :
+		if simTab.obtener(self.elem)[0] == tipo :
 			return True
 		else : 
-			return False
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
