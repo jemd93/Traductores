@@ -1,7 +1,7 @@
 create
     int bot bot1, bot2
         on activation: 
-            store 3.
+            store 6.
         end
         on default :
             recieve 1.
@@ -33,19 +33,19 @@ execute
 
         int bot bot2
             on default:
-                right 1+2+3.
+                right 1+2.
             end
         end
     execute 
         activate bot1,bot2,bot5.
 
-        if bot1 :
+        if bot1:
             deactivate bot2.
         end
     end
     activate bot2,bot4,bot5,bot1.
 
-    if 1>bot1 : 
+    if 1 /\ bot1 : 
         deactivate bot5.
     end
     advance bot2.

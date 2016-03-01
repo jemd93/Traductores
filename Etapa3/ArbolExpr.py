@@ -9,81 +9,89 @@
 # Proyecto BOT - Etapa 2 - Árbol de Expresiones tanto binario como unario
 # -------------------------------------------------
 
+import ContBot
+ContBot.numeroLineas()
+
 # Árbol de Expresiones con un solo elemento
 # para las hojas, que será usualmente un ID,
 # un número o un booleano.
 class ArbolExpr(object):
-	def __init__(self, x):
+	def __init__(self, x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab) :
+	def check(self,tipo,simTab,linea) :
 		return True
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-
 class ArbolExInt(ArbolExpr):
-	def __init__(self,x):
+	def __init__(self,x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if tipo == "int" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 			
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
 class ArbolExBool(ArbolExpr):
-	def __init__(self,x):
+	def __init__(self,x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if tipo == "bool" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
 class ArbolExChar(ArbolExpr):
-	def __init__(self,x):
+	def __init__(self,x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if tipo == "char" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
 class ArbolExId(ArbolExpr):
-	def __init__(self,x):
+	def __init__(self,x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if simTab.obtener(self.elem)[0] == tipo :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo)
+			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
 class ArbolExMe(ArbolExpr):
-	def __init__(self,x):
+	def __init__(self,x,linea):
 		self.elem = x
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if tipo == "me" :
 			return True
 		else : 
@@ -95,23 +103,24 @@ class ArbolExMe(ArbolExpr):
 # Árbol unario para el operador de negación
 # o el negativo unario aritmético
 class ArbolUn(ArbolExpr):
-	def __init__(self,elem,a1):
+	def __init__(self,elem,a1,linea):
 		self.elem = elem
 		self.hijo = a1
+		self.linea = linea
 
-	def check(self,tipo,simTab):
+	def check(self,tipo,simTab,linea):
 		if (self.elem == '-'):
-			if self.hijo.check("int",simTab) and (tipo == "int"):
+			if self.hijo.check("int",simTab,self.linea) and (tipo == "int"):
 				return True
 			else:
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 				exit(1)
 
 		elif (self.elem == '~'):
-			if self.hijo.check("bool", simTab) and (tipo == "bool"):
+			if self.hijo.check("bool", simTab,self.linea) and (tipo == "bool"):
 				return True
 			else:
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 				exit(1)		
 
 	def printArb(self,tabs,userTabs):
@@ -134,47 +143,48 @@ class ArbolUn(ArbolExpr):
 # Árbol binario para el resto de las
 # expresiones, tanto aritméticas como booleanas
 class ArbolBin(ArbolExpr):
-	def __init__(self,elem,a1,a2):
+	def __init__(self,elem,a1,a2,linea):
 		self.elem = elem
 		self.hizq = a1
 		self.hder = a2
+		self.linea = linea
 
-	def check(self,tipo,simTab) :
+	def check(self,tipo,simTab,linea) :
 		if ((self.elem == '+') or (self.elem == '-') 
 		or (self.elem == '*') or (self.elem == '/') 
 		or (self.elem == '%')) :
-			if (self.hizq.check("int",simTab)
-			and self.hder.check("int",simTab)
+			if (self.hizq.check("int",simTab,self.linea)
+			and self.hder.check("int",simTab,self.linea)
 			and tipo == "int") :
 				return True
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 				exit(1)
 		elif ((self.elem == '>') or (self.elem == '<')
 		or (self.elem == '<=') or (self.elem == '>=')) : 
-			if (self.hizq.check("int",simTab) 
-			and self.hder.check("int",simTab)
+			if (self.hizq.check("int",simTab,self.linea) 
+			and self.hder.check("int",simTab,self.linea)
 			and tipo == "bool") :
 				return True
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int")
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 				exit(1)
 		elif ((self.elem == '/\\') or (self.elem == '\/')) :
-			if (self.hizq.check("bool",simTab)
-			and self.hder.check("bool",simTab)
+			if (self.hizq.check("bool",simTab,self.linea)
+			and self.hder.check("bool",simTab,self.linea)
 			and tipo=="bool") :
 				return True
 			else :
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool")
+				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 				exit(1)
 		elif ((self.elem == '=') or (self.elem == '/=')) :
 			for t in ["int","bool","char"] :
-				if (self.hizq.check(t,simTab)
-				and self.hder.check(t,simTab)
+				if (self.hizq.check(t,simTab,self.linea)
+				and self.hder.check(t,simTab,self.linea)
 				and tipo=="bool") :
 					return True
 
-			print("Error, los operadores de la operacion "+self.elem+" deben ser del mismo tipo")
+			print("Error, los operadores de la operacion "+self.elem+" deben ser del mismo tipo. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
