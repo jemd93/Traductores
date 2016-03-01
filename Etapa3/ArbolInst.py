@@ -278,7 +278,9 @@ class ArbolRead(ArbolInst):
 
 	def check(self,tipo,simTab,linea) :
 		if (self.h2 != None):
+			# simTab.tabhash[self.h2.elem] = [tipo,{}]
 			self.h2.check(tipo,simTab,self.linea)
+			# del simTab.tabhash[self.h2.elem] = [tipo,{}]
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
