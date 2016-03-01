@@ -144,7 +144,7 @@ class ArbolCompList(ArbolInst):
 			self.h2.check(tipo,simTab,self.linea)
 
 	def generarTablaComps(self,tabla):
-		if tabla == {} and self.h1 != None and self.h2 != None :
+		if self.h1 != None and self.h2.h1 != None :
 			if self.h1.h2.inst == 'default' :
 				print("El comportamiento 'default' debe estar ") 
 				print("declarado de ultimo en la lista de comportamientos")
