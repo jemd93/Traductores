@@ -1,13 +1,16 @@
 create
     int bot bot4
     	on activation :
-    		left.
+    		collect as x.
+            store x.
     	end
     end
 
     char bot bot5
-        on 1>2:
+        on default:
+            collect as x.
             drop 'h'.
+            store x.
         end
     end
 

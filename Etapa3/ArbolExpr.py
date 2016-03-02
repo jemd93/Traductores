@@ -20,7 +20,7 @@ class ArbolExpr(object):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
+	def check(self,tipo,simTab,linea,esDec) :
 		return True
 
 	def printArb(self,tabs,userTabs):
@@ -31,7 +31,7 @@ class ArbolExInt(ArbolExpr):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if tipo == "int" :
 			return True
 		else : 
@@ -46,7 +46,7 @@ class ArbolExBool(ArbolExpr):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if tipo == "bool" :
 			return True
 		else : 
@@ -61,7 +61,7 @@ class ArbolExChar(ArbolExpr):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if tipo == "char" :
 			return True
 		else : 
@@ -76,11 +76,15 @@ class ArbolExId(ArbolExpr):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if simTab.obtener(self.elem)[0] == tipo :
+			if esDec and (not('clean' in simTab.obtener(self.elem)[1])) :
+				print("Errror en la linea " +str(self.linea+1-ContBot.numLines)+": la variable "+self.elem+" no ha sido declarada")
+				exit(1)
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea " +str(self.linea+1-ContBot.numLines)
+				+": la operacion que intenta realizar requiere operadores de tipo "+tipo+ ".")
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
@@ -91,7 +95,7 @@ class ArbolExMe(ArbolExpr):
 		self.elem = x
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if simTab.obtener(self.elem)[0] == tipo :
 			return True
 		else : 
@@ -109,7 +113,7 @@ class ArbolUn(ArbolExpr):
 		self.hijo = a1
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if (self.elem == '-'):
 			if self.hijo.check("int",simTab,self.linea) and (tipo == "int"):
 				return True
@@ -150,13 +154,13 @@ class ArbolBin(ArbolExpr):
 		self.hder = a2
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
+	def check(self,tipo,simTab,linea,esDec) :
 		if ((self.elem == '+') or (self.elem == '-') 
 		or (self.elem == '*') or (self.elem == '/') 
 		or (self.elem == '%')) :
 			if tipo == "int":
-				if (self.hizq.check("int",simTab,self.linea)
-				and self.hder.check("int",simTab,self.linea)) :
+				if (self.hizq.check("int",simTab,self.linea,esDec)
+				and self.hder.check("int",simTab,self.linea,esDec)) :
 					return True
 				else :
 					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
@@ -167,8 +171,8 @@ class ArbolBin(ArbolExpr):
 		elif ((self.elem == '>') or (self.elem == '<')
 		or (self.elem == '<=') or (self.elem == '>=')) : 
 			if tipo == "bool" :
-				if (self.hizq.check("int",simTab,self.linea) 
-				and self.hder.check("int",simTab,self.linea)) :
+				if (self.hizq.check("int",simTab,self.linea,esDec) 
+				and self.hder.check("int",simTab,self.linea,esDec)) :
 					return True
 				else :
 					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
@@ -178,8 +182,8 @@ class ArbolBin(ArbolExpr):
 				exit(1)
 		elif ((self.elem == '/\\') or (self.elem == '\/')) :
 			if tipo=="bool" :
-				if (self.hizq.check("bool",simTab,self.linea)
-				and self.hder.check("bool",simTab,self.linea)) :
+				if (self.hizq.check("bool",simTab,self.linea,esDec)
+				and self.hder.check("bool",simTab,self.linea,esDec)) :
 					return True
 				else :
 					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
@@ -190,8 +194,8 @@ class ArbolBin(ArbolExpr):
 		elif ((self.elem == '=') or (self.elem == '/=')) :
 			for t in ["int","bool","char"] :
 				if tipo=="bool" :
-					if (self.hizq.check(t,simTab,self.linea)
-					and self.hder.check(t,simTab,self.linea)) :
+					if (self.hizq.check(t,simTab,self.linea,esDec)
+					and self.hder.check(t,simTab,self.linea,esDec)) :
 						return True
 				else :
 					print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")

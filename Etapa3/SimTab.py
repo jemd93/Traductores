@@ -81,7 +81,7 @@ class SimTab(object):
 	def clean(self):
 		listaElim = []
 		for elem in self.tabhash:
-			if self.tabhash[elem][1] == 'clean' :
+			if 'clean' in self.tabhash[elem][1] :
 				listaElim.append(elem)
 
 		for elem in listaElim :

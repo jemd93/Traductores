@@ -46,8 +46,8 @@ class ArbolDecListInit(ArbolInst):
 		self.h2 = decList
 		self.linea = linea
 
-	def check(self,simTab,linea) :
-		self.h2.check(simTab,self.linea)
+	def check(self,simTab,linea,esDec) :
+		self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -63,10 +63,10 @@ class ArbolDecList(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h1.check(simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h1.check(simTab,self.linea,esDec)
 		if (self.h2 != None) :
-			self.h2.check(simTab,self.linea)
+			self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if not(self.h2 is None):
@@ -84,9 +84,9 @@ class ArbolDec(ArbolInst):
 		self.h4 = compList
 		self.linea = linea
 
-	def check(self,simTab,linea) :
+	def check(self,simTab,linea,esDec) :
 		simTab.insertar("me",self.h1.inst,{})
-		self.h4.check(self.h1.inst,simTab,self.linea)
+		self.h4.check(self.h1.inst,simTab,self.linea,esDec)
 		simTab.eliminar("me")
 
 	def printArb(self,tabs,usarTabs):
@@ -113,10 +113,10 @@ class ArbolIdList(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,simTab,linea) :
+	def check(self,simTab,linea,esDec) :
 		simTab.obtenerClave(self.h1.elem)
 		if (self.h2 != None) :
-			self.h2.check(simTab,self.linea)
+			self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		print("\t"*tabs,end="")
@@ -139,11 +139,11 @@ class ArbolCompList(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
+	def check(self,tipo,simTab,linea,esDec) :
 		if (self.h1 != None) :
-			self.h1.check(tipo,simTab,self.linea)
+			self.h1.check(tipo,simTab,self.linea,esDec)
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea)
+			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def generarTablaComps(self,tabla):
 		if self.h1 != None and self.h2.h1 != None :
@@ -172,13 +172,15 @@ class ArbolComp(ArbolInst):
 		self.h3 = inst
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
-		self.h3.check(tipo,simTab,self.linea)
-		simTab.clean() # AUN NO FUNCIONA. CHEQUEAR.
+	def check(self,tipo,simTab,linea,esDec) :
+		# Creamos una nueva tabla de simbolos para este comportamiento
+		simTab = SimTab(simTab)
+		self.h3.check(tipo,simTab,self.linea,esDec)
+		# Desempilamos la tabla de simbolos del comportamiento
+		simTab = simTab.papa
+		# simTab.clean() 
 
 	def agregarATabla(self,tabla):
-		# if type(self.h2) == ArbolExpr.ArbolBin :
-		# 	print("HOLAAAAA")	
 		if self.h2.inst in tabla : 
 			print("Error : No es posible declarar dos veces un comportamiento")
 			exit(1)
@@ -207,10 +209,10 @@ class ArbolInstBotList(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
-		self.h1.check(tipo,simTab,self.linea)
+	def check(self,tipo,simTab,linea,esDec) :
+		self.h1.check(tipo,simTab,self.linea,esDec)
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea)
+			self.h2.check(tipo,simTab,self.linea,esDec)
 		self.linea = linea
 
 	def printArb(self,tabs,usarTabs):
@@ -227,8 +229,8 @@ class ArbolStore(ArbolInst):
 		self.h2 = h2
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
-		self.h2.check(tipo,simTab,self.linea)
+	def check(self,tipo,simTab,linea,esDec) :
+		self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -245,10 +247,14 @@ class ArbolCollect(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if (self.h2 != None) :
-			simTab.insertar(self.h2.elem,tipo,'clean')
-			self.h2.check(tipo,simTab,self.linea)
+			if self.h2.elem in simTab.tabhash : 
+				print("Error: La variable " + self.h2.elem + " ya ha sido declarada")
+				exit(1)
+			simTab.insertar(self.h2.elem,tipo,{'clean':'clean'})
+			self.h2.check(tipo,simTab,self.linea,esDec)
+
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -262,8 +268,8 @@ class ArbolDrop(ArbolInst):
 		self.h2 = h2
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
-		self.h2.check(tipo,simTab,self.linea)
+	def check(self,tipo,simTab,linea,esDec):
+		self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -280,10 +286,13 @@ class ArbolRead(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
-		if (self.h2 != None):
-			simTab.insertar(self.h2.elem,tipo,'clean')
-			self.h2.check(tipo,simTab,self.linea)
+	def check(self,tipo,simTab,linea,esDec) :
+		if (self.h2 != None) :
+			if self.h2.elem in simTab.tabhash : 
+				print("Error: La variable " + self.h2.elem + " ya ha sido declarada")
+				exit(1)
+			simTab.insertar(self.h2.elem,tipo,{'clean','clean'})
+			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -296,7 +305,7 @@ class ArbolSend(ArbolInst):
 		self.h1 = ArbolInst('send',linea)
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		return True
 
 	def printArb(self,tabs,usarTabs):
@@ -312,9 +321,9 @@ class ArbolRecieve(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea):
+	def check(self,tipo,simTab,linea,esDec):
 		if (self.h2 != None):
-			self.h2.check(tipo,simTab,self.linea)
+			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -333,9 +342,9 @@ class ArbolDir(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea) :
+	def check(self,tipo,simTab,linea,esDec) :
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea)
+			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(tabs,True)
@@ -382,8 +391,8 @@ class ArbolActivate(ArbolInst):
 		self.h2 = idList
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h2.check(simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
@@ -398,8 +407,8 @@ class ArbolAdvance(ArbolInst):
 		self.h2 = idList
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h2.check(simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
@@ -414,8 +423,8 @@ class ArbolDeactivate(ArbolInst):
 		self.h2 = idList
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h2.check(simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h2.check(simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs : 
@@ -437,8 +446,8 @@ class ArbolIf(ArbolInst):
 			self.h5 = None
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h2.check("bool",simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h2.check("bool",simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :
@@ -471,8 +480,8 @@ class ArbolWhile(ArbolInst):
 		self.h3 = inst
 		self.linea = linea
 
-	def check(self,simTab,linea):
-		self.h2.check("bool",simTab,self.linea)
+	def check(self,simTab,linea,esDec):
+		self.h2.check("bool",simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :

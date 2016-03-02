@@ -56,7 +56,7 @@ def p_dec_list_init(p):
   simTabActual.agregarDecInit(p[2])
 
   p[0] = ArbolDecListInit(p[2],p.lineno(1))
-  p[0].check(simTabActual,p.lineno(1))
+  p[0].check(simTabActual,p.lineno(1),True)
 
 def p_dec_list(p):
 
@@ -261,23 +261,23 @@ def p_inst_cont(p):
 
   if p[1] == 'activate' :
     p[0] = ArbolActivate(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1))
+    p[0].check(simTabActual,p.lineno(1),False)
   elif p[1] == 'advance' :
     p[0] = ArbolAdvance(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1))
+    p[0].check(simTabActual,p.lineno(1),False)
   elif p[1] == 'deactivate' :
     p[0] = ArbolDeactivate(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1))
+    p[0].check(simTabActual,p.lineno(1),False)
   elif p[1] == 'if' :
     if p[5] == 'else' :
       p[0] = ArbolIf(p[2],p[4],p[7],p.lineno(1))
-      p[0].check(simTabActual,p.lineno(1))
+      p[0].check(simTabActual,p.lineno(1),False)
     else: 
       p[0] = ArbolIf(p[2],p[4],None,p.lineno(1))
-      p[0].check(simTabActual,p.lineno(1))
+      p[0].check(simTabActual,p.lineno(1),False)
   elif p[1] == 'while' :
     p[0] = ArbolWhile(p[2],p[4],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1))
+    p[0].check(simTabActual,p.lineno(1),False)
   else : 
     p[0] = p[1]
 
@@ -324,20 +324,14 @@ def p_expr(p):
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2], p.lineno(1))
     if p[1] == '-':
-      p[0].check("int",simTabActual,p.lineno(1))
+      p[0].check("int",simTabActual,p.lineno(1),False)
     else:
-      p[0].check("bool",simTabActual,p.lineno(1))
+      p[0].check("bool",simTabActual,p.lineno(1),False)
 
   else:
     if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3], p.lineno(2))
-      # if ((p[2] == '/\\') or (p[2] == '\/')
-      # or (p[2] == '=') or (p[2] == '/=')
-      # or (p[2] == '<') or (p[2] == '>')
-      # or (p[2] == '<=') or (p[2] == '>=')) :
-        # p[0].check("bool",simTabActual,p.lineno(1))
-      # else :
-        # p[0].check("int",simTabActual,p.lineno(1))
+
     else :
       p[0] = p[2] 
 
