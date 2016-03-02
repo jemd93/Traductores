@@ -35,7 +35,7 @@ class ArbolExInt(ArbolExpr):
 		if tipo == "int" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 			
 	def printArb(self,tabs,userTabs):
@@ -50,7 +50,7 @@ class ArbolExBool(ArbolExpr):
 		if tipo == "bool" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
@@ -65,7 +65,7 @@ class ArbolExChar(ArbolExpr):
 		if tipo == "char" :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
@@ -77,14 +77,13 @@ class ArbolExId(ArbolExpr):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
+		if esDec and (not('clean' in simTab.obtener(self.elem)[1])) :
+			print("Error en la linea " +str(self.linea)+": La variable "+self.elem+" no ha sido declarada")
+			exit(1)
 		if simTab.obtener(self.elem)[0] == tipo :
-			if esDec and (not('clean' in simTab.obtener(self.elem)[1])) :
-				print("Errror en la linea " +str(self.linea+1-ContBot.numLines)+": la variable "+self.elem+" no ha sido declarada")
-				exit(1)
 			return True
 		else : 
-			print("Error en la linea " +str(self.linea+1-ContBot.numLines)
-				+": la operacion que intenta realizar requiere operadores de tipo "+tipo+ ".")
+			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
@@ -99,7 +98,7 @@ class ArbolExMe(ArbolExpr):
 		if simTab.obtener(self.elem)[0] == tipo :
 			return True
 		else : 
-			print("Error la operacion que intenta realizar requiere operadores de tipo "+tipo+ ". El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 
 	def printArb(self,tabs,userTabs):
@@ -118,15 +117,15 @@ class ArbolUn(ArbolExpr):
 			if self.hijo.check("int",simTab,self.linea) and (tipo == "int"):
 				return True
 			else:
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+				print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo int.")
 				exit(1)
 
 		elif (self.elem == '~'):
 			if self.hijo.check("bool", simTab,self.linea) and (tipo == "bool"):
 				return True
 			else:
-				print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
-				exit(1)		
+				print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo bool.")
+				exit(1)
 
 	def printArb(self,tabs,userTabs):
 		# print(self.elem)
@@ -163,10 +162,10 @@ class ArbolBin(ArbolExpr):
 				and self.hder.check("int",simTab,self.linea,esDec)) :
 					return True
 				else :
-					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo int.")
 					exit(1)
 			else :
-				print("El tipo de la operacion debe ser "+tipo+" pero es int")
+				print("Error en la linea "+str(self.linea)+": El tipo de la operacion debe ser "+tipo+" pero es int")
 				exit(1)
 		elif ((self.elem == '>') or (self.elem == '<')
 		or (self.elem == '<=') or (self.elem == '>=')) : 
@@ -175,10 +174,10 @@ class ArbolBin(ArbolExpr):
 				and self.hder.check("int",simTab,self.linea,esDec)) :
 					return True
 				else :
-					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo int. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo int.")
 					exit(1)
 			else :
-				print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
+				print("Error en la linea "+str(self.linea)+": El tipo de la operacion debe ser "+tipo+" pero es int")
 				exit(1)
 		elif ((self.elem == '/\\') or (self.elem == '\/')) :
 			if tipo=="bool" :
@@ -186,10 +185,10 @@ class ArbolBin(ArbolExpr):
 				and self.hder.check("bool",simTab,self.linea,esDec)) :
 					return True
 				else :
-					print("Error, los operadores de la operacion "+self.elem+" deben ser de tipo bool. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+					print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo bool.")
 					exit(1)
 			else :
-				print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
+				print("Error en la linea "+str(self.linea)+": El tipo de la operacion debe ser "+tipo+" pero es bool")
 				exit(1)
 		elif ((self.elem == '=') or (self.elem == '/=')) :
 			for t in ["int","bool","char"] :
@@ -198,9 +197,9 @@ class ArbolBin(ArbolExpr):
 					and self.hder.check(t,simTab,self.linea,esDec)) :
 						return True
 				else :
-					print("Error, el tipo de la operacion debe ser "+tipo+" pero es bool")
+					print("Error en la linea "+str(self.linea)+": El tipo de la operacion debe ser "+tipo+" pero es bool")
 					exit(1)			
-			print("Error, los operadores de la operacion "+self.elem+" deben ser del mismo tipo. El error se encuentra en la línea " + str(self.linea+1-ContBot.numLines))
+			print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser del mismo tipo.")
 			exit(1)
 
 	def printArb(self,tabs,userTabs):

@@ -55,8 +55,8 @@ def p_dec_list_init(p):
   simTabActual = SimTab(simTabActual)
   simTabActual.agregarDecInit(p[2])
 
-  p[0] = ArbolDecListInit(p[2],p.lineno(1))
-  p[0].check(simTabActual,p.lineno(1),True)
+  p[0] = ArbolDecListInit(p[2],p.lineno(1)+1-ContBot.numLines)
+  p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,True)
 
 def p_dec_list(p):
 
@@ -68,9 +68,9 @@ def p_dec_list(p):
                | DEC '''
 
   if len(p) == 2:
-    p[0] = ArbolDecList(p[1],None,p.lineno(1))
+    p[0] = ArbolDecList(p[1],None,p.lineno(1)+1-ContBot.numLines)
   else:
-    p[0] = ArbolDecList(p[1],p[2],p.lineno(1))
+    p[0] = ArbolDecList(p[1],p[2],p.lineno(1)+1-ContBot.numLines)
 
 def p_dec(p):
 
@@ -79,7 +79,7 @@ def p_dec(p):
 
   ''' DEC : TIPO TkBot ID_LIST COMP_LIST TkEnd '''
 
-  p[0] = ArbolDec(p[1],p[3],p[4],p.lineno(1))
+  p[0] = ArbolDec(p[1],p[3],p[4],p.lineno(1)+1-ContBot.numLines)
 
 def p_tipo(p):
 
@@ -90,7 +90,7 @@ def p_tipo(p):
            | TkChar
            | TkInt '''
 
-  p[0] = ArbolInst(p[1],p.lineno(1))
+  p[0] = ArbolInst(p[1],p.lineno(1)+1-ContBot.numLines)
 
 def p_id_list(p):
 
@@ -101,9 +101,9 @@ def p_id_list(p):
               | ID '''
 
   if len(p) == 2:
-    p[0] = ArbolIdList(p[1],None,p.lineno(1))
+    p[0] = ArbolIdList(p[1],None,p.lineno(1)+1-ContBot.numLines)
   else : 
-    p[0] = ArbolIdList(p[1],p[3],p.lineno(1))
+    p[0] = ArbolIdList(p[1],p[3],p.lineno(1)+1-ContBot.numLines)
 
 
 def p_id(p):
@@ -113,7 +113,7 @@ def p_id(p):
 
   ''' ID : TkIdent '''
 
-  p[0] = ArbolExId(p[1],p.lineno(1))
+  p[0] = ArbolExId(p[1],p.lineno(1)+1-ContBot.numLines)
 
 def p_comp_list(p):
 
@@ -139,7 +139,7 @@ def p_comp(p):
   ''' COMP : TkOn EXPR TkDosPuntos INST_BOT_LIST TkEnd 
            | TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd '''
   
-  p[0] = ArbolComp(p[2],p[4],p.lineno(1))
+  p[0] = ArbolComp(p[2],p[4],p.lineno(1)+1-ContBot.numLines)
 
 def p_state(p):
 
@@ -150,7 +150,7 @@ def p_state(p):
             | TkDeactivation
             | TkDefault '''
 
-  p[0] = ArbolInst(p[1],p.lineno(1))
+  p[0] = ArbolInst(p[1],p.lineno(1)+1-ContBot.numLines)
 
 def p_inst_bot_list(p):
 
@@ -161,9 +161,9 @@ def p_inst_bot_list(p):
                     | INST_BOT '''
 
   if len(p) == 2:
-    p[0] = ArbolInstBotList(p[1],None,p.lineno(1))
+    p[0] = ArbolInstBotList(p[1],None,p.lineno(1)+1-ContBot.numLines)
   else:
-    p[0] = ArbolInstBotList(p[1],p[2],p.lineno(1))
+    p[0] = ArbolInstBotList(p[1],p[2],p.lineno(1)+1-ContBot.numLines)
 
 def p_inst_bot(p):
 
@@ -183,31 +183,31 @@ def p_inst_bot(p):
                | TkRecieve EXPR TkPunto '''
 
   if p[1] == 'store':
-     p[0] = ArbolStore(p[2],p.lineno(1))
+     p[0] = ArbolStore(p[2],p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'collect':
     if len(p) == 3: 
-      p[0] = ArbolCollect(None,p.lineno(1))
+      p[0] = ArbolCollect(None,p.lineno(1)+1-ContBot.numLines)
     else:
-      p[0] = ArbolCollect(p[3],p.lineno(1))
+      p[0] = ArbolCollect(p[3],p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'drop':
-     p[0] = ArbolDrop(p[2],p.lineno(1))
+     p[0] = ArbolDrop(p[2],p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'read':
     if len(p) == 3:
-      p[0] = ArbolRead(None,p.lineno(1))
+      p[0] = ArbolRead(None,p.lineno(1)+1-ContBot.numLines)
     else:
-      p[0] = ArbolRead(p[3],p.lineno(1))
+      p[0] = ArbolRead(p[3],p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'send':
-    p[0] = ArbolSend(p.lineno(1))
+    p[0] = ArbolSend(p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'recieve':
     if p[2] == '.':
-      p[0] = ArbolRecieve(None,p.lineno(1))
+      p[0] = ArbolRecieve(None,p.lineno(1)+1-ContBot.numLines)
     else:
-      p[0] = ArbolRecieve(p[2],p.lineno(1))
+      p[0] = ArbolRecieve(p[2],p.lineno(1)+1-ContBot.numLines)
   else:
     if len(p) == 3: 
-      p[0] = ArbolDir(p[1],None,p.lineno(1))
+      p[0] = ArbolDir(p[1],None,p.lineno(1)+1-ContBot.numLines)
     else:
-      p[0] = ArbolDir(p[1],p[2],p.lineno(1))
+      p[0] = ArbolDir(p[1],p[2],p.lineno(1)+1-ContBot.numLines)
 
 def p_dir(p):
 
@@ -219,7 +219,7 @@ def p_dir(p):
           | TkUp
           | TkDown '''
 
-  p[0] = ArbolInst(p[1],p.lineno(1))
+  p[0] = ArbolInst(p[1],p.lineno(1)+1-ContBot.numLines)
 
 def p_inst_exe(p):
 
@@ -229,7 +229,7 @@ def p_inst_exe(p):
 
   ''' INST_EXE : TkExecute INST_CONT_LIST TkEnd '''
 
-  p[0] = ArbolInstExe(p[2],p.lineno(1))
+  p[0] = ArbolInstExe(p[2],p.lineno(1)+1-ContBot.numLines)
 
 def p_inst_cont_list(p):
 
@@ -260,24 +260,24 @@ def p_inst_cont(p):
   global simTabActual
 
   if p[1] == 'activate' :
-    p[0] = ArbolActivate(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1),False)
+    p[0] = ArbolActivate(p[2],p.lineno(1)+1-ContBot.numLines)
+    p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
   elif p[1] == 'advance' :
-    p[0] = ArbolAdvance(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1),False)
+    p[0] = ArbolAdvance(p[2],p.lineno(1)+1-ContBot.numLines)
+    p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
   elif p[1] == 'deactivate' :
-    p[0] = ArbolDeactivate(p[2],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1),False)
+    p[0] = ArbolDeactivate(p[2],p.lineno(1)+1-ContBot.numLines)
+    p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
   elif p[1] == 'if' :
     if p[5] == 'else' :
-      p[0] = ArbolIf(p[2],p[4],p[7],p.lineno(1))
-      p[0].check(simTabActual,p.lineno(1),False)
+      p[0] = ArbolIf(p[2],p[4],p[7],p.lineno(1)+1-ContBot.numLines)
+      p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
     else: 
-      p[0] = ArbolIf(p[2],p[4],None,p.lineno(1))
-      p[0].check(simTabActual,p.lineno(1),False)
+      p[0] = ArbolIf(p[2],p[4],None,p.lineno(1)+1-ContBot.numLines)
+      p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
   elif p[1] == 'while' :
-    p[0] = ArbolWhile(p[2],p[4],p.lineno(1))
-    p[0].check(simTabActual,p.lineno(1),False)
+    p[0] = ArbolWhile(p[2],p[4],p.lineno(1)+1-ContBot.numLines)
+    p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,False)
   else : 
     p[0] = p[1]
 
@@ -312,25 +312,25 @@ def p_expr(p):
 
   if len(p) == 2:
     if type(p[1]) is int :
-      p[0] = ArbolExInt(p[1],p.lineno(1))
+      p[0] = ArbolExInt(p[1],p.lineno(1)+1-ContBot.numLines)
     elif p[1] == "true" or p[1] == "false" :
-      p[0] = ArbolExBool(p[1],p.lineno(1))
+      p[0] = ArbolExBool(p[1],p.lineno(1)+1-ContBot.numLines)
     elif p[1] == "me" :
-      p[0] = ArbolExMe(p[1],p.lineno(1))
+      p[0] = ArbolExMe(p[1],p.lineno(1)+1-ContBot.numLines)
     elif p[1][0] == '\'' :
-      p[0] = ArbolExChar(p[1],p.lineno(1))
+      p[0] = ArbolExChar(p[1],p.lineno(1)+1-ContBot.numLines)
     elif type(p[1]) is str :
-      p[0] = ArbolExId(p[1],p.lineno(1))
+      p[0] = ArbolExId(p[1],p.lineno(1)+1-ContBot.numLines)
   elif len(p) == 3:
-    p[0] = ArbolUn(p[1], p[2], p.lineno(1))
+    p[0] = ArbolUn(p[1], p[2], p.lineno(1)+1-ContBot.numLines)
     if p[1] == '-':
-      p[0].check("int",simTabActual,p.lineno(1),False)
+      p[0].check("int",simTabActual,p.lineno(1)+1-ContBot.numLines,False)
     else:
-      p[0].check("bool",simTabActual,p.lineno(1),False)
+      p[0].check("bool",simTabActual,p.lineno(1)+1-ContBot.numLines,False)
 
   else:
     if (p[1] != '('):
-      p[0] = ArbolBin(p[2], p[1], p[3], p.lineno(2))
+      p[0] = ArbolBin(p[2], p[1], p[3], p.lineno(2)+1-ContBot.numLines)
 
     else :
       p[0] = p[2] 

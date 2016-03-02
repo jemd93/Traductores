@@ -148,8 +148,8 @@ class ArbolCompList(ArbolInst):
 	def generarTablaComps(self,tabla):
 		if self.h1 != None and self.h2.h1 != None :
 			if self.h1.h2.inst == 'default' :
-				print("El comportamiento 'default' debe estar ") 
-				print("declarado de ultimo en la lista de comportamientos")
+				print("Error en la linea "+str(self.h1.linea)+": El comportamiento 'default'")
+				print("debe ser declarado de ultimo en la lista de comportamientos")
 				exit(1)
 		if (self.h1 != None):
 			self.h1.agregarATabla(tabla)
@@ -182,7 +182,7 @@ class ArbolComp(ArbolInst):
 
 	def agregarATabla(self,tabla):
 		if self.h2.inst in tabla : 
-			print("Error : No es posible declarar dos veces un comportamiento")
+			print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
 			exit(1)
 		tabla[self.h2.inst] = self.h3
 
@@ -250,7 +250,7 @@ class ArbolCollect(ArbolInst):
 	def check(self,tipo,simTab,linea,esDec):
 		if (self.h2 != None) :
 			if self.h2.elem in simTab.tabhash : 
-				print("Error: La variable " + self.h2.elem + " ya ha sido declarada")
+				print("Error en la linea " + str(self.linea)+ ": La variable " + self.h2.elem + " ya ha sido declarada")
 				exit(1)
 			simTab.insertar(self.h2.elem,tipo,{'clean':'clean'})
 			self.h2.check(tipo,simTab,self.linea,esDec)
@@ -289,7 +289,7 @@ class ArbolRead(ArbolInst):
 	def check(self,tipo,simTab,linea,esDec) :
 		if (self.h2 != None) :
 			if self.h2.elem in simTab.tabhash : 
-				print("Error: La variable " + self.h2.elem + " ya ha sido declarada")
+				print("Error en la linea "+str(self.linea)+": La variable " + self.h2.elem + " ya ha sido declarada")
 				exit(1)
 			simTab.insertar(self.h2.elem,tipo,{'clean','clean'})
 			self.h2.check(tipo,simTab,self.linea,esDec)
