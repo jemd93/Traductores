@@ -177,6 +177,8 @@ class ArbolComp(ArbolInst):
 		simTab.clean() # AUN NO FUNCIONA. CHEQUEAR.
 
 	def agregarATabla(self,tabla):
+		# if type(self.h2) == ArbolExpr.ArbolBin :
+		# 	print("HOLAAAAA")	
 		if self.h2.inst in tabla : 
 			print("Error : No es posible declarar dos veces un comportamiento")
 			exit(1)
