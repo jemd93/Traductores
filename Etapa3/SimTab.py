@@ -30,25 +30,25 @@ class SimTab(object):
 		del self.tabhash[clave]
 
 	# Función para obtener la tupla de un identificador en la tabla de símbolos
-	def obtener(self,clave):
+	def obtener(self,clave,linea):
 		if clave in self.tabhash:
 			return self.tabhash[clave]
 		else:
 			if (self.papa != None):
-				return self.papa.obtener(clave)
+				return self.papa.obtener(clave,linea)
 			else:
-				print("Error de contexto: no ha sido realizada la declaración de: " + clave)
+				print("Error en la linea "+str(linea)+": no ha sido realizada la declaración de: " + clave)
 				exit(1)
 
 	# Función para obtener la clave en una tabla de símbolos
-	def obtenerClave(self,clave):
+	def obtenerClave(self,clave,linea):
 		if clave in self.tabhash:
 			return clave
 		else:
 			if (self.papa != None):
-				return self.papa.obtenerClave(clave)
+				return self.papa.obtenerClave(clave,linea)
 			else :
-				print("Error de contexto: no ha sido realizada la declaración de: " + clave)
+				print("Error en la linea "+str(linea)+": no ha sido realizada la declaración de: " + clave)
 				exit(1)
 
 	# FUNCIONES PARA LA CREACION DE LA TABLA DE SIMBOLOS

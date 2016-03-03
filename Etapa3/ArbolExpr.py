@@ -10,6 +10,7 @@
 # -------------------------------------------------
 
 import ContBot
+from SimTab import *
 ContBot.numeroLineas()
 
 # Árbol de Expresiones con un solo elemento
@@ -77,10 +78,10 @@ class ArbolExId(ArbolExpr):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		if esDec and (not('clean' in simTab.obtener(self.elem)[1])) :
+		if esDec and (not('clean' in simTab.obtener(self.elem,self.linea)[1])) :
 			print("Error en la linea " +str(self.linea)+": La variable "+self.elem+" no ha sido declarada")
 			exit(1)
-		if simTab.obtener(self.elem)[0] == tipo :
+		if simTab.obtener(self.elem,self.linea)[0] == tipo :
 			return True
 		else : 
 			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
@@ -95,7 +96,7 @@ class ArbolExMe(ArbolExpr):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		if simTab.obtener(self.elem)[0] == tipo :
+		if simTab.obtener(self.elem,self.linea)[0] == tipo :
 			return True
 		else : 
 			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)

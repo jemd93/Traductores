@@ -33,12 +33,15 @@ def p_programa(p):
 
   global simTabActual
   simTabActual.imprimir()
-  if len(p) == 3 :
-    simTabActual = simTabActual.papa
+  # if len(p) == 3 :
+  #   p[0].simTab = simTabActual
+  #   simTabActual = simTabActual.papa
   print("-----------------------------------------")
 
   if len(p) == 3:
     p[0] = ArbolProgram(p[1],p[2])
+    p[0].simTab = simTabActual
+    simTabActual = simTabActual.papa
   else: 
     p[0] = ArbolProgram(None,p[1])
 
@@ -429,7 +432,7 @@ def main():
 
   if (result != None):
     result.h2.printArb(0,True)
-
+    
   simTabActual.imprimir()
   f.close()
 

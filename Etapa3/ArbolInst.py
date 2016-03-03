@@ -33,6 +33,8 @@ class ArbolProgram(ArbolInst):
 		else:
 			self.h1 = None
 
+		self.simTab = SimTab()
+
 	def printArb(self,tabs,usarTabs):
 		if not(self.h1 is None):
 			self.h2.printArb(tabs,usarTabs)
@@ -114,9 +116,9 @@ class ArbolIdList(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea,esDec) :
-		simTab.obtenerClave(self.h1.elem)
+		simTab.obtenerClave(self.h1.elem,linea)
 		if (self.h2 != None) :
-			self.h2.check(simTab,self.linea,esDec)
+			self.h2.check(simTab,linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		print("\t"*tabs,end="")
@@ -141,9 +143,9 @@ class ArbolCompList(ArbolInst):
 
 	def check(self,tipo,simTab,linea,esDec) :
 		if (self.h1 != None) :
-			self.h1.check(tipo,simTab,self.linea,esDec)
+			self.h1.check(tipo,simTab,linea,esDec)
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea,esDec)
+			self.h2.check(tipo,simTab,linea,esDec)
 
 	def generarTablaComps(self,tabla):
 		if self.h1 != None and self.h2.h1 != None :
@@ -171,12 +173,14 @@ class ArbolComp(ArbolInst):
 		self.h2 = expsta
 		self.h3 = inst
 		self.linea = linea
+		self.simTab = SimTab()
 
 	def check(self,tipo,simTab,linea,esDec) :
 		# Creamos una nueva tabla de simbolos para este comportamiento
 		simTab = SimTab(simTab)
 		self.h3.check(tipo,simTab,self.linea,esDec)
 		# Desempilamos la tabla de simbolos del comportamiento
+		self.simTab = simTab
 		simTab = simTab.papa
 		# simTab.clean() 
 
@@ -210,9 +214,9 @@ class ArbolInstBotList(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec) :
-		self.h1.check(tipo,simTab,self.linea,esDec)
+		self.h1.check(tipo,simTab,linea,esDec)
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea,esDec)
+			self.h2.check(tipo,simTab,linea,esDec)
 		self.linea = linea
 
 	def printArb(self,tabs,usarTabs):

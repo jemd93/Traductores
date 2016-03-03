@@ -1,0 +1,27 @@
+create
+    int bot bot4
+        on deactivation :
+            read as y.
+            store y+1.
+        end
+    	on activation :
+    		collect as x.
+            store x.
+    	end
+    end
+
+execute
+
+    activate bot4.
+
+    if bot4 > 1 : 
+        deactivate bot4.
+    end
+    advance bot4.
+
+    execute
+        if bot4 < 2 :
+            advance bot1.
+        end
+    end
+end 
