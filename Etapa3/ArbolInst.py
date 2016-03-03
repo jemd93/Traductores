@@ -9,6 +9,7 @@
 # Proyecto BOT - Etapa 2 - Árbol de Instrucciones
 # -------------------------------------------------
 
+import ArbolExpr
 from ArbolExpr import *
 from SimTab import *
 from ContBot import *
@@ -149,10 +150,11 @@ class ArbolCompList(ArbolInst):
 
 	def generarTablaComps(self,tabla):
 		if self.h1 != None and self.h2.h1 != None :
-			if self.h1.h2.inst == 'default' :
-				print("Error en la linea "+str(self.h1.linea)+": El comportamiento 'default'")
-				print("debe ser declarado de ultimo en la lista de comportamientos")
-				exit(1)
+			if type(self.h1.h2) != ArbolExpr.ArbolBin :
+				if self.h1.h2.inst == 'default' :
+					print("Error en la linea "+str(self.h1.linea)+": El comportamiento 'default'")
+					print("debe ser declarado de ultimo en la lista de comportamientos")
+					exit(1)
 		if (self.h1 != None):
 			self.h1.agregarATabla(tabla)
 		if (self.h2 != None):
@@ -185,6 +187,13 @@ class ArbolComp(ArbolInst):
 		# simTab.clean() 
 
 	def agregarATabla(self,tabla):
+		if type(self.h2) == ArbolExpr.ArbolBin :
+			self.h2.check("bool",tabla,self.linea,True)
+			if 'advance' in tabla : 
+				print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
+				exit(1)
+			tabla['advance'] = [self.h2,self.h3]
+			return 
 		if self.h2.inst in tabla : 
 			print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
 			exit(1)
