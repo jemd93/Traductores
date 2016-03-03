@@ -1,22 +1,25 @@
-create
+create 
     int bot bot4
         on deactivation :
-            read as y.
-            store y+1.
+            read.
+            store me.
         end
     	on activation :
-    		collect as x.
-            store x.
+    		collect as bot4.
+            store me.
     	end
-        on 1>1 :
+        on me > 2 :
             collect as x.
+            store me.
+        end
+        on me < 3 :
             store x.
         end
-        on default:
-            send.
-        end
-        on 1 < 2:
-            send.
+    end
+
+    bool bot bot3
+        on activation :
+            store me /\ true.
         end
     end
 
@@ -29,3 +32,4 @@ execute
     end
     advance bot4.
 end 
+

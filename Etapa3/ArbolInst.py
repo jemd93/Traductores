@@ -180,6 +180,8 @@ class ArbolComp(ArbolInst):
 	def check(self,tipo,simTab,linea,esDec) :
 		# Creamos una nueva tabla de simbolos para este comportamiento
 		simTab = SimTab(simTab)
+		if type(self.h2) == ArbolExpr.ArbolBin :
+			self.h2.check("bool",simTab,self.linea,True)
 		self.h3.check(tipo,simTab,self.linea,esDec)
 		# Desempilamos la tabla de simbolos del comportamiento
 		self.simTab = simTab
@@ -188,12 +190,11 @@ class ArbolComp(ArbolInst):
 
 	def agregarATabla(self,tabla):
 		if type(self.h2) == ArbolExpr.ArbolBin :
-			self.h2.check("bool",tabla,self.linea,True)
-			if 'advance' in tabla : 
-				print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
-				exit(1)
-			tabla['advance'] = [self.h2,self.h3]
+			if not('advance' in tabla) : 
+				tabla['advance'] = {}
+			tabla['advance'][self.h2] = self.h3
 			return 
+
 		if self.h2.inst in tabla : 
 			print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
 			exit(1)
