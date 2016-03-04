@@ -116,14 +116,14 @@ class ArbolUn(ArbolExpr):
 
 	def check(self,tipo,simTab,linea,esDec):
 		if (self.elem == '-'):
-			if self.hijo.check("int",simTab,self.linea) and (tipo == "int"):
+			if self.hijo.check("int",simTab,self.linea,esDec) and (tipo == "int"):
 				return True
 			else:
 				print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo int.")
 				exit(1)
 
 		elif (self.elem == '~'):
-			if self.hijo.check("bool", simTab,self.linea) and (tipo == "bool"):
+			if self.hijo.check("bool", simTab,self.linea,esDec) and (tipo == "bool"):
 				return True
 			else:
 				print("Error en la linea "+str(self.linea)+": Los operadores de la operacion "+self.elem+" deben ser de tipo bool.")

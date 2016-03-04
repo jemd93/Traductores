@@ -150,7 +150,7 @@ class ArbolCompList(ArbolInst):
 
 	def generarTablaComps(self,tabla):
 		if self.h1 != None and self.h2.h1 != None :
-			if type(self.h1.h2) != ArbolExpr.ArbolBin :
+			if not(isinstance(self.h1.h2,ArbolExpr.ArbolExpr)) :
 				if self.h1.h2.inst == 'default' :
 					print("Error en la linea "+str(self.h1.linea)+": El comportamiento 'default'")
 					print("debe ser declarado de ultimo en la lista de comportamientos")
@@ -180,7 +180,7 @@ class ArbolComp(ArbolInst):
 	def check(self,tipo,simTab,linea,esDec) :
 		# Creamos una nueva tabla de simbolos para este comportamiento
 		simTab = SimTab(simTab)
-		if type(self.h2) == ArbolExpr.ArbolBin :
+		if (isinstance(self.h2,ArbolExpr.ArbolExpr)) :
 			self.h2.check("bool",simTab,self.linea,True)
 		self.h3.check(tipo,simTab,self.linea,esDec)
 		# Desempilamos la tabla de simbolos del comportamiento
@@ -189,7 +189,8 @@ class ArbolComp(ArbolInst):
 		# simTab.clean() 
 
 	def agregarATabla(self,tabla):
-		if type(self.h2) == ArbolExpr.ArbolBin :
+		if (isinstance(self.h2,ArbolExpr.ArbolExpr)):
+			# ESTA AGREGANDO EXPS CON IDS INEXSISTENTES
 			if not('advance' in tabla) : 
 				tabla['advance'] = {}
 			tabla['advance'][self.h2] = self.h3
