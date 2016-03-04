@@ -1,4 +1,4 @@
-# -------------------------------------------------
+# ----------------------------------------------------
 #  Universidad Simón Bolívar
 #  Traductores e interpretadores - CI3725
 #  Prof. Ricardo Monascal
@@ -6,8 +6,9 @@
 #  Autores: Jorge Marcano   # Carnet 11-10566
 #           Meggie Sánchez  # Carnet 11-10939
 #
-# Proyecto BOT - Etapa 2 - Árbol de Expresiones tanto binario como unario
-# -------------------------------------------------
+# Proyecto BOT - Etapa 2 - Árbol de Expresiones 
+#						   tanto binario como unario
+# ----------------------------------------------------
 
 import ContBot
 from SimTab import *

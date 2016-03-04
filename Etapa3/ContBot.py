@@ -28,6 +28,7 @@ def p_programa(p):
 
   # Descripción: Regla principal para iniciar el programa en lenguaje BOT.
   # Parámetros: - p: token
+
   ''' PROGRAM : DEC_LIST_INIT INST_EXE 
               | INST_EXE '''
 
@@ -51,7 +52,6 @@ def p_dec_list_init(p):
   # Parámetros: - p: token
 
   ''' DEC_LIST_INIT : TkCreate DEC_LIST '''
-
 
   global simTabActual
   # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
@@ -378,7 +378,11 @@ precedence = (
   ('left','TkIgual','TkDistinto'),
 )
 
+
 def numeroLineas():
+
+  # Descripción: Método para usar en el cálculo del número de líneas para los
+  #              errores.
 
   global numLines
   numLines = 0
@@ -393,6 +397,7 @@ def numeroLineas():
 def main():
 
   # Descripción: Función del programa principal
+  
   print(" ")
 
   # Variable global para indicar tabla de símbolos actual
@@ -435,8 +440,6 @@ def main():
     
   simTabActual.imprimir()
   f.close()
-
-  # ANALIZADOR DE CONTEXTO
 
 # Programa principal
 if __name__ == "__main__":
