@@ -1,4 +1,4 @@
-$- Deberia fallar porque en "bot4 = bot1" ese bot1 es int porque es del alcanze anterior-$
+$- Deberia correr -$
 create
 	bool bot bot1,bot4
 		on activation :
@@ -9,6 +9,13 @@ create
 			right true.
 			collect as x.
 			store x \/ ~(true).
+		end
+		on me /\ ~(me):
+			left false.
+			drop false.
+			read as x.
+			send.
+			store x.
 		end
 	end
 
@@ -36,10 +43,18 @@ execute
 	execute 
 		execute 
 			activate bot1.
-			while ((1 < 3) /\ (3 > 2)) \/ (bot4 = bot1):
+			while ((1 < 3) /\ (3 > 2)) \/ (bot4 /= false):
 				advance bot4.
 			end
 			deactivate bot4.
+		end
+		execute 
+			activate bot1,bot4.
+			deactivate bot4.
+			advance bot1.
+			if bot1 > bot2 :
+				advance bot2.
+			end
 		end
 		activate bot1,bot3,bot2.
 		if  bot4 \/ true :

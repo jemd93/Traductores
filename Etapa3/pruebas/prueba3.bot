@@ -1,3 +1,4 @@
+$- Deberia correr -$
 execute
     create 
         bool bot bot1, bot2

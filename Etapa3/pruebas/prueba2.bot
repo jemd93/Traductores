@@ -1,3 +1,4 @@
+$- Deberia correr -$
 create
     int bot bot4
         on deactivation :
@@ -21,7 +22,7 @@ execute
 
     execute
         if bot4 < 2 :
-            advance bot1.
+            advance bot4.
         end
     end
 end 

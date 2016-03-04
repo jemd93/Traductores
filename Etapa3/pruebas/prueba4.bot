@@ -1,3 +1,4 @@
+$- Debe dar error porque el x en "on me < 3" no esta declarado -$
 create 
     int bot bot4
         on deactivation :

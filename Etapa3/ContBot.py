@@ -326,11 +326,6 @@ def p_expr(p):
       p[0] = ArbolExId(p[1],p.lineno(1)+1-ContBot.numLines)
   elif len(p) == 3:
     p[0] = ArbolUn(p[1], p[2], p.lineno(1)+1-ContBot.numLines)
-    if p[1] == '-':
-      p[0].check("int",simTabActual,p.lineno(1)+1-ContBot.numLines,False)
-    else:
-      p[0].check("bool",simTabActual,p.lineno(1)+1-ContBot.numLines,False)
-
   else:
     if (p[1] != '('):
       p[0] = ArbolBin(p[2], p[1], p[3], p.lineno(2)+1-ContBot.numLines)

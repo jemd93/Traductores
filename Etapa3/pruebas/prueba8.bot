@@ -1,3 +1,4 @@
+$- Deberia correr -$
 create
 	int bot hola
 		on activation:

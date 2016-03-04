@@ -181,7 +181,9 @@ class ArbolComp(ArbolInst):
 		# Creamos una nueva tabla de simbolos para este comportamiento
 		simTab = SimTab(simTab)
 		if (isinstance(self.h2,ArbolExpr.ArbolExpr)) :
-			self.h2.check("bool",simTab,self.linea,True)
+			if not(self.h2.check("bool",simTab,self.linea,True)):
+				print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo bool")
+				exit(1)
 		self.h3.check(tipo,simTab,self.linea,esDec)
 		# Desempilamos la tabla de simbolos del comportamiento
 		self.simTab = simTab
@@ -245,8 +247,9 @@ class ArbolStore(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec) :
-		self.h2.check(tipo,simTab,self.linea,esDec)
-
+		if not(self.h2.check(tipo,simTab,self.linea,esDec)):
+			print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
+			exit(1)
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		self.h2.printArb(0,True)
@@ -284,7 +287,9 @@ class ArbolDrop(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		self.h2.check(tipo,simTab,self.linea,esDec)
+		if not(self.h2.check(tipo,simTab,self.linea,esDec)):
+			print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
+			exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -338,7 +343,9 @@ class ArbolRecieve(ArbolInst):
 
 	def check(self,tipo,simTab,linea,esDec):
 		if (self.h2 != None):
-			self.h2.check(tipo,simTab,self.linea,esDec)
+			if not(self.h2.check(tipo,simTab,self.linea,esDec)):
+				print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
+				exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -462,7 +469,9 @@ class ArbolIf(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea,esDec):
-		self.h2.check("bool",simTab,self.linea,esDec)
+		if not(self.h2.check("bool",simTab,self.linea,esDec)):
+			print("Error en la linea "+str(self.linea)+" : La expresion debe ser de tipo bool")
+			exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :
@@ -496,7 +505,9 @@ class ArbolWhile(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea,esDec):
-		self.h2.check("bool",simTab,self.linea,esDec)
+		if not(self.h2.check("bool",simTab,self.linea,esDec)):
+			print("Error en la linea " + str(self.linea) + " : la expresion debe ser de tipo bool")
+			exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		if usarTabs :
