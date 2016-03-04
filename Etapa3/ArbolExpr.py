@@ -55,6 +55,7 @@ class ArbolExBool(ArbolExpr):
 			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
 
+
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
@@ -102,7 +103,7 @@ class ArbolExMe(ArbolExpr):
 		else : 
 			print("Error en la linea "+str(self.linea)+": La operacion que intenta realizar requiere operadores de tipo "+tipo)
 			exit(1)
-
+			
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 

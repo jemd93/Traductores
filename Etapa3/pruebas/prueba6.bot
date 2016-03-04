@@ -1,0 +1,25 @@
+create
+	bool bot bot1,bot2 
+		on activation :
+			store true /\ false.
+			send.
+		end
+		on me :
+			right true.
+			collect as x.
+			store x \/ ~(true).
+		end
+	end
+
+execute
+	activate bot1.
+	activate bot2.
+	if (true/\false) = (bot1/\bot2) :
+		deactivate bot1.
+	end
+	if bot1 /\ ~(bot2) :
+		deactivate bot2.
+	else :
+		deactivate bot1.
+	end
+end
