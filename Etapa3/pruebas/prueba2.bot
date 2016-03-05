@@ -2,7 +2,7 @@ $- Deberia correr -$
 create
     int bot bot4
         on deactivation :
-            read as y.
+            left -2.
             store y+1.
         end
     	on activation :

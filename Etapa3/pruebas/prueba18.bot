@@ -1,0 +1,49 @@
+$- Deberia correr -$
+create
+	int bot meg
+		on activation:
+			left 1.
+		end
+	end
+	bool bot jorge
+		on deactivation:
+			right 100000000000000000000000000000000000000000000000000000000000.
+		end
+		on false:
+			store true.
+		end
+		on default:
+			collect as x.
+			send.
+		end
+	end
+execute
+	while 10 /= 3:
+		execute
+			activate meg,jorge.
+			deactivate meg,jorge.
+			execute
+				create
+					char bot trad
+						on default:
+							store 'f'.
+						end
+					end
+				execute
+					activate meg.
+					while true:
+						advance trad.
+					end
+					execute
+						activate jorge.
+						if (true /\ false) \/ (true /\ false):
+							deactivate meg.
+						else:
+							deactivate jorge.
+						end
+					end
+				end
+			end
+		end
+	end
+end
