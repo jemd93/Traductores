@@ -5,20 +5,19 @@ create
 			store true /\ false.
 			send.
 		end
-		on me :
-			right true.
+		on me /\ false :
+			right 1.
 			collect as x.
 			store x \/ ~(true).
 		end
 		on me /\ ~(me):
-			left false.
+			left 1.
 			drop false.
 			read as x.
 			send.
 			store x.
 		end
 	end
-
 execute
 	activate bot1.
 	activate bot4.

@@ -208,9 +208,9 @@ def p_inst_bot(p):
       p[0] = ArbolRecieve(p[2],p.lineno(1)+1-ContBot.numLines)
   else:
     if len(p) == 3: 
-      p[0] = ArbolDir(p[1],None,p.lineno(1)+1-ContBot.numLines)
+      p[0] = ArbolDir(p[1],None,p.lineno(2)+1-ContBot.numLines)
     else:
-      p[0] = ArbolDir(p[1],p[2],p.lineno(1)+1-ContBot.numLines)
+      p[0] = ArbolDir(p[1],p[2],p.lineno(3)+1-ContBot.numLines)
 
 def p_dir(p):
 

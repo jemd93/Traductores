@@ -366,7 +366,9 @@ class ArbolDir(ArbolInst):
 
 	def check(self,tipo,simTab,linea,esDec) :
 		if (self.h2 != None) :
-			self.h2.check(tipo,simTab,self.linea,esDec)
+			if not(self.h2.check("int",simTab,self.linea,esDec)):
+				print("Error en la linea "+str(self.linea)+" : La expresion debe ser de tipo int")
+				exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(tabs,True)
