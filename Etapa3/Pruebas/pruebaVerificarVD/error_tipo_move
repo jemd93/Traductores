@@ -1,0 +1,28 @@
+create
+    bool bot contador
+        on activation:
+            store true.
+            read as x.
+            store false.
+            read as y.
+            collect as z.
+        end
+        on true:
+            store false.
+        end
+        on deactivation:
+            store false.
+        end
+        on default:
+            left.
+            right 6.
+            down me.
+            store true.
+        end
+   end
+
+execute
+    $- Asignar al contador
+    el valor 35 -$
+    activate contador.
+end

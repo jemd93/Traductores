@@ -33,11 +33,6 @@ def p_programa(p):
               | INST_EXE '''
 
   global simTabActual
-  simTabActual.imprimir()
-  # if len(p) == 3 :
-  #   p[0].simTab = simTabActual
-  #   simTabActual = simTabActual.papa
-  print("-----------------------------------------")
 
   if len(p) == 3:
     p[0] = ArbolProgram(p[1],p[2])

@@ -1,0 +1,24 @@
+create
+    char bot contador
+        on activation:
+            read as x.
+            read as y.
+            collect as z.
+            store 't'.
+        end
+        on true:
+            store 'x'.
+        end
+        on deactivation:
+            store 'y'.
+        end
+        on default:
+            up 'n'. $$ ERROR DE TIPOS
+        end
+   end
+
+execute
+    $- Asignar al contador
+    el valor 35 -$
+    activate contador.
+end

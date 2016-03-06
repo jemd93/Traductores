@@ -1,0 +1,26 @@
+create
+    bool bot contador
+        on activation:
+            store true.
+            read as x.
+            store false.
+            read as y.
+            collect as z.
+            store 't'. $$ERROR DE TIPOS
+        end
+        on true:
+            store false.
+        end
+        on deactivation:
+            store false.
+        end
+        on default:
+            store true.
+        end
+   end
+
+execute
+    $- Asignar al contador
+    el valor 35 -$
+    activate contador.
+end

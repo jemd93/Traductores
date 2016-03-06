@@ -1,0 +1,68 @@
+$$ ERROR CON EXPRESIONES
+create 
+
+int bot a,b,c,d,f,g 
+   on deactivation:
+       read as x.
+       read as p.
+       collect as a.
+       collect as b.
+       collect as c.
+       collect as d.
+       left -(3+4)+a*b%c*d.
+
+    end
+end
+
+bool bot m,z 
+     on deactivation:
+          collect as c.
+     end 
+     on activation:
+         collect as a.
+         collect as b.
+         store a.
+         up (a/\true\/~(a=b))/=(true/\false). $$ Error de tipos
+     end
+end 
+
+execute
+	activate d.
+   create
+      int bot bot1,bot2 
+      on activation:
+          store me+1.
+          read as y.
+      end
+   end
+   execute
+       deactivate a.
+       if false/\true\/false:
+           activate bot1.
+       end
+      create
+          int bot ae,be,ce
+             on activation:
+                 read as x.
+                 read as p.
+             end
+
+             on true /\ false:
+                 read as t.
+             end
+
+            on activation:
+                read as c.
+                read as m.
+            end
+          end
+       execute
+           activate bot1,a,b,c,d,ae.
+           activate be.
+           activate bot1.
+           
+       end
+       activate bot1.
+   end 
+   advance a.
+end

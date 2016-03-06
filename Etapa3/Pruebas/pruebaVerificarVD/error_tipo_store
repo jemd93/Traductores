@@ -1,0 +1,26 @@
+create
+    int bot contador
+        on activation:
+            store 35.
+            read as x.
+            store 20.
+            read as y.
+            collect as z.
+            store (me < 100) \/ true. $$ ERROR DE TIPOS
+        end
+        on true:
+            store 35.
+        end
+        on deactivation:
+            store 35.
+        end
+        on default:
+            store 35.
+        end
+   end
+
+execute
+    $- Asignar al contador
+    el valor 35 -$
+    activate contador.
+end
