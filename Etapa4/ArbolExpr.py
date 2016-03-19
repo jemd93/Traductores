@@ -28,6 +28,9 @@ class ArbolExpr(object):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
+	def evaluate(self):
+		return self.elem
+
 class ArbolExInt(ArbolExpr):
 	def __init__(self,x,linea):
 		self.elem = x
@@ -39,6 +42,9 @@ class ArbolExInt(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
+	def evaluate(self):
+		return self.elem		
+
 class ArbolExBool(ArbolExpr):
 	def __init__(self,x,linea):
 		self.elem = x
@@ -47,9 +53,11 @@ class ArbolExBool(ArbolExpr):
 	def check(self,tipo,simTab,linea,esDec):
 		return tipo=="bool"
 
-
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
+
+	def evaluate(self):
+		return self.elem
 
 class ArbolExChar(ArbolExpr):
 	def __init__(self,x,linea):
@@ -61,6 +69,9 @@ class ArbolExChar(ArbolExpr):
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
+
+	def evaluate(self):
+		return self.elem
 
 class ArbolExId(ArbolExpr):
 	def __init__(self,x,linea):
@@ -76,6 +87,9 @@ class ArbolExId(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
+	def evaluate(self):
+		return simTab.obtener(self.elem,self.linea)[0][1]
+
 class ArbolExMe(ArbolExpr):
 	def __init__(self,x,linea):
 		self.elem = x
@@ -86,6 +100,9 @@ class ArbolExMe(ArbolExpr):
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
+
+	def evaluate(self):
+		return simTab.obtener(self.elem,self.linea)[0][1]
 
 # Árbol unario para el operador de negación
 # o el negativo unario aritmético
@@ -131,8 +148,15 @@ class ArbolUn(ArbolExpr):
 				print("Negacion")
 			print("\t"*tabs,end="")
 			print("- operador : ",end="")
-			self.hijo.printArb(tabs+1,True)		
-				
+			self.hijo.printArb(tabs+1,True)	
+
+	def evaluate(self):
+
+        if (self.elem == '-'):
+        	return -self.hijo.evaluate()
+        elif (self.elem == '~'):
+        	return not(self.hijo.evaluate())
+
 # Árbol binario para el resto de las
 # expresiones, tanto aritméticas como booleanas
 class ArbolBin(ArbolExpr):
@@ -248,3 +272,44 @@ class ArbolBin(ArbolExpr):
 			print("- operador derecho: ",end="")
 		if self.hder is not None:
 			self.hder.printArb(tabs+1,True)
+
+	def evaluate(self):
+
+		if (self.elem == '+'): 
+			return self.hizq.evaluate() + self.hder.evaluate()
+
+		elif (self.elem == '-'):
+			return self.hizq.evaluate() - self.hder.evaluate()
+
+		elif (self.elem == '*'):
+			return self.hizq.evaluate() * self.hder.evaluate()
+
+		elif (self.elem == '/'):
+			return self.hizq.evaluate() / self.hder.evaluate()
+
+		elif (self.elem == '%'):
+			return self.hizq.evaluate() % self.hder.evaluate()
+
+		elif (self.elem == '/\\'):
+			return self.hizq.evaluate() and self.hder.evaluate()
+
+		elif (self.elem == '\/'):
+			return self.hizq.evaluate() or self.hder.evaluate()
+
+		elif (self.elem == '='):
+			return self.hizq.evaluate() == self.hder.evaluate()
+
+		elif (self.elem == '>'):
+			return self.hizq.evaluate() > self.hder.evaluate()
+
+		if (self.elem == '<'):
+			return self.hizq.evaluate() < self.hder.evaluate()
+
+		if (self.elem == '<='):
+			return self.hizq.evaluate() <= self.hder.evaluate()
+
+		if (self.elem == '>='):
+			return self.hizq.evaluate() >= self.hder.evaluate()
+
+		if (self.elem == '/='):
+			return self.hizq.evaluate() /= self.hder.evaluate()
