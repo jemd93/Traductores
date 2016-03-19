@@ -88,7 +88,7 @@ class ArbolDec(ArbolInst):
 		self.linea = linea
 
 	def check(self,simTab,linea,esDec) :
-		simTab.insertar("me",self.h1.inst,{})
+		simTab.insertar("me",[self.h1.inst,None,2,0,0],{})
 		self.h4.check(self.h1.inst,simTab,self.linea,esDec)
 		simTab.eliminar("me")
 
@@ -270,7 +270,7 @@ class ArbolCollect(ArbolInst):
 			if self.h2.elem in simTab.tabhash : 
 				print("Error en la linea " + str(self.linea)+ ": La variable " + self.h2.elem + " ya ha sido declarada")
 				exit(1)
-			simTab.insertar(self.h2.elem,tipo,{'clean':'clean'})
+			simTab.insertar(self.h2.elem,[tipo,None,2,0,0],{'clean':'clean'})
 			self.h2.check(tipo,simTab,self.linea,esDec)
 
 
@@ -311,7 +311,7 @@ class ArbolRead(ArbolInst):
 			if self.h2.elem in simTab.tabhash : 
 				print("Error en la linea "+str(self.linea)+": La variable " + self.h2.elem + " ya ha sido declarada")
 				exit(1)
-			simTab.insertar(self.h2.elem,tipo,{'clean','clean'})
+			simTab.insertar(self.h2.elem,[tipo,None,2,0,0],{'clean','clean'})
 			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):

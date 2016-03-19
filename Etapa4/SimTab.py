@@ -25,15 +25,15 @@ class SimTab(object):
 		self.tabhash = {}
 		self.papa = papa
 
-	def insertar(self,clave,tipo,comps=None):
+	def insertar(self,clave,info,comps=None):
 
   		# Descripción: Función para insertar en la tabla de símbolos.
   		# Parámetros: - clave: identificador bot declarado.
-  		#			  - tipo:  tipo del bot declarado.
+  		#			  - info:  Arreglo de la forma [tipo,valor,estado,posX,posY]
   		# 			  - comps: futura tabla hash que contiene los 
   		# 					   comportamientos de un bot. Puede ser vacía o no.		
 
-		self.tabhash[clave] = [tipo,comps]
+		self.tabhash[clave] = [info,comps]
 
 	def eliminar(self,clave):
 
@@ -113,7 +113,7 @@ class SimTab(object):
 			exit(1)
 		else :
 			diccComps = comps.generarTablaComps({})
-			self.tabhash[lista.h1.elem] = [tipo.inst,diccComps] 
+			self.tabhash[lista.h1.elem] = [[tipo.inst,None,2,0,0],diccComps] 
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
 

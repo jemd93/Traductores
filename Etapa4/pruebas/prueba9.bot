@@ -1,0 +1,11 @@
+$- Deberia dar error porque x fue declarada dos veces dentro de "on deactivation" -$
+create
+	char bot bot1
+		on deactivation :
+			read as x.
+			collect as x.
+		end
+	end
+execute
+	activate bot1.
+end

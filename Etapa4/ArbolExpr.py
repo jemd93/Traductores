@@ -71,7 +71,7 @@ class ArbolExId(ArbolExpr):
 		if esDec and (not('clean' in simTab.obtener(self.elem,self.linea)[1])) :
 			print("Error en la linea " +str(self.linea)+": La variable "+self.elem+" no ha sido declarada")
 			exit(1)
-		return simTab.obtener(self.elem,self.linea)[0] == tipo
+		return simTab.obtener(self.elem,self.linea)[0][0] == tipo
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
@@ -82,7 +82,7 @@ class ArbolExMe(ArbolExpr):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		return simTab.obtener(self.elem,self.linea)[0] == tipo 
+		return simTab.obtener(self.elem,self.linea)[0][0] == tipo 
 
 	def printArb(self,tabs,userTabs):
 		print(self.elem)

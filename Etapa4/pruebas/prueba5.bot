@@ -1,0 +1,34 @@
+$- Deberia correr -$
+create
+    int bot bot4
+        on deactivation :
+            read as y.
+            store y+1.
+        end
+    	on activation :
+    		collect as x.
+            store x.
+    	end
+        on ~(true)/\false:
+            send.
+        end
+        on 3 > 1 :
+            send.
+        end
+    end
+
+execute
+
+    activate bot4.
+
+    if bot4 > 1 : 
+        deactivate bot4.
+    end
+    advance bot4.
+
+    execute
+        if bot4 < 2 :
+            advance bot4.
+        end
+    end
+end 

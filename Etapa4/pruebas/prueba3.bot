@@ -1,0 +1,24 @@
+$- Deberia correr -$
+execute
+    create 
+        bool bot bot1, bot2
+            on activation :
+                collect as bot2.
+                store bot2.
+            end
+            on default :
+                store true.
+            end
+        end
+    execute 
+        activate bot1,bot2.
+        if 3 < 2 :
+            advance bot1.
+        end
+        execute 
+            advance bot1.
+            advance bot1,bot2.
+        end
+    end
+
+end 
