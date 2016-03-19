@@ -1,0 +1,28 @@
+$- Deberia correr -$
+create
+	bool bot bot1,bot2,bot3,bot4
+		on activation :
+			store me.
+		end
+		on true:
+			collect as x.
+			store x /\ true.
+		end
+		on default:
+			read as z.
+			read as w.
+			drop z.
+			drop w.
+		end
+	end
+execute
+	activate bot1,bot2,bot3,bot4.
+	execute
+		deactivate bot2,bot3.
+		execute
+			while false /\ true:
+				advance bot2.
+			end
+		end
+	end
+end

@@ -1,0 +1,44 @@
+$- Deberia correr -$
+create
+	bool bot bot1
+		on deactivation :
+			read as x.
+			collect as y.
+			store x/\y\/false.
+		end
+	end
+execute
+	activate bot1.
+	create
+		char bot bot1
+			on activation :
+				send.
+			end
+		end
+	execute 
+		if bot1 = 'h' :
+			advance bot1.
+		end
+		if (bot1 /= 'g') /\ (bot1 /= 'k'):
+			deactivate bot1.
+		end
+	end
+	create
+		int bot bot1
+			on deactivation :
+				store 1.
+			end
+			on default :
+				send.
+			end
+		end
+	execute
+		while bot1 > 1 :
+			advance bot1.
+		end
+	end
+	if bot1 /\ ~(true):
+		advance bot1.
+	end
+	deactivate bot1.
+end

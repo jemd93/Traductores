@@ -1,0 +1,39 @@
+$- Deberia correr -$
+create
+    int bot bot4
+        on deactivation :
+            read as y.
+            store y+1.
+        end
+    	on activation :
+    		collect as x.
+            store x.
+    	end
+    end
+
+execute
+
+    activate bot4.
+
+    if bot4 > 1 : 
+        deactivate bot4.
+    end
+    advance bot4.
+
+    create 
+        bool bot bot1, bot2
+            on activation :
+                collect as bot2.
+                store bot2.
+            end
+            on default :
+                store true.
+            end
+        end
+    execute 
+        activate bot1,bot2.
+        if bot4 < 2 :
+            advance bot1.
+        end
+    end
+end 
