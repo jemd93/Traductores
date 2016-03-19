@@ -101,7 +101,8 @@ class ArbolDec(ArbolInst):
 	def check(self,simTab,linea,esDec) :
 		simTab.insertar("me",[self.h1.inst,None,2,0,0],{})
 		self.h4.check(self.h1.inst,simTab,self.linea,esDec)
-		simTab.eliminar("me")
+		# OJO ESTO ESTABA DESCOMENTADO ANTES.
+		# simTab.eliminar("me")
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -274,8 +275,7 @@ class ArbolStore(ArbolInst):
 		self.h2.printArb(0,True)
 
 	def run(self,simTab,var):
-		simTab.updateValue(var,self.h2.evaluate(simTab))
-		simTab.imprimir()
+		simTab.updateValue(var,self.h2.evaluate(simTab,var))
 
 # Árbol para la instrucción Collect
 # con caso Collect y caso Collect as ID
@@ -310,13 +310,22 @@ class ArbolDrop(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		if not(self.h2.check(tipo,simTab,self.linea,esDec)):
+		if (self.h2.check("int",simTab,self.linea,esDec) or self.h2.check("bool",simTab,self.linea,esDec)
+		or self.h2.check("char",simTab,self.linea,esDec)):
+			return
+		else :
 			print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
 			exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		self.h2.printArb(0,True)
+
+	def run(self,simTab,var):
+		global superficie
+		# OJO DEVUELVE "'a'" en vez de 'a'
+		superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])] = self.h2.evaluate(simTab,var)
+		print(superficie)
 
 # Árbol para la instrucción Entrada y Salida
 # con caso Read y caso Read as ID
@@ -353,6 +362,9 @@ class ArbolSend(ArbolInst):
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
+
+	def run(self,simTab,var):
+		print(simTab.obtener(var,self.linea)[0][1])
 
 # Árbol para la instrucción Recieve
 class ArbolRecieve(ArbolInst):
