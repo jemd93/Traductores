@@ -24,6 +24,8 @@ from SimTab import *
 
 tokens = BotLexer.tokens
 
+
+
 def p_programa(p):
 
   # Descripción: Regla principal para iniciar el programa en lenguaje BOT.
@@ -384,6 +386,7 @@ def numeroLineas():
   numLines = len(finput.split('\n'))
   return numLines
 
+
 def main():
 
   # Descripción: Función del programa principal
@@ -425,10 +428,14 @@ def main():
   parser = yacc.yacc()
   result = parser.parse(finput, lexer=botlex.lexer)
 
+  print("--------------------- PRINT DEL PROGRAMA   ---------------------------")
   if (result != None):
     result.h2.printArb(0,True)
     
-  simTabActual.imprimir()
+  print("")
+  print("--------------------- CORRIDA DEL PROGRAMA ---------------------------")
+  # result.simTab.imprimir()
+  result.run()
   f.close()
 
 # Programa principal

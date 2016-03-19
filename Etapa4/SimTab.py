@@ -117,10 +117,27 @@ class SimTab(object):
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
 
+	def updateValue(self,clave,val):
+		if clave in self.tabhash : 
+			self.tabhash[clave][0][1] = val
+		else :
+			if (self.papa != None):
+				self.papa.updateValue(clave,val)
+
+	# FUNCIONES DE CAMBIOS EN LA TABLA DURANTE EJECUCION
+
+	# Funcion para activar una lista de IDs
+	def activate(self,lista):
+		self.tabhash[lista.h1.elem][0][2] = 1
+		# El run de aqui es el run del ArbolComp asociado a activate
+		self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
+		if lista.h2 != None :
+			activar(lista.h2)
+
+
 	def imprimir(self):
 
 		# Descripción: Método para imprimir la/las tablas de hashs.  
-
 		print(self.tabhash)
 		if (self.papa != None) :
 			self.papa.imprimir()

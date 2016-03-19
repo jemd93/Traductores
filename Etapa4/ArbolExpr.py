@@ -28,7 +28,7 @@ class ArbolExpr(object):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 		return self.elem
 
 class ArbolExInt(ArbolExpr):
@@ -42,7 +42,7 @@ class ArbolExInt(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 		return self.elem		
 
 class ArbolExBool(ArbolExpr):
@@ -56,8 +56,11 @@ class ArbolExBool(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
-		return self.elem
+	def evaluate(self,simTab):
+		if (self.elem == "true"):
+			return True
+		else :
+			return False
 
 class ArbolExChar(ArbolExpr):
 	def __init__(self,x,linea):
@@ -70,7 +73,7 @@ class ArbolExChar(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 		return self.elem
 
 class ArbolExId(ArbolExpr):
@@ -87,7 +90,7 @@ class ArbolExId(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 		return simTab.obtener(self.elem,self.linea)[0][1]
 
 class ArbolExMe(ArbolExpr):
@@ -101,7 +104,7 @@ class ArbolExMe(ArbolExpr):
 	def printArb(self,tabs,userTabs):
 		print(self.elem)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 		return simTab.obtener(self.elem,self.linea)[0][1]
 
 # Árbol unario para el operador de negación
@@ -134,7 +137,6 @@ class ArbolUn(ArbolExpr):
 				return False
 
 	def printArb(self,tabs,userTabs):
-		# print(self.elem)
 		if self.hijo is not None:
 			if (self.elem == '-'): 
 				print("EXP UNARIA ARITMETICA")
@@ -150,12 +152,11 @@ class ArbolUn(ArbolExpr):
 			print("- operador : ",end="")
 			self.hijo.printArb(tabs+1,True)	
 
-	def evaluate(self):
-
-        if (self.elem == '-'):
-        	return -self.hijo.evaluate()
-        elif (self.elem == '~'):
-        	return not(self.hijo.evaluate())
+	def evaluate(self,simTab):
+		if (self.elem == '-'):
+			return -(self.hijo.evaluate(simTab))
+		elif (self.elem == '~'):
+			return not(self.hijo.evaluate(simTab))
 
 # Árbol binario para el resto de las
 # expresiones, tanto aritméticas como booleanas
@@ -273,43 +274,43 @@ class ArbolBin(ArbolExpr):
 		if self.hder is not None:
 			self.hder.printArb(tabs+1,True)
 
-	def evaluate(self):
+	def evaluate(self,simTab):
 
 		if (self.elem == '+'): 
-			return self.hizq.evaluate() + self.hder.evaluate()
+			return self.hizq.evaluate(simTab) + self.hder.evaluate(simTab)
 
 		elif (self.elem == '-'):
-			return self.hizq.evaluate() - self.hder.evaluate()
+			return self.hizq.evaluate(simTab) - self.hder.evaluate(simTab)
 
 		elif (self.elem == '*'):
-			return self.hizq.evaluate() * self.hder.evaluate()
+			return self.hizq.evaluate(simTab) * self.hder.evaluate(simTab)
 
 		elif (self.elem == '/'):
-			return self.hizq.evaluate() / self.hder.evaluate()
+			return self.hizq.evaluate(simTab) / self.hder.evaluate(simTab)
 
 		elif (self.elem == '%'):
-			return self.hizq.evaluate() % self.hder.evaluate()
+			return self.hizq.evaluate(simTab) % self.hder.evaluate(simTab)
 
 		elif (self.elem == '/\\'):
-			return self.hizq.evaluate() and self.hder.evaluate()
+			return self.hizq.evaluate(simTab) and self.hder.evaluate(simTab)
 
 		elif (self.elem == '\/'):
-			return self.hizq.evaluate() or self.hder.evaluate()
+			return self.hizq.evaluate(simTab) or self.hder.evaluate(simTab)
 
 		elif (self.elem == '='):
-			return self.hizq.evaluate() == self.hder.evaluate()
+			return self.hizq.evaluate(simTab) == self.hder.evaluate(simTab)
 
 		elif (self.elem == '>'):
-			return self.hizq.evaluate() > self.hder.evaluate()
+			return self.hizq.evaluate(simTab) > self.hder.evaluate(simTab)
 
 		if (self.elem == '<'):
-			return self.hizq.evaluate() < self.hder.evaluate()
+			return self.hizq.evaluate(simTab) < self.hder.evaluate(simTab)
 
 		if (self.elem == '<='):
-			return self.hizq.evaluate() <= self.hder.evaluate()
+			return self.hizq.evaluate(simTab) <= self.hder.evaluate(simTab)
 
 		if (self.elem == '>='):
-			return self.hizq.evaluate() >= self.hder.evaluate()
+			return self.hizq.evaluate(simTab) >= self.hder.evaluate(simTab)
 
 		if (self.elem == '/='):
-			return self.hizq.evaluate() /= self.hder.evaluate()
+			return self.hizq.evaluate(simTab) != self.hder.evaluate(simTab)

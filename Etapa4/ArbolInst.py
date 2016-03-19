@@ -14,6 +14,10 @@ from ArbolExpr import *
 from SimTab import *
 from ContBot import *
 
+# OJO REVISAR
+global superficie
+superficie = {}
+
 # ArbolInst inicial. Como todas las hojas
 # son instrucciones (palabras reservadas) o 
 # variables, aquí entran todos esos casos.
@@ -24,6 +28,9 @@ class ArbolInst(object):
 
 	def printArb(self,tabs,usarTabs):
 		print(self.inst)
+
+	def run(self):
+		return
 
 # Árbol para el programa principal o los subprogramas
 class ArbolProgram(ArbolInst):
@@ -41,6 +48,10 @@ class ArbolProgram(ArbolInst):
 			self.h2.printArb(tabs,usarTabs)
 		else:
 			self.h2.printArb(tabs,usarTabs)
+
+	def run(self):
+		self.h2.run(self.simTab)
+
 
 # Arbol para el inicio de las listas de declaraciones
 class ArbolDecListInit(ArbolInst):
@@ -201,12 +212,15 @@ class ArbolComp(ArbolInst):
 		if self.h2.inst in tabla : 
 			print("Error en la linea "+str(self.linea)+" : No es posible declarar dos veces un comportamiento")
 			exit(1)
-		tabla[self.h2.inst] = self.h3
+		tabla[self.h2.inst] = self
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		self.h2.printArb(0,True)
 		self.h3.printArb(0,True)
+
+	def run(self,var):
+		self.h3.run(self.simTab,var)
 
 # Árbol de estados en los que puede estar un robot
 class ArbolState(ArbolInst):
@@ -237,6 +251,11 @@ class ArbolInstBotList(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(0,True)
 
+	def run(self,simTab,var):
+		self.h1.run(simTab,var)
+		if not(self.h2 is None):
+			self.h2.run(simTab,var)
+
 ######################## INSTRUCCIONES DE LOS ROBOTS ########################### 
 
 # Árbol para la instrucción Store
@@ -253,6 +272,10 @@ class ArbolStore(ArbolInst):
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		self.h2.printArb(0,True)
+
+	def run(self,simTab,var):
+		simTab.updateValue(var,self.h2.evaluate(simTab))
+		simTab.imprimir()
 
 # Árbol para la instrucción Collect
 # con caso Collect y caso Collect as ID
@@ -396,6 +419,9 @@ class ArbolInstExe(ArbolInst):
 		else : 
 			self.h2.printArb(tabs+1,True)
 
+	def run(self,simTab):
+		self.h2.run(simTab)
+
 # Árbol para la lista de instrucciones de controlador
 class ArbolInstContList(ArbolInst):
 	def __init__(self,contInst,instList):
@@ -409,6 +435,11 @@ class ArbolInstContList(ArbolInst):
 		self.h1.printArb(tabs,usarTabs)
 		if not(self.h2 is None):
 			self.h2.printArb(tabs,usarTabs)
+
+	def run(self,simTab):
+		self.h1.run(simTab)
+		if not(self.h2 is None):
+			self.h2.run(simTab)
 
 ###################### INSTRUCCIONES DEL CONTROLADOR ###########################
 
@@ -427,6 +458,10 @@ class ArbolActivate(ArbolInst):
 			print("\t"*tabs,end="")
 		print("ACTIVACION")
 		self.h2.printArb(tabs+1,True)
+
+	def run(self,simTab):
+		simTab.activate(self.h2)
+
 
 # Árbol para la instrucción advance
 class ArbolAdvance(ArbolInst):
