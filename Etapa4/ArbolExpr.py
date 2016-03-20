@@ -91,7 +91,11 @@ class ArbolExId(ArbolExpr):
 		print(self.elem)
 
 	def evaluate(self,simTab,var):
-		return simTab.obtener(self.elem,self.linea)[0][1]
+		val = simTab.obtener(self.elem,self.linea)[0][1]
+		if val is None :
+			print("Error : La variable "+var+" no ha sido inicializada")
+			exit(1)
+		return val
 
 class ArbolExMe(ArbolExpr):
 	def __init__(self,x,linea):
@@ -105,7 +109,11 @@ class ArbolExMe(ArbolExpr):
 		print(self.elem)
 
 	def evaluate(self,simTab,var):
-		return simTab.obtener(var,self.linea)[0][1]
+		val = simTab.obtener(var,self.linea)[0][1]
+		if val is None :
+			print("Error : La variable "+var+" no ha sido inicializada")
+			exit(1)
+		return val
 
 # Árbol unario para el operador de negación
 # o el negativo unario aritmético
@@ -275,7 +283,6 @@ class ArbolBin(ArbolExpr):
 			self.hder.printArb(tabs+1,True)
 
 	def evaluate(self,simTab,var):
-
 		if (self.elem == '+'): 
 			return self.hizq.evaluate(simTab,var) + self.hder.evaluate(simTab,var)
 

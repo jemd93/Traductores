@@ -118,8 +118,26 @@ class SimTab(object):
 				self.agregarListaId(lista.h2,tipo,comps)
 
 	def updateValue(self,clave,val):
-		if clave in self.tabhash : 
-			self.tabhash[clave][0][1] = val
+		# OJO EN CASO DE QUE LOS VALORES DEBAN SER INTS (creo que si es asi)
+		# if (isinstance(val,float)) : 
+		# 	val = int(val)
+
+		if clave in self.tabhash :
+			tipo = self.tabhash[clave][0][0]
+			if ((((isinstance(val,float) or isinstance(val,int)) and not(isinstance(val,bool))) and 
+				(tipo == 'int')) or (isinstance(val,bool) and tipo == 'bool') 
+				or (isinstance(val,str) and tipo == 'char')) :
+				if (tipo == 'char') and len(val) > 1 :
+					# OJO POR AHORA AGARRA EL PRIMER CARACTER IS PONES ALGO DE VARIOS CARACTERES
+					val = val[0]
+
+				self.tabhash[clave][0][1] = val
+			else :
+				if val == None :
+					print("Error : La variable "+clave+" no ha sido inicializada")
+					exit(1)
+				print("Error : El tipo del valor a asignar y la variable no son iguales")
+				exit(1)
 		else :
 			if (self.papa != None):
 				self.papa.updateValue(clave,val)
@@ -128,33 +146,25 @@ class SimTab(object):
 
 	# Funcion para activar una lista de IDs
 	def activate(self,lista):
-		if not('activation' in self.tabhash[lista.h1.elem][1]):
-			print("Error, no se puede activar un robot que no posea su comportamiento activation")
+		if self.tabhash[lista.h1.elem][0][2] == 1:
+			print("Error ya el robot ha sido activado anteriormente")
 			exit(1)
-		else:
-			if self.tabhash[lista.h1.elem][0][2] == 1:
-				print("Error ya el robot ha sido activado antes")
-				exit(1)
-			else:
-				self.tabhash[lista.h1.elem][0][2] = 1
-				# El run de aqui es el run del ArbolComp asociado a activate
-				self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
-				if lista.h2 != None :
-					self.activate(lista.h2)
+		if ('activation' in self.tabhash[lista.h1.elem][1]):
+			self.tabhash[lista.h1.elem][0][2] = 1
+			# El run de aqui es el run del ArbolComp asociado a activate
+			self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
+			if lista.h2 != None :
+				self.activate(lista.h2)
 
 	def deactivate(self,lista):
-		if not('deactivation' in self.tabhash[lista.h1.elem][1]):
-			print("Error, no se puede desactivar un robot que no posea su comportamiento deactivation")
+		if self.tabhash[lista.h1.elem][0][2] == 0:
+			print("Error ya el robot ha sido desactivado anteriormente")
 			exit(1)
-		else:
-			if self.tabhash[lista.h1.elem][0][2] == 0:
-				print("Error ya el robot ha sido desactivado antes")
-				exit(1)
-			else:
-				self.tabhash[lista.h1.elem][0][2] = 0
-				self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
-				if lista.h2 != None :
-					self.deactivate(lista.h2)
+		if ('deactivation' in self.tabhash[lista.h1.elem][1]):
+			self.tabhash[lista.h1.elem][0][2] = 0
+			self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
+			if lista.h2 != None :
+				self.deactivate(lista.h2)
 
 	def imprimir(self):
 

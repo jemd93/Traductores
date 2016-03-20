@@ -300,6 +300,15 @@ class ArbolCollect(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(0,True)
 
+	def run(self,simTab,var):
+		global superficie
+		if (self.h2 is None):
+			if ((simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4]) in superficie) :
+				simTab.updateValue(var,superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])])
+		else :
+			if ((simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4]) in superficie) :
+				simTab.updateValue(self.h2.elem,superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])])
+
 # Árbol para la instrucción Drop
 class ArbolDrop(ArbolInst):
 	def __init__(self,h2,linea):
@@ -323,7 +332,6 @@ class ArbolDrop(ArbolInst):
 		global superficie
 		# OJO DEVUELVE "'a'" en vez de 'a'
 		superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])] = self.h2.evaluate(simTab,var)
-		print(superficie)
 
 # Árbol para la instrucción Entrada y Salida
 # con caso Read y caso Read as ID
@@ -349,6 +357,30 @@ class ArbolRead(ArbolInst):
 		if not(self.h2 is None):
 			self.h2.printArb(0,True)
 
+	def run(self,simTab,var):
+		tipo = simTab.obtener(var,self.linea)[0][0]
+		i = input()
+		if len(i) == 1 :
+			if (tipo == 'int') and (i.isdigit()) :
+				i = int(i)
+		else :
+			if ((i[0] == '-') or (i[0].isdigit())) and (i[1:].isdigit()):
+				if (i[0] == '0'):
+					print("Error : Los numeros no pueden empezar por 0")
+					exit(1)
+				i = int(i)
+			elif i == "false":
+				i = False
+			elif i == "true" :
+				i = True
+
+		if (self.h2 is None) :
+			simTab.updateValue(var,i)
+		else :
+			simTab.updateValue(self.h2.elem,i)
+
+
+
 # Árbol para la instrucción Send
 class ArbolSend(ArbolInst):
 	def __init__(self,linea):
@@ -362,7 +394,17 @@ class ArbolSend(ArbolInst):
 		self.h1.printArb(0,True)
 
 	def run(self,simTab,var):
-		print(simTab.obtener(var,self.linea)[0][1])
+		# OJO. SI NO HAY VALOR IMPRIME NONE. NO SE SI ES ERROR.
+		val = simTab.obtener(var,self.linea)[0][1]
+		if val == False :
+			print("false")
+		elif val == True :
+			print("true")
+		elif val is None :
+			print("Error : La variable "+var+" no ha sido inicializada")
+			exit(1)
+		else:
+			print(val)
 
 # Árbol para la instrucción Recieve
 class ArbolRecieve(ArbolInst):
@@ -386,6 +428,30 @@ class ArbolRecieve(ArbolInst):
 		self.h1.printArb(0,True)
 		if not(self.h2 is None):
 			self.h2.printArb(0,True)
+
+	def run(self,simTab,var):
+		tipo = simTab.obtener(var,self.linea)[0][0]
+		i = input()
+		if len(i) == 1 :
+			if (tipo == 'int') and (i.isdigit()) :
+				i = int(i)
+		else :
+			if ((i[0] == '-') or (i[0].isdigit())) and (i[1:].isdigit()):
+				if (i[0] == '0'):
+					print("Error : Los numeros no pueden empezar por 0")
+					exit(1)
+				i = int(i)
+			elif i == "false":
+				i = False
+			elif i == "true" :
+				i = True
+
+		if (self.h2 is None) :
+			simTab.updateValue(var,i)
+		else :
+			simTab.updateValue(self.h2.elem,i)
+
+
 
 ##################### FIN DE LAS INSTRUCCIONES DEL ROBOT #######################
 
