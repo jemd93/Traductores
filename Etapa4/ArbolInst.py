@@ -368,19 +368,21 @@ class ArbolSend(ArbolInst):
 
 # Árbol para la instrucción Recieve
 class ArbolRecieve(ArbolInst):
-	def __init__(self,h2,linea):
+	def __init__(self,hid,linea):
 		self.h1 = ArbolInst('recieve',linea)
-		if not(h2 is None):
-			self.h2 = h2
+		if not(hid is None):
+			self.h2 = hid
 		else:
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea,esDec):
-		if (self.h2 != None):
-			if not(self.h2.check(tipo,simTab,self.linea,esDec)):
-				print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
+	def check(self,tipo,simTab,linea,esDec) :
+		if (self.h2 != None) :
+			if self.h2.elem in simTab.tabhash : 
+				print("Error en la linea "+str(self.linea)+": La variable " + self.h2.elem + " ya ha sido declarada")
 				exit(1)
+			simTab.insertar(self.h2.elem,[tipo,None,2,0,0],{'clean','clean'})
+			self.h2.check(tipo,simTab,self.linea,esDec)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
