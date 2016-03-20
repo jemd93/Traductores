@@ -1,0 +1,37 @@
+create
+  char bot b
+    on deactivation:
+      store 'H'. send.
+      store 'o'. send.
+      store 'l'. send.
+      store 'a'. send.
+      store ' '. send.
+      store 'M'. send.
+      store 'u'. send.
+      store 'n'. send.
+      store 'd'. send.
+      store 'o'. send.
+      store '!'. send.
+    end
+    on activation: 
+      store 'J'. send.
+    end
+  end
+  char bot a
+    on activation:
+      store 'M'. send.
+    end
+    on deactivation:
+      store 'W'. send.
+    end
+  end
+
+execute
+  deactivate b.
+  activate a,b.
+  if 1 > 2:
+    deactivate a.
+  else:
+    activate b.
+  end
+end

@@ -52,7 +52,6 @@ class ArbolProgram(ArbolInst):
 	def run(self):
 		self.h2.run(self.simTab)
 
-
 # Arbol para el inicio de las listas de declaraciones
 class ArbolDecListInit(ArbolInst):
 	def __init__(self,decList,linea):
@@ -296,7 +295,6 @@ class ArbolCollect(ArbolInst):
 			simTab.insertar(self.h2.elem,[tipo,None,2,0,0],{'clean':'clean'})
 			self.h2.check(tipo,simTab,self.linea,esDec)
 
-
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
 		if not(self.h2 is None):
@@ -476,7 +474,6 @@ class ArbolActivate(ArbolInst):
 	def run(self,simTab):
 		simTab.activate(self.h2)
 
-
 # Árbol para la instrucción advance
 class ArbolAdvance(ArbolInst):
 	def __init__(self,idList,linea):
@@ -508,6 +505,9 @@ class ArbolDeactivate(ArbolInst):
 			print("\t"*tabs,end="")
 		print("DESACTIVACION")
 		self.h2.printArb(tabs+1,True)
+
+	def run(self,simTab):
+		simTab.deactivate(self.h2)
 
 # Árbol para la instrucción if y if-else
 class ArbolIf(ArbolInst):
@@ -551,6 +551,13 @@ class ArbolIf(ArbolInst):
 			else :
 				self.h5.printArb(tabs+1,False)
 
+	def run(self,simTab):
+		if self.h2.evaluate(simTab,None) == True:
+			self.h3.run(simTab)
+		else:
+			if not(self.h5 is None):
+				self.h5.run(simTab)
+
 # Árbol para la instrucción while
 class ArbolWhile(ArbolInst):
 	def __init__(self,expr,inst,linea):
@@ -578,5 +585,9 @@ class ArbolWhile(ArbolInst):
 			self.h3.printArb(tabs+2,True)
 		else : 
 			self.h3.printArb(tabs+1,False)
+
+	# def run(self,simTab):
+	# 	while (self.h2.evaluate(simTab,None)):
+	# 		self.h3.run(SimTab)
 
 ################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR #####################

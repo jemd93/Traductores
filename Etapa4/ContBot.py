@@ -24,8 +24,6 @@ from SimTab import *
 
 tokens = BotLexer.tokens
 
-
-
 def p_programa(p):
 
   # Descripción: Regla principal para iniciar el programa en lenguaje BOT.

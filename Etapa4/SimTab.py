@@ -128,12 +128,33 @@ class SimTab(object):
 
 	# Funcion para activar una lista de IDs
 	def activate(self,lista):
-		self.tabhash[lista.h1.elem][0][2] = 1
-		# El run de aqui es el run del ArbolComp asociado a activate
-		self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
-		if lista.h2 != None :
-			activar(lista.h2)
+		if not('activation' in self.tabhash[lista.h1.elem][1]):
+			print("Error, no se puede activar un robot que no posea su comportamiento activation")
+			exit(1)
+		else:
+			if self.tabhash[lista.h1.elem][0][2] == 1:
+				print("Error ya el robot ha sido activado antes")
+				exit(1)
+			else:
+				self.tabhash[lista.h1.elem][0][2] = 1
+				# El run de aqui es el run del ArbolComp asociado a activate
+				self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
+				if lista.h2 != None :
+					self.activate(lista.h2)
 
+	def deactivate(self,lista):
+		if not('deactivation' in self.tabhash[lista.h1.elem][1]):
+			print("Error, no se puede desactivar un robot que no posea su comportamiento deactivation")
+			exit(1)
+		else:
+			if self.tabhash[lista.h1.elem][0][2] == 0:
+				print("Error ya el robot ha sido desactivado antes")
+				exit(1)
+			else:
+				self.tabhash[lista.h1.elem][0][2] = 0
+				self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
+				if lista.h2 != None :
+					self.deactivate(lista.h2)
 
 	def imprimir(self):
 
