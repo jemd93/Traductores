@@ -13,6 +13,11 @@ create
 			send.
 		end
 
+		on me > 10 : 
+			store 11.
+			send.
+		end 
+
 		on me < 0 :
 			store 6.
 			send.
@@ -23,6 +28,11 @@ create
 			send.
 		end
 
+		on me > 5 : 
+			store 10.
+			send.
+		end
+
 		on default :
 			store 8.
 			send.
@@ -30,5 +40,6 @@ create
 	end	
 
 execute
+	activate bot1.
 	advance bot1.
 end

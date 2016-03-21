@@ -170,10 +170,10 @@ class SimTab(object):
 		# Busca algun comportamiento con expresiones :
 		ran = False
 		if ('advance' in self.tabhash[lista.h1.elem][1]):
-			for exp in self.tabhash[lista.h1.elem][1]['advance']:
-				if exp.evaluate(self,lista.h1.elem) :
+			for par in self.tabhash[lista.h1.elem][1]['advance']:
+				if par[0].evaluate(self,lista.h1.elem) :
 					ran = True
-					self.tabhash[lista.h1.elem][1]['advance'][exp].run(lista.h1.elem)
+					par[1].run(lista.h1.elem)
 					break
 
 			# En caso de que no existan, o ninguna expresion se cumpla, si hay comp de default, lo corre
