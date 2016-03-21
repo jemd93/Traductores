@@ -166,6 +166,31 @@ class SimTab(object):
 			if lista.h2 != None :
 				self.deactivate(lista.h2)
 
+	def advance(self,lista):
+		# Busca algun comportamiento con expresiones :
+		ran = False
+		if ('advance' in self.tabhash[lista.h1.elem][1]):
+			for exp in self.tabhash[lista.h1.elem][1]['advance']:
+				if exp.evaluate(self,lista.h1.elem) :
+					ran = True
+					self.tabhash[lista.h1.elem][1]['advance'][exp].run(lista.h1.elem)
+					break
+
+			# En caso de que no existan, o ninguna expresion se cumpla, si hay comp de default, lo corre
+			if not(ran) and ('default' in self.tabhash[lista.h1.elem][1]):
+				ran = True
+				self.tabhash[lista.h1.elem][1]['default'].run(lista.h1.elem)
+			if lista.h2 != None :
+				self.advance(lista.h2)
+
+		elif ('default' in self.tabhash[lista.h1.elem][1]):
+			self.tabhash[lista.h1.elem][1]['default'].run(lista.h1.elem)
+			if lista.h2 != None :
+				self.advance(lista.h2)
+
+
+
+
 	def imprimir(self):
 
 		# Descripción: Método para imprimir la/las tablas de hashs.  

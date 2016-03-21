@@ -206,7 +206,8 @@ class ArbolComp(ArbolInst):
 			# ESTA AGREGANDO EXPS CON IDS INEXSISTENTES
 			if not('advance' in tabla) : 
 				tabla['advance'] = {}
-			tabla['advance'][self.h2] = self.h3
+			# OJO AQUI ESTABA SELF.H3 EN VEZ DE SELF.
+			tabla['advance'][self.h2] = self
 			return 
 
 		if self.h2.inst in tabla : 
@@ -555,6 +556,9 @@ class ArbolAdvance(ArbolInst):
 			print("\t"*tabs,end="")
 		print("AVANCE")
 		self.h2.printArb(tabs+1,True)
+
+	def run(self,simTab):
+		simTab.advance(self.h2)
 
 # Árbol para la instrucción deactivate
 class ArbolDeactivate(ArbolInst):
