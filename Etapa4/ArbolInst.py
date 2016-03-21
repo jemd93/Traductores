@@ -205,8 +205,10 @@ class ArbolComp(ArbolInst):
 		if (isinstance(self.h2,ArbolExpr.ArbolExpr)):
 			# ESTA AGREGANDO EXPS CON IDS INEXSISTENTES
 			if not('advance' in tabla) : 
+				#OJO ESTO ERA ANTES UN DICCIONARIO
 				tabla['advance'] = []
 			# OJO AQUI ESTABA SELF.H3 EN VEZ DE SELF.
+			# OJO 2 : AQUI ERA tabla['advance'][self.h2] = self PQ ANTES ERA DICCIONARIO
 			tabla['advance'].append((self.h2,self))
 			return 
 

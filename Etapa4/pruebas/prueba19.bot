@@ -8,15 +8,10 @@ create
 			read.
 		end
 
-		on me > 1 :
+		on 1 > me :
 			store 5.
 			send.
 		end
-
-		on me > 10 : 
-			store 11.
-			send.
-		end 
 
 		on me < 0 :
 			store 6.
