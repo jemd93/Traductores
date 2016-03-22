@@ -382,8 +382,6 @@ class ArbolRead(ArbolInst):
 		else :
 			simTab.updateValue(self.h2.elem,i)
 
-
-
 # Árbol para la instrucción Send
 class ArbolSend(ArbolInst):
 	def __init__(self,linea):
@@ -408,53 +406,6 @@ class ArbolSend(ArbolInst):
 			exit(1)
 		else:
 			print(val)
-
-# Árbol para la instrucción Recieve
-class ArbolRecieve(ArbolInst):
-	def __init__(self,hid,linea):
-		self.h1 = ArbolInst('recieve',linea)
-		if not(hid is None):
-			self.h2 = hid
-		else:
-			self.h2 = None
-		self.linea = linea
-
-	def check(self,tipo,simTab,linea,esDec) :
-		if (self.h2 != None) :
-			if self.h2.elem in simTab.tabhash : 
-				print("Error en la linea "+str(self.linea)+": La variable " + self.h2.elem + " ya ha sido declarada")
-				exit(1)
-			simTab.insertar(self.h2.elem,[tipo,None,2,0,0],{'clean','clean'})
-			self.h2.check(tipo,simTab,self.linea,esDec)
-
-	def printArb(self,tabs,usarTabs):
-		self.h1.printArb(0,True)
-		if not(self.h2 is None):
-			self.h2.printArb(0,True)
-
-	def run(self,simTab,var):
-		tipo = simTab.obtener(var,self.linea)[0][0]
-		i = input()
-		if len(i) == 1 :
-			if (tipo == 'int') and (i.isdigit()) :
-				i = int(i)
-		else :
-			if ((i[0] == '-') or (i[0].isdigit())) and (i[1:].isdigit()):
-				if (i[0] == '0'):
-					print("Error : Los numeros no pueden empezar por 0")
-					exit(1)
-				i = int(i)
-			elif i == "false":
-				i = False
-			elif i == "true" :
-				i = True
-
-		if (self.h2 is None) :
-			simTab.updateValue(var,i)
-		else :
-			simTab.updateValue(self.h2.elem,i)
-
-
 
 ##################### FIN DE LAS INSTRUCCIONES DEL ROBOT #######################
 

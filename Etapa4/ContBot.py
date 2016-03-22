@@ -176,9 +176,7 @@ def p_inst_bot(p):
                | DIR EXPR TkPunto
                | TkRead TkPunto
                | TkRead TkAs ID TkPunto
-               | TkSend TkPunto
-               | TkRecieve TkPunto
-               | TkRecieve TkAs ID TkPunto '''
+               | TkSend TkPunto '''
 
   if p[1] == 'store':
      p[0] = ArbolStore(p[2],p.lineno(1)+1-ContBot.numLines)
@@ -194,11 +192,6 @@ def p_inst_bot(p):
       p[0] = ArbolRead(None,p.lineno(1)+1-ContBot.numLines)
     else:
       p[0] = ArbolRead(p[3],p.lineno(1)+1-ContBot.numLines)
-  elif p[1] == 'recieve':
-    if len(p) == 3:
-      p[0] = ArbolRecieve(None,p.lineno(1)+1-ContBot.numLines)
-    else:
-      p[0] = ArbolRecieve(p[3],p.lineno(1)+1-ContBot.numLines)
   elif p[1] == 'send':
     p[0] = ArbolSend(p.lineno(1)+1-ContBot.numLines)
   else:

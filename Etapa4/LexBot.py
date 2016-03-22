@@ -67,7 +67,6 @@ class BotLexer(object):
 
     # Instrucciones para robots
     'store'         : 'TkStore',
-    'recieve'       : 'TkRecieve',
     'collect'       : 'TkCollect',
     'drop'          : 'TkDrop',
     'read'          : 'TkRead',

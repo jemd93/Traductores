@@ -188,9 +188,6 @@ class SimTab(object):
 			if lista.h2 != None :
 				self.advance(lista.h2)
 
-
-
-
 	def imprimir(self):
 
 		# Descripción: Método para imprimir la/las tablas de hashs.  
