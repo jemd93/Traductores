@@ -6,13 +6,13 @@ $- a+b.bot:
 create
   int bot a
     on activation:
-      recieve.
+      read.
       drop me.
     end
   end
   int bot b
     on activation:
-      recieve.
+      read.
       collect as a.
       store a + b.
       send.

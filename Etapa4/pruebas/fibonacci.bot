@@ -6,7 +6,7 @@ $- fibonacci.bot:
 create
   int bot n
     on activation:
-      recieve.
+      read.
     end
     on default:
       store me - 1.

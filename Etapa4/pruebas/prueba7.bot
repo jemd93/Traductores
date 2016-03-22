@@ -35,7 +35,7 @@ execute
 			on default :
 				store 1+2/3*5.
 				collect as y.
-				recieve (1+2)%(3).
+				read (1+2)%(3).
 				store y-1-1.
 			end
 		end
