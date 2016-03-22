@@ -6,7 +6,7 @@ create
 			send.
 		end
 		on me :
-			right true.
+			right -3.
 			collect as x.
 			store x \/ ~(true).
 		end

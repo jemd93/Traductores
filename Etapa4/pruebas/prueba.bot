@@ -3,7 +3,7 @@ create
     int bot bot4
         on deactivation :
             read as y.
-            store y+1.
+            store (4 / 0).
         end
     	on activation :
     		collect as x.

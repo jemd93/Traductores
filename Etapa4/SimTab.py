@@ -118,6 +118,11 @@ class SimTab(object):
 				self.agregarListaId(lista.h2,tipo,comps)
 
 	def updateValue(self,clave,val):
+
+		# Descripción: Método para modificar y/o actualizar el valor de un bot.
+		# Parámetros: - clave: nombre del bot a buscar en la tabla hash
+		#			  - val: valor a actualizar en el bot.
+
 		# OJO EN CASO DE QUE LOS VALORES DEBAN SER INTS (creo que si es asi)
 		# if (isinstance(val,float)) : 
 		# 	val = int(val)
@@ -142,10 +147,31 @@ class SimTab(object):
 			if (self.papa != None):
 				self.papa.updateValue(clave,val)
 
+	def updatePos(self,clave,posx=None,posy=None):
+
+		# Descripción: Método para modificar y/o actualizar la posición tanto 
+		#			   en x como en y, de un bot.
+		# Parámetros: - clave: nombre del bot a buscar en la tabla hash.
+		#			  - posx: posición a actualizar en el bot.
+		# 			  - posy: posición a actualizar en el bot.
+
+		if clave in self.tabhash:
+			if posx != None:
+				self.tabhash[clave][0][3] = self.tabhash[clave][0][3] + posx
+			elif posy != None:
+				self.tabhash[clave][0][4] = self.tabhash[clave][0][4] + posy
+		else:
+			if (self.papa != None):
+				self.papa.updatePos(clave,posx,posy)
+
 	# FUNCIONES DE CAMBIOS EN LA TABLA DURANTE EJECUCION
 
-	# Funcion para activar una lista de IDs
 	def activate(self,lista):
+
+		# Descripción: Método para activar el bot cuando la instrucción en
+		#			   execute lo indica.
+		# Parámetros: - lista: un bot o la lista de bots a activar.
+
 		if self.tabhash[lista.h1.elem][0][2] == 1:
 			print("Error ya el robot ha sido activado anteriormente")
 			exit(1)
@@ -157,6 +183,11 @@ class SimTab(object):
 				self.activate(lista.h2)
 
 	def deactivate(self,lista):
+
+		# Descripción: Método para desactivar el bot cuando la instrucción en
+		#			   execute lo indica.
+		# Parámetros: - lista: un bot o la lista de bots a desactivar.
+
 		if self.tabhash[lista.h1.elem][0][2] == 0:
 			print("Error ya el robot ha sido desactivado anteriormente")
 			exit(1)
@@ -167,6 +198,11 @@ class SimTab(object):
 				self.deactivate(lista.h2)
 
 	def advance(self,lista):
+
+		# Descripción: Método para avanzar el bot cuando la instrucción en
+		#			   execute lo indica.
+		# Parámetros: - lista: un bot o la lista de bots a avanzar.
+
 		# Busca algun comportamiento con expresiones :
 		ran = False
 		if ('advance' in self.tabhash[lista.h1.elem][1]):
@@ -190,7 +226,8 @@ class SimTab(object):
 
 	def imprimir(self):
 
-		# Descripción: Método para imprimir la/las tablas de hashs.  
+		# Descripción: Método para imprimir la/las tablas de hashs. 
+
 		print(self.tabhash)
 		if (self.papa != None) :
 			self.papa.imprimir()

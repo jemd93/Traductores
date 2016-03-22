@@ -1,37 +1,29 @@
 create
   char bot b
     on deactivation:
-      store 'H'. send.
-      store 'o'. send.
-      store 'l'. send.
-      store 'a'. send.
-      store ' '. send.
-      store 'M'. send.
-      store 'u'. send.
-      store 'n'. send.
-      store 'd'. send.
-      store 'o'. send.
       store '!'. send.
     end
     on activation: 
       store 'J'. send.
+      up 4.
+      up 5.
+      up 6.
+      down 20.
     end
   end
-  char bot a
+  int bot a
     on activation:
-      store 'M'. send.
+      store 4. send.
     end
     on deactivation:
-      store 'W'. send.
+      store (4 % 3). send.
     end
   end
 
 execute
-  deactivate b.
-  activate a,b.
-  if 1 > 2:
-    deactivate a.
-  else:
+  if 1 < 2:
     activate b.
+  else:
+    deactivate b.
   end
 end

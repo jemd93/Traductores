@@ -419,20 +419,40 @@ class ArbolDir(ArbolInst):
 			self.h2 = None
 		self.linea = linea
 
-	def check(self,tipo,simTab,linea,esDec) :
+	def check(self,tipo,simTab,linea,esDec):
 		if (self.h2 != None) :
 			if not(self.h2.check("int",simTab,self.linea,esDec)):
 				print("Error en la linea "+str(self.linea)+" : La expresion debe ser de tipo int")
 				exit(1)
-			# else:
-			# 	if type(self.h2) == ArbolExpr.ArbolUn:
-			# 		print("Error en la linea "+str(self.linea)+" : La expresion debe ser no negativa")
-			# 		exit(1)
+			else:
+				if type(self.h2) == ArbolExpr.ArbolUn:
+					print("Error en la linea "+str(self.linea)+" : La expresion del movimiento debe ser no negativa")
+					exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(tabs,True)
 		if not(self.h2 is None):
 			self.h2.printArb(tabs,True)
+
+	def run(self,simTab,var):
+		if not(self.h2 is None):
+			if (self.h1.inst == 'left'):
+				simTab.updatePos(var,-self.h2.evaluate(simTab,var),None)
+			elif (self.h1.inst == 'right'):
+				simTab.updatePos(var,self.h2.evaluate(simTab,var),None)
+			elif (self.h1.inst == 'down'):
+				simTab.updatePos(var,None,-self.h2.evaluate(simTab,var))
+			elif (self.h1.inst == 'up'):
+				simTab.updatePos(var,None,self.h2.evaluate(simTab,var))
+		else:
+			if (self.h1.inst == 'left'):
+				simTab.updatePos(var,-1,None)
+			elif (self.h1.inst == 'right'):
+				simTab.updatePos(var,1,None)
+			elif (self.h1.inst == 'down'):
+				simTab.updatePos(var,None,-1)
+			elif (self.h1.inst == 'up'):
+				simTab.updatePos(var,None,1)
 
 # Árbol para ejecutar las instrucciones de controlador
 class ArbolInstExe(ArbolInst):
