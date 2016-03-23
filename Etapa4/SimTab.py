@@ -113,7 +113,7 @@ class SimTab(object):
 			exit(1)
 		else :
 			diccComps = comps.generarTablaComps({})
-			self.tabhash[lista.h1.elem] = [[tipo.inst,None,2,0,0],diccComps] 
+			self.tabhash[lista.h1.elem] = [[tipo.inst,None,0,0,0],diccComps] 
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
 
@@ -133,8 +133,7 @@ class SimTab(object):
 				(tipo == 'int')) or (isinstance(val,bool) and tipo == 'bool') 
 				or (isinstance(val,str) and tipo == 'char')) :
 				if (tipo == 'char') and len(val) > 1 :
-					# OJO POR AHORA AGARRA EL PRIMER CARACTER IS PONES ALGO DE VARIOS CARACTERES
-					val = val[0]
+					print("Error : La entrada introducida no es valida.")
 
 				self.tabhash[clave][0][1] = val
 			else :
@@ -163,6 +162,7 @@ class SimTab(object):
 		else:
 			if (self.papa != None):
 				self.papa.updatePos(clave,posx,posy)
+
 
 	# FUNCIONES DE CAMBIOS EN LA TABLA DURANTE EJECUCION
 

@@ -320,10 +320,7 @@ class ArbolDrop(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		if (self.h2.check("int",simTab,self.linea,esDec) or self.h2.check("bool",simTab,self.linea,esDec)
-		or self.h2.check("char",simTab,self.linea,esDec)):
-			return
-		else :
+		if not(self.h2.check(tipo,simTab,self.linea,esDec)):
 			print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
 			exit(1)
 
@@ -376,6 +373,9 @@ class ArbolRead(ArbolInst):
 				i = False
 			elif i == "true" :
 				i = True
+			else :
+				print("Error: La entrada introducida no es valida.")
+				exit(1)
 
 		if (self.h2 is None) :
 			simTab.updateValue(var,i)
@@ -424,10 +424,6 @@ class ArbolDir(ArbolInst):
 			if not(self.h2.check("int",simTab,self.linea,esDec)):
 				print("Error en la linea "+str(self.linea)+" : La expresion debe ser de tipo int")
 				exit(1)
-			else:
-				if type(self.h2) == ArbolExpr.ArbolUn:
-					print("Error en la linea "+str(self.linea)+" : La expresion del movimiento debe ser no negativa")
-					exit(1)
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(tabs,True)
@@ -436,14 +432,19 @@ class ArbolDir(ArbolInst):
 
 	def run(self,simTab,var):
 		if not(self.h2 is None):
+			val = self.h2.evaluate(simTab,var)
+			if val < 0 :
+				print("Error en la linea "+str(self.linea)+" : La expresion de movimiento no puede ser negativa.")
+				exit(1)
+
 			if (self.h1.inst == 'left'):
-				simTab.updatePos(var,-self.h2.evaluate(simTab,var),None)
+				simTab.updatePos(var,-val,None)
 			elif (self.h1.inst == 'right'):
-				simTab.updatePos(var,self.h2.evaluate(simTab,var),None)
+				simTab.updatePos(var,val,None)
 			elif (self.h1.inst == 'down'):
-				simTab.updatePos(var,None,-self.h2.evaluate(simTab,var))
+				simTab.updatePos(var,None,-val)
 			elif (self.h1.inst == 'up'):
-				simTab.updatePos(var,None,self.h2.evaluate(simTab,var))
+				simTab.updatePos(var,None,val)
 		else:
 			if (self.h1.inst == 'left'):
 				simTab.updatePos(var,-1,None)
@@ -595,6 +596,7 @@ class ArbolIf(ArbolInst):
 				self.h5.printArb(tabs+1,False)
 
 	def run(self,simTab):
+		# OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
 		if self.h2.evaluate(simTab,None) == True:
 			self.h3.run(simTab)
 		else:
@@ -630,6 +632,7 @@ class ArbolWhile(ArbolInst):
 			self.h3.printArb(tabs+1,False)
 
 	# def run(self,simTab):
+	# OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
 	# 	while (self.h2.evaluate(simTab,None)):
 	# 		self.h3.run(SimTab)
 

@@ -1,38 +1,22 @@
 create
 	int bot bot1
 		on activation:
-			store 20.
+			store 1.
+			drop me.
 		end
-		on deactivation :
-			store 7.
-			read.
-		end
-
-		on 1 > me :
-			store 5.
-			send.
-		end
-
-		on me < 0 :
-			store 6.
-			send.
-		end
-
-		on me > 2 : 
-			store 9.
-			send.
-		end
-
-		on me > 5 : 
-			store 10.
-			send.
-		end
-
-		on default :
-			store 8.
-			send.
+		on true :
+			right 1.
+			up 1.
 		end
 	end	
+
+	bool bot bot2
+		on activation:
+			collect.
+			send.
+		end
+	end
+
 
 execute
 	activate bot1.
