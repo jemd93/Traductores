@@ -396,16 +396,16 @@ class ArbolSend(ArbolInst):
 
 	def run(self,simTab,var):
 		# OJO. SI NO HAY VALOR IMPRIME NONE. NO SE SI ES ERROR.
-		val = simTab.obtener(var,self.linea)[0][1]
-		if val == False :
+		val = simTab.obtener(var,self.linea)[0]
+		if val[1] == False and val[0] == "bool" :
 			print("false")
-		elif val == True :
+		elif val[1] == True and val[0] == "bool":
 			print("true")
-		elif val is None :
+		elif val[1] is None :
 			print("Error : La variable "+var+" no ha sido inicializada")
 			exit(1)
 		else:
-			print(val)
+			print(val[1])
 
 ##################### FIN DE LAS INSTRUCCIONES DEL ROBOT #######################
 

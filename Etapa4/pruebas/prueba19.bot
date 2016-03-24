@@ -10,7 +10,7 @@ create
 		end
 	end	
 
-	bool bot bot2
+	int bot bot2
 		on activation:
 			collect.
 			send.
@@ -19,6 +19,6 @@ create
 
 
 execute
-	activate bot1.
+	activate bot1,bot2.
 	advance bot1.
 end
