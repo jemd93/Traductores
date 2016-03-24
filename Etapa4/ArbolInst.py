@@ -641,6 +641,6 @@ class ArbolWhile(ArbolInst):
 	def run(self,simTab):
 	#OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
 		while (self.h2.evaluate(simTab,None)):
-			self.h3.run(SimTab)
+			self.h3.run(simTab)
 
 ################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR #####################

@@ -42,7 +42,6 @@ create
     end
 
 execute
-
     while true:
         activate bot3.
     end
