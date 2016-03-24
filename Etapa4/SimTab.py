@@ -112,7 +112,7 @@ class SimTab(object):
 			print("Error : la variable "+lista.h1.elem+" ya fue declarada anteriormente")
 			exit(1)
 		else :
-			diccComps = comps.generarTablaComps({})
+			diccComps = comps.generarTablaComps({},False)
 			self.tabhash[lista.h1.elem] = [[tipo.inst,None,0,0,0],diccComps] 
 			if (lista.h2 != None) :
 				self.agregarListaId(lista.h2,tipo,comps)
@@ -132,8 +132,9 @@ class SimTab(object):
 			if ((((isinstance(val,float) or isinstance(val,int)) and not(isinstance(val,bool))) and 
 				(tipo == 'int')) or (isinstance(val,bool) and tipo == 'bool') 
 				or (isinstance(val,str) and tipo == 'char')) :
-				if (tipo == 'char') and len(val) > 1 :
+				if (tipo == 'char') and len(val) > 1 and not(val == "\\n" or val == "\\t"):
 					print("Error : La entrada introducida no es valida.")
+					exit(1)
 
 				self.tabhash[clave][0][1] = val
 			else :

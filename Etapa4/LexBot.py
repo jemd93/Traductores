@@ -136,7 +136,7 @@ class BotLexer(object):
     # Descripción: Función para detección de caracteres
     # Parámetros: - t: token
 
-    r'\'.\''
+    r"\'.\'|\'\\[nt]\'"
     return t
 
   def t_TkIdent(self,t):

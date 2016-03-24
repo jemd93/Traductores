@@ -49,7 +49,9 @@ class ArbolProgram(ArbolInst):
 		else:
 			self.h2.printArb(tabs,usarTabs)
 
-	def run(self):
+	def run(self,simTab):
+		# if not(self.h1 is None):
+		# 	self.simTab.agregarDecInit(self.h1.h2)
 		self.h2.run(self.simTab)
 
 # Arbol para el inicio de las listas de declaraciones
@@ -159,17 +161,22 @@ class ArbolCompList(ArbolInst):
 		if (self.h2 != None) :
 			self.h2.check(tipo,simTab,linea,esDec)
 
-	def generarTablaComps(self,tabla):
-		if self.h1 != None and self.h2.h1 != None :
-			if not(isinstance(self.h1.h2,ArbolExpr.ArbolExpr)) :
-				if self.h1.h2.inst == 'default' :
-					print("Error en la linea "+str(self.h1.linea)+": El comportamiento 'default'")
-					print("debe ser declarado de ultimo en la lista de comportamientos")
-					exit(1)
+	def generarTablaComps(self,tabla,defaultListo):
+		if self.h1 != None :
+			if (defaultListo) and (isinstance(self.h1.h2,ArbolExpr.ArbolExpr) or isinstance(self.h1.h2,ArbolExpr.ArbolBin)
+				or isinstance(self.h1.h2,ArbolExpr.ArbolUn)) :
+				print("Error en la linea "+str(self.h1.linea)+": No debe haber comportamiento 'default'")
+				print("antes de comportamientos de expresion.")
+				exit(1)
+			else :
+				if not(isinstance(self.h1.h2,ArbolExpr.ArbolExpr) or isinstance(self.h1.h2,ArbolExpr.ArbolBin)
+				or isinstance(self.h1.h2,ArbolExpr.ArbolUn)) :
+					if self.h1.h2.inst == 'default':
+						defaultListo = True
 		if (self.h1 != None):
 			self.h1.agregarATabla(tabla)
 		if (self.h2 != None):
-			self.h2.generarTablaComps(tabla)
+			self.h2.generarTablaComps(tabla,defaultListo)
 		return tabla
 
 	def printArb(self,tabs,usarTabs):
@@ -402,17 +409,20 @@ class ArbolSend(ArbolInst):
 		self.h1.printArb(0,True)
 
 	def run(self,simTab,var):
-		# OJO. SI NO HAY VALOR IMPRIME NONE. NO SE SI ES ERROR.
 		val = simTab.obtener(var,self.linea)[0]
-		if val[1] == False and val[0] == "bool" :
-			print("false")
+		if val[1] == "\\n" :
+			print("\n")
+		elif val[1] == "\\t" :
+			print("\t",end="")
+		elif val[1] == False and val[0] == "bool" :
+			print("false",end="")
 		elif val[1] == True and val[0] == "bool":
-			print("true")
+			print("true",end="")
 		elif val[1] is None :
 			print("Error : La variable "+var+" no ha sido inicializada")
 			exit(1)
 		else:
-			print(val[1])
+			print(val[1],end="")
 
 ##################### FIN DE LAS INSTRUCCIONES DEL ROBOT #######################
 

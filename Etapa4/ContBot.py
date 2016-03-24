@@ -426,7 +426,7 @@ def main():
   print("")
   print("--------------------- CORRIDA DEL PROGRAMA ---------------------------")
   # result.simTab.imprimir()
-  result.run()
+  result.run(simTabActual)
   f.close()
 
 # Programa principal

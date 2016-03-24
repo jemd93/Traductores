@@ -17,6 +17,7 @@ create
       store 'd'. send.
       store 'o'. send.
       store '!'. send.
+      store '\n'. send.
     end
   end
 
