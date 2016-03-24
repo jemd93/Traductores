@@ -14,7 +14,6 @@ create
 execute
 
     activate bot4.
-
     if bot4 > 1 : 
         deactivate bot4.
     end
