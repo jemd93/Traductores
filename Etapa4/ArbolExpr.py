@@ -299,7 +299,7 @@ class ArbolBin(ArbolExpr):
 			if self.hder.evaluate(simTab,var) == 0:
 				print("Error en la linea " + str(self.linea) + " : la division por cero es ilegal")
 				exit(1)
-			return self.hizq.evaluate(simTab,var) / self.hder.evaluate(simTab,var)
+			return self.hizq.evaluate(simTab,var) // self.hder.evaluate(simTab,var)
 
 		elif (self.elem == '%'):
 			return self.hizq.evaluate(simTab,var) % self.hder.evaluate(simTab,var)
