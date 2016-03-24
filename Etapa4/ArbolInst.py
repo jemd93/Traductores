@@ -305,12 +305,19 @@ class ArbolCollect(ArbolInst):
 
 	def run(self,simTab,var):
 		global superficie
+		aux = simTab.obtener(var,self.linea)[0]
 		if (self.h2 is None):
-			if ((simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4]) in superficie) :
-				simTab.updateValue(var,superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])])
+			if ((aux[3],aux[4]) in superficie) :
+				simTab.updateValue(var,superficie[(aux[3],aux[4])])
+			else :
+				print("Error en la linea "+str(self.linea)+": No hay nada que recolectar en la posicion "+str(aux[3])+","+str(aux[4]))
+				exit(1)
 		else :
-			if ((simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4]) in superficie) :
-				simTab.updateValue(self.h2.elem,superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])])
+			if ((aux[3],aux[4]) in superficie) :
+				simTab.updateValue(self.h2.elem,superficie[(aux[3],aux[4])])
+			else :
+				print("Error en la linea "+str(self.linea)+": No hay nada que recolectar en la posicion "+str(aux[3])+","+str(aux[4]))
+				exit(1)
 
 # Árbol para la instrucción Drop
 class ArbolDrop(ArbolInst):
