@@ -5,10 +5,10 @@ create
             read as y.
             store (4 / 0).
         end
-    	on activation :
+    	$-on activation :
     		collect as x.
             store x.
-    	end
+    	end-$
     end
 
 execute
