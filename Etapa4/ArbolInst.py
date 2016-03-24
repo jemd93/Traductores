@@ -50,8 +50,10 @@ class ArbolProgram(ArbolInst):
 			self.h2.printArb(tabs,usarTabs)
 
 	def run(self,simTab):
-		# if not(self.h1 is None):
-		# 	self.simTab.agregarDecInit(self.h1.h2)
+		# OJO, LAS SIGUIENTES DOS LINEAS PUEDEN DAR ERRORES. 
+		# REINICIALIZAN LAS TABLAS CADA VEZ QUE HAY DECLARACIONES.
+		if not(self.h1 is None):
+			self.simTab.agregarDecInit(self.h1.h2,False)
 		self.h2.run(self.simTab)
 
 # Arbol para el inicio de las listas de declaraciones

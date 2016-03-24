@@ -78,29 +78,29 @@ class SimTab(object):
 
 	# FUNCIONES PARA LA CREACIÓN DE LA TABLA DE SÍMBOLOS
 
-	def agregarDecInit(self,lista) :
+	def agregarDecInit(self,lista,check) :
 
 		# Descripción: Método para agregar lista de declaraciones de DecListInit
 		#			   a la tabla de simbolos.
   		# Parámetros: - lista: lista de declaraciones de bots.
 
 		if (lista.h2 != None) :
-			self.agregarDecList(lista.h1,lista.h2)
+			self.agregarDecList(lista.h1,lista.h2,check)
 		else :
-			self.agregarDecList(lista.h1,None)
+			self.agregarDecList(lista.h1,None,check)
 
-	def agregarDecList(self,dec,lista) :
+	def agregarDecList(self,dec,lista,check) :
 
 		# Descripción: Método para agregar todas las declaraciones de una 
 		# 			   DecList en la tabla de simbolos.
   		# Parámetros: - dec: declaracion a agregar en la lista de declaraciones.
   		# 			  - lista: lista de declaraciones de bots.
 
-		self.agregarListaId(dec.h3,dec.h1,dec.h4)
+		self.agregarListaId(dec.h3,dec.h1,dec.h4,check)
 		if (lista != None) :
-			self.agregarDecList(lista.h1,lista.h2)
+			self.agregarDecList(lista.h1,lista.h2,check)
 
-	def agregarListaId(self,lista,tipo,comps) :
+	def agregarListaId(self,lista,tipo,comps,check) :
 
 		# Descripción: Método para agregar todos los ids de una listaId con sus 
 		# 			   respectivos tipos y comportamientos.
@@ -108,7 +108,7 @@ class SimTab(object):
   		#			  - tipo: tipo de los identificadores de los bots.
   		#			  - comps: tabla hash de comportamientos para los bots.
 
-		if lista.h1.elem in self.tabhash:
+		if (lista.h1.elem in self.tabhash) and check:
 			print("Error : la variable "+lista.h1.elem+" ya fue declarada anteriormente")
 			exit(1)
 		else :

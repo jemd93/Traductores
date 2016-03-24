@@ -159,11 +159,11 @@ state 0
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
     TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     PROGRAM                        shift and go to state 4
-    INST_EXE                       shift and go to state 5
-    DEC_LIST_INIT                  shift and go to state 2
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
 
 state 1
 
@@ -175,24 +175,46 @@ state 1
     (8) TIPO -> . TkChar
     (9) TIPO -> . TkInt
 
-    TkBool          shift and go to state 10
-    TkChar          shift and go to state 7
-    TkInt           shift and go to state 11
+    TkBool          shift and go to state 9
+    TkChar          shift and go to state 8
+    TkInt           shift and go to state 7
 
-    DEC_LIST                       shift and go to state 9
     DEC                            shift and go to state 6
-    TIPO                           shift and go to state 8
+    TIPO                           shift and go to state 10
+    DEC_LIST                       shift and go to state 11
 
 state 2
+
+    (2) PROGRAM -> INST_EXE .
+
+    TkActivate      reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkAdvance       reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkDeactivate    reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkIf            reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkWhile         reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkCreate        reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkExecute       reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkEnd           reduce using rule 2 (PROGRAM -> INST_EXE .)
+    $end            reduce using rule 2 (PROGRAM -> INST_EXE .)
+    TkElse          reduce using rule 2 (PROGRAM -> INST_EXE .)
+
+
+state 3
 
     (1) PROGRAM -> DEC_LIST_INIT . INST_EXE
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     INST_EXE                       shift and go to state 12
 
-state 3
+state 4
+
+    (0) S' -> PROGRAM .
+
+
+
+state 5
 
     (35) INST_EXE -> TkExecute . INST_CONT_LIST TkEnd
     (36) INST_CONT_LIST -> . INST_CONT INST_CONT_LIST
@@ -209,41 +231,19 @@ state 3
     (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
-    TkActivate      shift and go to state 19
-    TkAdvance       shift and go to state 18
-    TkDeactivate    shift and go to state 16
-    TkIf            shift and go to state 20
+    TkActivate      shift and go to state 16
+    TkAdvance       shift and go to state 15
+    TkDeactivate    shift and go to state 20
+    TkIf            shift and go to state 18
     TkWhile         shift and go to state 17
     TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     INST_CONT_LIST                 shift and go to state 13
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
     INST_CONT                      shift and go to state 14
-    DEC_LIST_INIT                  shift and go to state 2
-    PROGRAM                        shift and go to state 15
-    INST_EXE                       shift and go to state 5
-
-state 4
-
-    (0) S' -> PROGRAM .
-
-
-
-state 5
-
-    (2) PROGRAM -> INST_EXE .
-
-    TkActivate      reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkAdvance       reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkDeactivate    reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkIf            reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkWhile         reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkCreate        reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkExecute       reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkElse          reduce using rule 2 (PROGRAM -> INST_EXE .)
-    TkEnd           reduce using rule 2 (PROGRAM -> INST_EXE .)
-    $end            reduce using rule 2 (PROGRAM -> INST_EXE .)
-
+    PROGRAM                        shift and go to state 19
 
 state 6
 
@@ -257,47 +257,47 @@ state 6
     (9) TIPO -> . TkInt
 
     TkExecute       reduce using rule 5 (DEC_LIST -> DEC .)
-    TkBool          shift and go to state 10
-    TkChar          shift and go to state 7
-    TkInt           shift and go to state 11
+    TkBool          shift and go to state 9
+    TkChar          shift and go to state 8
+    TkInt           shift and go to state 7
 
-    DEC_LIST                       shift and go to state 21
     DEC                            shift and go to state 6
-    TIPO                           shift and go to state 8
+    TIPO                           shift and go to state 10
+    DEC_LIST                       shift and go to state 21
 
 state 7
+
+    (9) TIPO -> TkInt .
+
+    TkBot           reduce using rule 9 (TIPO -> TkInt .)
+
+
+state 8
 
     (8) TIPO -> TkChar .
 
     TkBot           reduce using rule 8 (TIPO -> TkChar .)
 
 
-state 8
-
-    (6) DEC -> TIPO . TkBot ID_LIST COMP_LIST TkEnd
-
-    TkBot           shift and go to state 22
-
-
 state 9
-
-    (3) DEC_LIST_INIT -> TkCreate DEC_LIST .
-
-    TkExecute       reduce using rule 3 (DEC_LIST_INIT -> TkCreate DEC_LIST .)
-
-
-state 10
 
     (7) TIPO -> TkBool .
 
     TkBot           reduce using rule 7 (TIPO -> TkBool .)
 
 
+state 10
+
+    (6) DEC -> TIPO . TkBot ID_LIST COMP_LIST TkEnd
+
+    TkBot           shift and go to state 22
+
+
 state 11
 
-    (9) TIPO -> TkInt .
+    (3) DEC_LIST_INIT -> TkCreate DEC_LIST .
 
-    TkBot           reduce using rule 9 (TIPO -> TkInt .)
+    TkExecute       reduce using rule 3 (DEC_LIST_INIT -> TkCreate DEC_LIST .)
 
 
 state 12
@@ -311,9 +311,9 @@ state 12
     TkWhile         reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
     TkCreate        reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
     TkExecute       reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
-    TkElse          reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
     TkEnd           reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
     $end            reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
+    TkElse          reduce using rule 1 (PROGRAM -> DEC_LIST_INIT INST_EXE .)
 
 
 state 13
@@ -341,48 +341,45 @@ state 14
     (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
-    TkEnd           reduce using rule 37 (INST_CONT_LIST -> INST_CONT .)
     TkElse          reduce using rule 37 (INST_CONT_LIST -> INST_CONT .)
-    TkActivate      shift and go to state 19
-    TkAdvance       shift and go to state 18
-    TkDeactivate    shift and go to state 16
-    TkIf            shift and go to state 20
+    TkEnd           reduce using rule 37 (INST_CONT_LIST -> INST_CONT .)
+    TkActivate      shift and go to state 16
+    TkAdvance       shift and go to state 15
+    TkDeactivate    shift and go to state 20
+    TkIf            shift and go to state 18
     TkWhile         shift and go to state 17
     TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     INST_CONT_LIST                 shift and go to state 24
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
     INST_CONT                      shift and go to state 14
-    DEC_LIST_INIT                  shift and go to state 2
-    PROGRAM                        shift and go to state 15
-    INST_EXE                       shift and go to state 5
+    PROGRAM                        shift and go to state 19
 
 state 15
 
-    (44) INST_CONT -> PROGRAM .
-
-    TkActivate      reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkAdvance       reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkDeactivate    reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkIf            reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkWhile         reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkCreate        reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkExecute       reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkEnd           reduce using rule 44 (INST_CONT -> PROGRAM .)
-    TkElse          reduce using rule 44 (INST_CONT -> PROGRAM .)
-
-
-state 16
-
-    (40) INST_CONT -> TkDeactivate . ID_LIST TkPunto
+    (39) INST_CONT -> TkAdvance . ID_LIST TkPunto
     (10) ID_LIST -> . ID TkComa ID_LIST
     (11) ID_LIST -> . ID
     (12) ID -> . TkIdent
 
-    TkIdent         shift and go to state 25
+    TkIdent         shift and go to state 26
 
-    ID                             shift and go to state 26
-    ID_LIST                        shift and go to state 27
+    ID_LIST                        shift and go to state 25
+    ID                             shift and go to state 27
+
+state 16
+
+    (38) INST_CONT -> TkActivate . ID_LIST TkPunto
+    (10) ID_LIST -> . ID TkComa ID_LIST
+    (11) ID_LIST -> . ID
+    (12) ID -> . TkIdent
+
+    TkIdent         shift and go to state 26
+
+    ID_LIST                        shift and go to state 28
+    ID                             shift and go to state 27
 
 state 17
 
@@ -410,43 +407,19 @@ state 17
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 32
+    EXPR                           shift and go to state 33
 
 state 18
-
-    (39) INST_CONT -> TkAdvance . ID_LIST TkPunto
-    (10) ID_LIST -> . ID TkComa ID_LIST
-    (11) ID_LIST -> . ID
-    (12) ID -> . TkIdent
-
-    TkIdent         shift and go to state 25
-
-    ID                             shift and go to state 26
-    ID_LIST                        shift and go to state 38
-
-state 19
-
-    (38) INST_CONT -> TkActivate . ID_LIST TkPunto
-    (10) ID_LIST -> . ID TkComa ID_LIST
-    (11) ID_LIST -> . ID
-    (12) ID -> . TkIdent
-
-    TkIdent         shift and go to state 25
-
-    ID                             shift and go to state 26
-    ID_LIST                        shift and go to state 39
-
-state 20
 
     (41) INST_CONT -> TkIf . EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd
     (42) INST_CONT -> TkIf . EXPR TkDosPuntos INST_CONT_LIST TkEnd
@@ -473,17 +446,44 @@ state 20
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 40
+    EXPR                           shift and go to state 39
+
+state 19
+
+    (44) INST_CONT -> PROGRAM .
+
+    TkActivate      reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkAdvance       reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkDeactivate    reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkIf            reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkWhile         reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkCreate        reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkExecute       reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkElse          reduce using rule 44 (INST_CONT -> PROGRAM .)
+    TkEnd           reduce using rule 44 (INST_CONT -> PROGRAM .)
+
+
+state 20
+
+    (40) INST_CONT -> TkDeactivate . ID_LIST TkPunto
+    (10) ID_LIST -> . ID TkComa ID_LIST
+    (11) ID_LIST -> . ID
+    (12) ID -> . TkIdent
+
+    TkIdent         shift and go to state 26
+
+    ID_LIST                        shift and go to state 40
+    ID                             shift and go to state 27
 
 state 21
 
@@ -499,10 +499,10 @@ state 22
     (11) ID_LIST -> . ID
     (12) ID -> . TkIdent
 
-    TkIdent         shift and go to state 25
+    TkIdent         shift and go to state 26
 
-    ID                             shift and go to state 26
     ID_LIST                        shift and go to state 41
+    ID                             shift and go to state 27
 
 state 23
 
@@ -515,20 +515,27 @@ state 23
     TkWhile         reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
     TkCreate        reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
     TkExecute       reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
+    TkElse          reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
     TkEnd           reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
     $end            reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
-    TkElse          reduce using rule 35 (INST_EXE -> TkExecute INST_CONT_LIST TkEnd .)
 
 
 state 24
 
     (36) INST_CONT_LIST -> INST_CONT INST_CONT_LIST .
 
-    TkEnd           reduce using rule 36 (INST_CONT_LIST -> INST_CONT INST_CONT_LIST .)
     TkElse          reduce using rule 36 (INST_CONT_LIST -> INST_CONT INST_CONT_LIST .)
+    TkEnd           reduce using rule 36 (INST_CONT_LIST -> INST_CONT INST_CONT_LIST .)
 
 
 state 25
+
+    (39) INST_CONT -> TkAdvance ID_LIST . TkPunto
+
+    TkPunto         shift and go to state 42
+
+
+state 26
 
     (12) ID -> TkIdent .
 
@@ -538,27 +545,27 @@ state 25
     TkEnd           reduce using rule 12 (ID -> TkIdent .)
 
 
-state 26
+state 27
 
     (10) ID_LIST -> ID . TkComa ID_LIST
     (11) ID_LIST -> ID .
 
-    TkComa          shift and go to state 42
+    TkComa          shift and go to state 43
     TkPunto         reduce using rule 11 (ID_LIST -> ID .)
     TkOn            reduce using rule 11 (ID_LIST -> ID .)
     TkEnd           reduce using rule 11 (ID_LIST -> ID .)
 
 
-state 27
-
-    (40) INST_CONT -> TkDeactivate ID_LIST . TkPunto
-
-    TkPunto         shift and go to state 43
-
-
 state 28
 
-    (50) EXPR -> TkNegacion . EXPR
+    (38) INST_CONT -> TkActivate ID_LIST . TkPunto
+
+    TkPunto         shift and go to state 44
+
+
+state 29
+
+    (49) EXPR -> TkParAbre . EXPR TkParCierra
     (45) EXPR -> . TkNum
     (46) EXPR -> . TkIdent
     (47) EXPR -> . TkCaracter
@@ -582,60 +589,38 @@ state 28
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 44
-
-state 29
-
-    (58) EXPR -> TkFalse .
-
-    TkSuma          reduce using rule 58 (EXPR -> TkFalse .)
-    TkResta         reduce using rule 58 (EXPR -> TkFalse .)
-    TkMult          reduce using rule 58 (EXPR -> TkFalse .)
-    TkDiv           reduce using rule 58 (EXPR -> TkFalse .)
-    TkMod           reduce using rule 58 (EXPR -> TkFalse .)
-    TkConjuncion    reduce using rule 58 (EXPR -> TkFalse .)
-    TkDisyuncion    reduce using rule 58 (EXPR -> TkFalse .)
-    TkIgual         reduce using rule 58 (EXPR -> TkFalse .)
-    TkMayor         reduce using rule 58 (EXPR -> TkFalse .)
-    TkMayorIgual    reduce using rule 58 (EXPR -> TkFalse .)
-    TkMenor         reduce using rule 58 (EXPR -> TkFalse .)
-    TkMenorIgual    reduce using rule 58 (EXPR -> TkFalse .)
-    TkDistinto      reduce using rule 58 (EXPR -> TkFalse .)
-    TkDosPuntos     reduce using rule 58 (EXPR -> TkFalse .)
-    TkParCierra     reduce using rule 58 (EXPR -> TkFalse .)
-    TkPunto         reduce using rule 58 (EXPR -> TkFalse .)
-
+    EXPR                           shift and go to state 45
 
 state 30
 
-    (46) EXPR -> TkIdent .
+    (57) EXPR -> TkTrue .
 
-    TkSuma          reduce using rule 46 (EXPR -> TkIdent .)
-    TkResta         reduce using rule 46 (EXPR -> TkIdent .)
-    TkMult          reduce using rule 46 (EXPR -> TkIdent .)
-    TkDiv           reduce using rule 46 (EXPR -> TkIdent .)
-    TkMod           reduce using rule 46 (EXPR -> TkIdent .)
-    TkConjuncion    reduce using rule 46 (EXPR -> TkIdent .)
-    TkDisyuncion    reduce using rule 46 (EXPR -> TkIdent .)
-    TkIgual         reduce using rule 46 (EXPR -> TkIdent .)
-    TkMayor         reduce using rule 46 (EXPR -> TkIdent .)
-    TkMayorIgual    reduce using rule 46 (EXPR -> TkIdent .)
-    TkMenor         reduce using rule 46 (EXPR -> TkIdent .)
-    TkMenorIgual    reduce using rule 46 (EXPR -> TkIdent .)
-    TkDistinto      reduce using rule 46 (EXPR -> TkIdent .)
-    TkDosPuntos     reduce using rule 46 (EXPR -> TkIdent .)
-    TkParCierra     reduce using rule 46 (EXPR -> TkIdent .)
-    TkPunto         reduce using rule 46 (EXPR -> TkIdent .)
+    TkDosPuntos     reduce using rule 57 (EXPR -> TkTrue .)
+    TkSuma          reduce using rule 57 (EXPR -> TkTrue .)
+    TkResta         reduce using rule 57 (EXPR -> TkTrue .)
+    TkMult          reduce using rule 57 (EXPR -> TkTrue .)
+    TkDiv           reduce using rule 57 (EXPR -> TkTrue .)
+    TkMod           reduce using rule 57 (EXPR -> TkTrue .)
+    TkConjuncion    reduce using rule 57 (EXPR -> TkTrue .)
+    TkDisyuncion    reduce using rule 57 (EXPR -> TkTrue .)
+    TkIgual         reduce using rule 57 (EXPR -> TkTrue .)
+    TkMayor         reduce using rule 57 (EXPR -> TkTrue .)
+    TkMayorIgual    reduce using rule 57 (EXPR -> TkTrue .)
+    TkMenor         reduce using rule 57 (EXPR -> TkTrue .)
+    TkMenorIgual    reduce using rule 57 (EXPR -> TkTrue .)
+    TkDistinto      reduce using rule 57 (EXPR -> TkTrue .)
+    TkParCierra     reduce using rule 57 (EXPR -> TkTrue .)
+    TkPunto         reduce using rule 57 (EXPR -> TkTrue .)
 
 
 state 31
@@ -664,19 +649,41 @@ state 31
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 45
+    EXPR                           shift and go to state 46
 
 state 32
+
+    (48) EXPR -> TkMe .
+
+    TkDosPuntos     reduce using rule 48 (EXPR -> TkMe .)
+    TkSuma          reduce using rule 48 (EXPR -> TkMe .)
+    TkResta         reduce using rule 48 (EXPR -> TkMe .)
+    TkMult          reduce using rule 48 (EXPR -> TkMe .)
+    TkDiv           reduce using rule 48 (EXPR -> TkMe .)
+    TkMod           reduce using rule 48 (EXPR -> TkMe .)
+    TkConjuncion    reduce using rule 48 (EXPR -> TkMe .)
+    TkDisyuncion    reduce using rule 48 (EXPR -> TkMe .)
+    TkIgual         reduce using rule 48 (EXPR -> TkMe .)
+    TkMayor         reduce using rule 48 (EXPR -> TkMe .)
+    TkMayorIgual    reduce using rule 48 (EXPR -> TkMe .)
+    TkMenor         reduce using rule 48 (EXPR -> TkMe .)
+    TkMenorIgual    reduce using rule 48 (EXPR -> TkMe .)
+    TkDistinto      reduce using rule 48 (EXPR -> TkMe .)
+    TkParCierra     reduce using rule 48 (EXPR -> TkMe .)
+    TkPunto         reduce using rule 48 (EXPR -> TkMe .)
+
+
+state 33
 
     (43) INST_CONT -> TkWhile EXPR . TkDosPuntos INST_CONT_LIST TkEnd
     (52) EXPR -> EXPR . TkSuma EXPR
@@ -693,25 +700,91 @@ state 32
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkDosPuntos     shift and go to state 48
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkDosPuntos     shift and go to state 59
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
 
 
-state 33
+state 34
 
-    (49) EXPR -> TkParAbre . EXPR TkParCierra
+    (46) EXPR -> TkIdent .
+
+    TkDosPuntos     reduce using rule 46 (EXPR -> TkIdent .)
+    TkSuma          reduce using rule 46 (EXPR -> TkIdent .)
+    TkResta         reduce using rule 46 (EXPR -> TkIdent .)
+    TkMult          reduce using rule 46 (EXPR -> TkIdent .)
+    TkDiv           reduce using rule 46 (EXPR -> TkIdent .)
+    TkMod           reduce using rule 46 (EXPR -> TkIdent .)
+    TkConjuncion    reduce using rule 46 (EXPR -> TkIdent .)
+    TkDisyuncion    reduce using rule 46 (EXPR -> TkIdent .)
+    TkIgual         reduce using rule 46 (EXPR -> TkIdent .)
+    TkMayor         reduce using rule 46 (EXPR -> TkIdent .)
+    TkMayorIgual    reduce using rule 46 (EXPR -> TkIdent .)
+    TkMenor         reduce using rule 46 (EXPR -> TkIdent .)
+    TkMenorIgual    reduce using rule 46 (EXPR -> TkIdent .)
+    TkDistinto      reduce using rule 46 (EXPR -> TkIdent .)
+    TkParCierra     reduce using rule 46 (EXPR -> TkIdent .)
+    TkPunto         reduce using rule 46 (EXPR -> TkIdent .)
+
+
+state 35
+
+    (45) EXPR -> TkNum .
+
+    TkDosPuntos     reduce using rule 45 (EXPR -> TkNum .)
+    TkSuma          reduce using rule 45 (EXPR -> TkNum .)
+    TkResta         reduce using rule 45 (EXPR -> TkNum .)
+    TkMult          reduce using rule 45 (EXPR -> TkNum .)
+    TkDiv           reduce using rule 45 (EXPR -> TkNum .)
+    TkMod           reduce using rule 45 (EXPR -> TkNum .)
+    TkConjuncion    reduce using rule 45 (EXPR -> TkNum .)
+    TkDisyuncion    reduce using rule 45 (EXPR -> TkNum .)
+    TkIgual         reduce using rule 45 (EXPR -> TkNum .)
+    TkMayor         reduce using rule 45 (EXPR -> TkNum .)
+    TkMayorIgual    reduce using rule 45 (EXPR -> TkNum .)
+    TkMenor         reduce using rule 45 (EXPR -> TkNum .)
+    TkMenorIgual    reduce using rule 45 (EXPR -> TkNum .)
+    TkDistinto      reduce using rule 45 (EXPR -> TkNum .)
+    TkParCierra     reduce using rule 45 (EXPR -> TkNum .)
+    TkPunto         reduce using rule 45 (EXPR -> TkNum .)
+
+
+state 36
+
+    (58) EXPR -> TkFalse .
+
+    TkDosPuntos     reduce using rule 58 (EXPR -> TkFalse .)
+    TkSuma          reduce using rule 58 (EXPR -> TkFalse .)
+    TkResta         reduce using rule 58 (EXPR -> TkFalse .)
+    TkMult          reduce using rule 58 (EXPR -> TkFalse .)
+    TkDiv           reduce using rule 58 (EXPR -> TkFalse .)
+    TkMod           reduce using rule 58 (EXPR -> TkFalse .)
+    TkConjuncion    reduce using rule 58 (EXPR -> TkFalse .)
+    TkDisyuncion    reduce using rule 58 (EXPR -> TkFalse .)
+    TkIgual         reduce using rule 58 (EXPR -> TkFalse .)
+    TkMayor         reduce using rule 58 (EXPR -> TkFalse .)
+    TkMayorIgual    reduce using rule 58 (EXPR -> TkFalse .)
+    TkMenor         reduce using rule 58 (EXPR -> TkFalse .)
+    TkMenorIgual    reduce using rule 58 (EXPR -> TkFalse .)
+    TkDistinto      reduce using rule 58 (EXPR -> TkFalse .)
+    TkParCierra     reduce using rule 58 (EXPR -> TkFalse .)
+    TkPunto         reduce using rule 58 (EXPR -> TkFalse .)
+
+
+state 37
+
+    (50) EXPR -> TkNegacion . EXPR
     (45) EXPR -> . TkNum
     (46) EXPR -> . TkIdent
     (47) EXPR -> . TkCaracter
@@ -735,66 +808,23 @@ state 33
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 60
+    EXPR                           shift and go to state 61
 
-state 34
-
-    (45) EXPR -> TkNum .
-
-    TkSuma          reduce using rule 45 (EXPR -> TkNum .)
-    TkResta         reduce using rule 45 (EXPR -> TkNum .)
-    TkMult          reduce using rule 45 (EXPR -> TkNum .)
-    TkDiv           reduce using rule 45 (EXPR -> TkNum .)
-    TkMod           reduce using rule 45 (EXPR -> TkNum .)
-    TkConjuncion    reduce using rule 45 (EXPR -> TkNum .)
-    TkDisyuncion    reduce using rule 45 (EXPR -> TkNum .)
-    TkIgual         reduce using rule 45 (EXPR -> TkNum .)
-    TkMayor         reduce using rule 45 (EXPR -> TkNum .)
-    TkMayorIgual    reduce using rule 45 (EXPR -> TkNum .)
-    TkMenor         reduce using rule 45 (EXPR -> TkNum .)
-    TkMenorIgual    reduce using rule 45 (EXPR -> TkNum .)
-    TkDistinto      reduce using rule 45 (EXPR -> TkNum .)
-    TkDosPuntos     reduce using rule 45 (EXPR -> TkNum .)
-    TkParCierra     reduce using rule 45 (EXPR -> TkNum .)
-    TkPunto         reduce using rule 45 (EXPR -> TkNum .)
-
-
-state 35
-
-    (57) EXPR -> TkTrue .
-
-    TkSuma          reduce using rule 57 (EXPR -> TkTrue .)
-    TkResta         reduce using rule 57 (EXPR -> TkTrue .)
-    TkMult          reduce using rule 57 (EXPR -> TkTrue .)
-    TkDiv           reduce using rule 57 (EXPR -> TkTrue .)
-    TkMod           reduce using rule 57 (EXPR -> TkTrue .)
-    TkConjuncion    reduce using rule 57 (EXPR -> TkTrue .)
-    TkDisyuncion    reduce using rule 57 (EXPR -> TkTrue .)
-    TkIgual         reduce using rule 57 (EXPR -> TkTrue .)
-    TkMayor         reduce using rule 57 (EXPR -> TkTrue .)
-    TkMayorIgual    reduce using rule 57 (EXPR -> TkTrue .)
-    TkMenor         reduce using rule 57 (EXPR -> TkTrue .)
-    TkMenorIgual    reduce using rule 57 (EXPR -> TkTrue .)
-    TkDistinto      reduce using rule 57 (EXPR -> TkTrue .)
-    TkDosPuntos     reduce using rule 57 (EXPR -> TkTrue .)
-    TkParCierra     reduce using rule 57 (EXPR -> TkTrue .)
-    TkPunto         reduce using rule 57 (EXPR -> TkTrue .)
-
-
-state 36
+state 38
 
     (47) EXPR -> TkCaracter .
 
+    TkDosPuntos     reduce using rule 47 (EXPR -> TkCaracter .)
     TkSuma          reduce using rule 47 (EXPR -> TkCaracter .)
     TkResta         reduce using rule 47 (EXPR -> TkCaracter .)
     TkMult          reduce using rule 47 (EXPR -> TkCaracter .)
@@ -808,48 +838,11 @@ state 36
     TkMenor         reduce using rule 47 (EXPR -> TkCaracter .)
     TkMenorIgual    reduce using rule 47 (EXPR -> TkCaracter .)
     TkDistinto      reduce using rule 47 (EXPR -> TkCaracter .)
-    TkDosPuntos     reduce using rule 47 (EXPR -> TkCaracter .)
     TkParCierra     reduce using rule 47 (EXPR -> TkCaracter .)
     TkPunto         reduce using rule 47 (EXPR -> TkCaracter .)
 
 
-state 37
-
-    (48) EXPR -> TkMe .
-
-    TkSuma          reduce using rule 48 (EXPR -> TkMe .)
-    TkResta         reduce using rule 48 (EXPR -> TkMe .)
-    TkMult          reduce using rule 48 (EXPR -> TkMe .)
-    TkDiv           reduce using rule 48 (EXPR -> TkMe .)
-    TkMod           reduce using rule 48 (EXPR -> TkMe .)
-    TkConjuncion    reduce using rule 48 (EXPR -> TkMe .)
-    TkDisyuncion    reduce using rule 48 (EXPR -> TkMe .)
-    TkIgual         reduce using rule 48 (EXPR -> TkMe .)
-    TkMayor         reduce using rule 48 (EXPR -> TkMe .)
-    TkMayorIgual    reduce using rule 48 (EXPR -> TkMe .)
-    TkMenor         reduce using rule 48 (EXPR -> TkMe .)
-    TkMenorIgual    reduce using rule 48 (EXPR -> TkMe .)
-    TkDistinto      reduce using rule 48 (EXPR -> TkMe .)
-    TkDosPuntos     reduce using rule 48 (EXPR -> TkMe .)
-    TkParCierra     reduce using rule 48 (EXPR -> TkMe .)
-    TkPunto         reduce using rule 48 (EXPR -> TkMe .)
-
-
-state 38
-
-    (39) INST_CONT -> TkAdvance ID_LIST . TkPunto
-
-    TkPunto         shift and go to state 61
-
-
 state 39
-
-    (38) INST_CONT -> TkActivate ID_LIST . TkPunto
-
-    TkPunto         shift and go to state 62
-
-
-state 40
 
     (41) INST_CONT -> TkIf EXPR . TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd
     (42) INST_CONT -> TkIf EXPR . TkDosPuntos INST_CONT_LIST TkEnd
@@ -867,20 +860,27 @@ state 40
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkDosPuntos     shift and go to state 63
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkDosPuntos     shift and go to state 62
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
+
+
+state 40
+
+    (40) INST_CONT -> TkDeactivate ID_LIST . TkPunto
+
+    TkPunto         shift and go to state 63
 
 
 state 41
@@ -892,43 +892,58 @@ state 41
     (16) COMP -> . TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd
     (67) empty -> .
 
-    TkOn            shift and go to state 64
+    TkOn            shift and go to state 65
     TkEnd           reduce using rule 67 (empty -> .)
 
-    COMP_LIST                      shift and go to state 65
+    COMP_LIST                      shift and go to state 64
     empty                          shift and go to state 66
     COMP                           shift and go to state 67
 
 state 42
+
+    (39) INST_CONT -> TkAdvance ID_LIST TkPunto .
+
+    TkActivate      reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkAdvance       reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkDeactivate    reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkIf            reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkWhile         reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkCreate        reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkExecute       reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkElse          reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+    TkEnd           reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+
+
+state 43
 
     (10) ID_LIST -> ID TkComa . ID_LIST
     (10) ID_LIST -> . ID TkComa ID_LIST
     (11) ID_LIST -> . ID
     (12) ID -> . TkIdent
 
-    TkIdent         shift and go to state 25
+    TkIdent         shift and go to state 26
 
     ID_LIST                        shift and go to state 68
-    ID                             shift and go to state 26
-
-state 43
-
-    (40) INST_CONT -> TkDeactivate ID_LIST TkPunto .
-
-    TkActivate      reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkAdvance       reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkDeactivate    reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkIf            reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkWhile         reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkCreate        reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkExecute       reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkEnd           reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-    TkElse          reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
-
+    ID                             shift and go to state 27
 
 state 44
 
-    (50) EXPR -> TkNegacion EXPR .
+    (38) INST_CONT -> TkActivate ID_LIST TkPunto .
+
+    TkActivate      reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkAdvance       reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkDeactivate    reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkIf            reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkWhile         reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkCreate        reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkExecute       reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkElse          reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+    TkEnd           reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
+
+
+state 45
+
+    (49) EXPR -> TkParAbre EXPR . TkParCierra
     (52) EXPR -> EXPR . TkSuma EXPR
     (53) EXPR -> EXPR . TkResta EXPR
     (54) EXPR -> EXPR . TkMult EXPR
@@ -943,39 +958,23 @@ state 44
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkSuma          reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkResta         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMult          reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkDiv           reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMod           reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkConjuncion    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkDisyuncion    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMayor         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMayorIgual    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMenor         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkMenorIgual    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkDosPuntos     reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkParCierra     reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkPunto         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkIgual         [ reduce using rule 50 (EXPR -> TkNegacion EXPR .) ]
-  ! TkDistinto      [ reduce using rule 50 (EXPR -> TkNegacion EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkConjuncion    [ shift and go to state 52 ]
-  ! TkDisyuncion    [ shift and go to state 46 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
+    TkParCierra     shift and go to state 69
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
 
 
-state 45
+state 46
 
     (51) EXPR -> TkResta EXPR .
     (52) EXPR -> EXPR . TkSuma EXPR
@@ -992,6 +991,7 @@ state 45
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
+    TkDosPuntos     reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkSuma          reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkResta         reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkMult          reduce using rule 51 (EXPR -> TkResta EXPR .)
@@ -1001,517 +1001,29 @@ state 45
     TkMayorIgual    reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkMenor         reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkMenorIgual    reduce using rule 51 (EXPR -> TkResta EXPR .)
-    TkDosPuntos     reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkParCierra     reduce using rule 51 (EXPR -> TkResta EXPR .)
     TkPunto         reduce using rule 51 (EXPR -> TkResta EXPR .)
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
 
   ! TkConjuncion    [ reduce using rule 51 (EXPR -> TkResta EXPR .) ]
   ! TkDisyuncion    [ reduce using rule 51 (EXPR -> TkResta EXPR .) ]
   ! TkIgual         [ reduce using rule 51 (EXPR -> TkResta EXPR .) ]
   ! TkDistinto      [ reduce using rule 51 (EXPR -> TkResta EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
 
-
-state 46
-
-    (60) EXPR -> EXPR TkDisyuncion . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 69
 
 state 47
-
-    (53) EXPR -> EXPR TkResta . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 70
-
-state 48
-
-    (43) INST_CONT -> TkWhile EXPR TkDosPuntos . INST_CONT_LIST TkEnd
-    (36) INST_CONT_LIST -> . INST_CONT INST_CONT_LIST
-    (37) INST_CONT_LIST -> . INST_CONT
-    (38) INST_CONT -> . TkActivate ID_LIST TkPunto
-    (39) INST_CONT -> . TkAdvance ID_LIST TkPunto
-    (40) INST_CONT -> . TkDeactivate ID_LIST TkPunto
-    (41) INST_CONT -> . TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd
-    (42) INST_CONT -> . TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd
-    (43) INST_CONT -> . TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd
-    (44) INST_CONT -> . PROGRAM
-    (1) PROGRAM -> . DEC_LIST_INIT INST_EXE
-    (2) PROGRAM -> . INST_EXE
-    (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
-    (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
-
-    TkActivate      shift and go to state 19
-    TkAdvance       shift and go to state 18
-    TkDeactivate    shift and go to state 16
-    TkIf            shift and go to state 20
-    TkWhile         shift and go to state 17
-    TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
-
-    INST_CONT_LIST                 shift and go to state 71
-    INST_CONT                      shift and go to state 14
-    DEC_LIST_INIT                  shift and go to state 2
-    PROGRAM                        shift and go to state 15
-    INST_EXE                       shift and go to state 5
-
-state 49
-
-    (65) EXPR -> EXPR TkMenorIgual . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 72
-
-state 50
-
-    (63) EXPR -> EXPR TkMayorIgual . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 73
-
-state 51
-
-    (66) EXPR -> EXPR TkDistinto . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 74
-
-state 52
-
-    (59) EXPR -> EXPR TkConjuncion . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 75
-
-state 53
-
-    (52) EXPR -> EXPR TkSuma . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 76
-
-state 54
-
-    (54) EXPR -> EXPR TkMult . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 77
-
-state 55
-
-    (56) EXPR -> EXPR TkMod . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 78
-
-state 56
-
-    (55) EXPR -> EXPR TkDiv . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 79
-
-state 57
-
-    (61) EXPR -> EXPR TkIgual . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 80
-
-state 58
-
-    (64) EXPR -> EXPR TkMenor . EXPR
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 81
-
-state 59
 
     (62) EXPR -> EXPR TkMayor . EXPR
     (45) EXPR -> . TkNum
@@ -1537,21 +1049,508 @@ state 59
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
-    EXPR                           shift and go to state 82
+    EXPR                           shift and go to state 70
+
+state 48
+
+    (61) EXPR -> EXPR TkIgual . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 71
+
+state 49
+
+    (59) EXPR -> EXPR TkConjuncion . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 72
+
+state 50
+
+    (55) EXPR -> EXPR TkDiv . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 73
+
+state 51
+
+    (52) EXPR -> EXPR TkSuma . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 74
+
+state 52
+
+    (64) EXPR -> EXPR TkMenor . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 75
+
+state 53
+
+    (63) EXPR -> EXPR TkMayorIgual . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 76
+
+state 54
+
+    (56) EXPR -> EXPR TkMod . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 77
+
+state 55
+
+    (53) EXPR -> EXPR TkResta . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 78
+
+state 56
+
+    (54) EXPR -> EXPR TkMult . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 79
+
+state 57
+
+    (66) EXPR -> EXPR TkDistinto . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 80
+
+state 58
+
+    (65) EXPR -> EXPR TkMenorIgual . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 81
+
+state 59
+
+    (43) INST_CONT -> TkWhile EXPR TkDosPuntos . INST_CONT_LIST TkEnd
+    (36) INST_CONT_LIST -> . INST_CONT INST_CONT_LIST
+    (37) INST_CONT_LIST -> . INST_CONT
+    (38) INST_CONT -> . TkActivate ID_LIST TkPunto
+    (39) INST_CONT -> . TkAdvance ID_LIST TkPunto
+    (40) INST_CONT -> . TkDeactivate ID_LIST TkPunto
+    (41) INST_CONT -> . TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd
+    (42) INST_CONT -> . TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd
+    (43) INST_CONT -> . TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd
+    (44) INST_CONT -> . PROGRAM
+    (1) PROGRAM -> . DEC_LIST_INIT INST_EXE
+    (2) PROGRAM -> . INST_EXE
+    (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
+    (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
+
+    TkActivate      shift and go to state 16
+    TkAdvance       shift and go to state 15
+    TkDeactivate    shift and go to state 20
+    TkIf            shift and go to state 18
+    TkWhile         shift and go to state 17
+    TkCreate        shift and go to state 1
+    TkExecute       shift and go to state 5
+
+    INST_CONT_LIST                 shift and go to state 82
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
+    INST_CONT                      shift and go to state 14
+    PROGRAM                        shift and go to state 19
 
 state 60
 
-    (49) EXPR -> TkParAbre EXPR . TkParCierra
+    (60) EXPR -> EXPR TkDisyuncion . EXPR
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 83
+
+state 61
+
+    (50) EXPR -> TkNegacion EXPR .
     (52) EXPR -> EXPR . TkSuma EXPR
     (53) EXPR -> EXPR . TkResta EXPR
     (54) EXPR -> EXPR . TkMult EXPR
@@ -1566,53 +1565,39 @@ state 60
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkParCierra     shift and go to state 83
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkDosPuntos     reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkSuma          reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkResta         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMult          reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkDiv           reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMod           reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkConjuncion    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkDisyuncion    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMayor         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMayorIgual    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMenor         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkMenorIgual    reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkParCierra     reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkPunto         reduce using rule 50 (EXPR -> TkNegacion EXPR .)
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
 
-
-state 61
-
-    (39) INST_CONT -> TkAdvance ID_LIST TkPunto .
-
-    TkActivate      reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkAdvance       reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkDeactivate    reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkIf            reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkWhile         reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkCreate        reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkExecute       reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkEnd           reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
-    TkElse          reduce using rule 39 (INST_CONT -> TkAdvance ID_LIST TkPunto .)
+  ! TkIgual         [ reduce using rule 50 (EXPR -> TkNegacion EXPR .) ]
+  ! TkDistinto      [ reduce using rule 50 (EXPR -> TkNegacion EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkConjuncion    [ shift and go to state 49 ]
+  ! TkDisyuncion    [ shift and go to state 60 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
 
 
 state 62
-
-    (38) INST_CONT -> TkActivate ID_LIST TkPunto .
-
-    TkActivate      reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkAdvance       reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkDeactivate    reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkIf            reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkWhile         reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkCreate        reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkExecute       reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkEnd           reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-    TkElse          reduce using rule 38 (INST_CONT -> TkActivate ID_LIST TkPunto .)
-
-
-state 63
 
     (41) INST_CONT -> TkIf EXPR TkDosPuntos . INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd
     (42) INST_CONT -> TkIf EXPR TkDosPuntos . INST_CONT_LIST TkEnd
@@ -1630,21 +1615,43 @@ state 63
     (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
-    TkActivate      shift and go to state 19
-    TkAdvance       shift and go to state 18
-    TkDeactivate    shift and go to state 16
-    TkIf            shift and go to state 20
+    TkActivate      shift and go to state 16
+    TkAdvance       shift and go to state 15
+    TkDeactivate    shift and go to state 20
+    TkIf            shift and go to state 18
     TkWhile         shift and go to state 17
     TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     INST_CONT_LIST                 shift and go to state 84
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
     INST_CONT                      shift and go to state 14
-    DEC_LIST_INIT                  shift and go to state 2
-    PROGRAM                        shift and go to state 15
-    INST_EXE                       shift and go to state 5
+    PROGRAM                        shift and go to state 19
+
+state 63
+
+    (40) INST_CONT -> TkDeactivate ID_LIST TkPunto .
+
+    TkActivate      reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkAdvance       reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkDeactivate    reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkIf            reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkWhile         reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkCreate        reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkExecute       reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkElse          reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+    TkEnd           reduce using rule 40 (INST_CONT -> TkDeactivate ID_LIST TkPunto .)
+
 
 state 64
+
+    (6) DEC -> TIPO TkBot ID_LIST COMP_LIST . TkEnd
+
+    TkEnd           shift and go to state 85
+
+
+state 65
 
     (15) COMP -> TkOn . EXPR TkDosPuntos INST_BOT_LIST TkEnd
     (16) COMP -> TkOn . STATE TkDosPuntos INST_BOT_LIST TkEnd
@@ -1674,28 +1681,21 @@ state 64
     (18) STATE -> . TkDeactivation
     (19) STATE -> . TkDefault
 
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
     TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-    TkActivation    shift and go to state 88
-    TkDeactivation  shift and go to state 85
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+    TkActivation    shift and go to state 90
+    TkDeactivation  shift and go to state 88
     TkDefault       shift and go to state 86
 
-    STATE                          shift and go to state 87
     EXPR                           shift and go to state 89
-
-state 65
-
-    (6) DEC -> TIPO TkBot ID_LIST COMP_LIST . TkEnd
-
-    TkEnd           shift and go to state 90
-
+    STATE                          shift and go to state 87
 
 state 66
 
@@ -1713,7 +1713,7 @@ state 67
     (16) COMP -> . TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd
     (67) empty -> .
 
-    TkOn            shift and go to state 64
+    TkOn            shift and go to state 65
     TkEnd           reduce using rule 67 (empty -> .)
 
     COMP_LIST                      shift and go to state 91
@@ -1731,600 +1731,27 @@ state 68
 
 state 69
 
-    (60) EXPR -> EXPR TkDisyuncion EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
+    (49) EXPR -> TkParAbre EXPR TkParCierra .
 
-    TkSuma          reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkResta         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMult          reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkDiv           reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMod           reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkDisyuncion    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMayor         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMayorIgual    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMenor         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkMenorIgual    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkDosPuntos     reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkParCierra     reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkPunto         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
-    TkConjuncion    shift and go to state 52
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkConjuncion    [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
-  ! TkIgual         [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
-  ! TkDistinto      [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkDisyuncion    [ shift and go to state 46 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
+    TkDosPuntos     reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkSuma          reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkResta         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMult          reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkDiv           reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMod           reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkConjuncion    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkDisyuncion    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkIgual         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMayor         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMayorIgual    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMenor         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkMenorIgual    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkDistinto      reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkParCierra     reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkPunto         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
 
 
 state 70
-
-    (53) EXPR -> EXPR TkResta EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkResta         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkMayor         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkMayorIgual    reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkMenor         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkMenorIgual    reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkDosPuntos     reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkParCierra     reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkPunto         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkMult          [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkDiv           [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkMod           [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkConjuncion    [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkIgual         [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkDistinto      [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 71
-
-    (43) INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST . TkEnd
-
-    TkEnd           shift and go to state 92
-
-
-state 72
-
-    (65) EXPR -> EXPR TkMenorIgual EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkMayor         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkMayorIgual    reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkMenor         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkMenorIgual    reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkDosPuntos     reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkParCierra     reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkPunto         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkSuma          [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkResta         [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkMult          [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkDiv           [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkMod           [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkConjuncion    [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkIgual         [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkDistinto      [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 73
-
-    (63) EXPR -> EXPR TkMayorIgual EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkMayor         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkMayorIgual    reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkMenor         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkMenorIgual    reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkDosPuntos     reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkParCierra     reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkPunto         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkSuma          [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkResta         [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkMult          [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkDiv           [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkMod           [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkConjuncion    [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkIgual         [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkDistinto      [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 74
-
-    (66) EXPR -> EXPR TkDistinto EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkResta         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMult          reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkDiv           reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMod           reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkConjuncion    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkDisyuncion    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkIgual         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMayor         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMayorIgual    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMenor         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkMenorIgual    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkDistinto      reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkDosPuntos     reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkParCierra     reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-    TkPunto         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
-
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkConjuncion    [ shift and go to state 52 ]
-  ! TkDisyuncion    [ shift and go to state 46 ]
-  ! TkIgual         [ shift and go to state 57 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-  ! TkDistinto      [ shift and go to state 51 ]
-
-
-state 75
-
-    (59) EXPR -> EXPR TkConjuncion EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkResta         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMult          reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkDiv           reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMod           reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkConjuncion    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkDisyuncion    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMayor         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMayorIgual    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMenor         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkMenorIgual    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkDosPuntos     reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkParCierra     reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkPunto         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkIgual         [ reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .) ]
-  ! TkDistinto      [ reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkConjuncion    [ shift and go to state 52 ]
-  ! TkDisyuncion    [ shift and go to state 46 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 76
-
-    (52) EXPR -> EXPR TkSuma EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkResta         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkMayor         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkMayorIgual    reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkMenor         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkMenorIgual    reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkDosPuntos     reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkParCierra     reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkPunto         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkMult          [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkDiv           [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkMod           [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkConjuncion    [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkIgual         [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkDistinto      [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 77
-
-    (54) EXPR -> EXPR TkMult EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkResta         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMult          reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkDiv           reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMod           reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMayor         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMayorIgual    reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMenor         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkMenorIgual    reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkDosPuntos     reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkParCierra     reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkPunto         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkConjuncion    [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
-  ! TkIgual         [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
-  ! TkDistinto      [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 78
-
-    (56) EXPR -> EXPR TkMod EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkResta         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMult          reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkDiv           reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMod           reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMayor         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMayorIgual    reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMenor         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkMenorIgual    reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkDosPuntos     reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkParCierra     reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkPunto         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkConjuncion    [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
-  ! TkIgual         [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
-  ! TkDistinto      [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 79
-
-    (55) EXPR -> EXPR TkDiv EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkResta         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMult          reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkDiv           reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMod           reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMayor         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMayorIgual    reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMenor         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkMenorIgual    reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkDosPuntos     reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkParCierra     reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkPunto         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkConjuncion    [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
-  ! TkIgual         [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
-  ! TkDistinto      [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 80
-
-    (61) EXPR -> EXPR TkIgual EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkSuma          reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkResta         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMult          reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkDiv           reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMod           reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkConjuncion    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkDisyuncion    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkIgual         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMayor         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMayorIgual    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMenor         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkMenorIgual    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkDistinto      reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkDosPuntos     reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkParCierra     reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-    TkPunto         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
-
-  ! TkSuma          [ shift and go to state 53 ]
-  ! TkResta         [ shift and go to state 47 ]
-  ! TkMult          [ shift and go to state 54 ]
-  ! TkDiv           [ shift and go to state 56 ]
-  ! TkMod           [ shift and go to state 55 ]
-  ! TkConjuncion    [ shift and go to state 52 ]
-  ! TkDisyuncion    [ shift and go to state 46 ]
-  ! TkIgual         [ shift and go to state 57 ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-  ! TkDistinto      [ shift and go to state 51 ]
-
-
-state 81
-
-    (64) EXPR -> EXPR TkMenor EXPR .
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkMayor         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkMayorIgual    reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkMenor         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkMenorIgual    reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkDosPuntos     reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkParCierra     reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkPunto         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
-
-  ! TkSuma          [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkResta         [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkMult          [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkDiv           [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkMod           [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkConjuncion    [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkDisyuncion    [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkIgual         [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkDistinto      [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
-
-
-state 82
 
     (62) EXPR -> EXPR TkMayor EXPR .
     (52) EXPR -> EXPR . TkSuma EXPR
@@ -2341,22 +1768,22 @@ state 82
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
+    TkDosPuntos     reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkMayor         reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkMayorIgual    reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkMenor         reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkMenorIgual    reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
-    TkDosPuntos     reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkParCierra     reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
     TkPunto         reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .)
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkDistinto      shift and go to state 51
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
 
   ! TkSuma          [ reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .) ]
   ! TkResta         [ reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .) ]
@@ -2367,32 +1794,605 @@ state 82
   ! TkDisyuncion    [ reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .) ]
   ! TkIgual         [ reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .) ]
   ! TkDistinto      [ reduce using rule 62 (EXPR -> EXPR TkMayor EXPR .) ]
-  ! TkMayor         [ shift and go to state 59 ]
-  ! TkMayorIgual    [ shift and go to state 50 ]
-  ! TkMenor         [ shift and go to state 58 ]
-  ! TkMenorIgual    [ shift and go to state 49 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 71
+
+    (61) EXPR -> EXPR TkIgual EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkSuma          reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkResta         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMult          reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkDiv           reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMod           reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkConjuncion    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkDisyuncion    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkIgual         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMayor         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMayorIgual    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMenor         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkMenorIgual    reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkDistinto      reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkParCierra     reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+    TkPunto         reduce using rule 61 (EXPR -> EXPR TkIgual EXPR .)
+
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkConjuncion    [ shift and go to state 49 ]
+  ! TkDisyuncion    [ shift and go to state 60 ]
+  ! TkIgual         [ shift and go to state 48 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+  ! TkDistinto      [ shift and go to state 57 ]
+
+
+state 72
+
+    (59) EXPR -> EXPR TkConjuncion EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkSuma          reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkResta         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMult          reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkDiv           reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMod           reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkConjuncion    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkDisyuncion    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMayor         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMayorIgual    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMenor         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkMenorIgual    reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkParCierra     reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkPunto         reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .)
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkIgual         [ reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .) ]
+  ! TkDistinto      [ reduce using rule 59 (EXPR -> EXPR TkConjuncion EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkConjuncion    [ shift and go to state 49 ]
+  ! TkDisyuncion    [ shift and go to state 60 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 73
+
+    (55) EXPR -> EXPR TkDiv EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkSuma          reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkResta         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMult          reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkDiv           reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMod           reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMayor         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMayorIgual    reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMenor         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkMenorIgual    reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkParCierra     reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkPunto         reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .)
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkConjuncion    [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
+  ! TkIgual         [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
+  ! TkDistinto      [ reduce using rule 55 (EXPR -> EXPR TkDiv EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 74
+
+    (52) EXPR -> EXPR TkSuma EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkSuma          reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkResta         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkMayor         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkMayorIgual    reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkMenor         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkMenorIgual    reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkParCierra     reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkPunto         reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .)
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkMult          [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkDiv           [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkMod           [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkConjuncion    [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkIgual         [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkDistinto      [ reduce using rule 52 (EXPR -> EXPR TkSuma EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 75
+
+    (64) EXPR -> EXPR TkMenor EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkMayor         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkMayorIgual    reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkMenor         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkMenorIgual    reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkParCierra     reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkPunto         reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .)
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkSuma          [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkResta         [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkMult          [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkDiv           [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkMod           [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkConjuncion    [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkIgual         [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkDistinto      [ reduce using rule 64 (EXPR -> EXPR TkMenor EXPR .) ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 76
+
+    (63) EXPR -> EXPR TkMayorIgual EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkMayor         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkMayorIgual    reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkMenor         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkMenorIgual    reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkParCierra     reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkPunto         reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .)
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkSuma          [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkResta         [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkMult          [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkDiv           [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkMod           [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkConjuncion    [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkIgual         [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkDistinto      [ reduce using rule 63 (EXPR -> EXPR TkMayorIgual EXPR .) ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 77
+
+    (56) EXPR -> EXPR TkMod EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkSuma          reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkResta         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMult          reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkDiv           reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMod           reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMayor         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMayorIgual    reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMenor         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkMenorIgual    reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkParCierra     reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkPunto         reduce using rule 56 (EXPR -> EXPR TkMod EXPR .)
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkConjuncion    [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
+  ! TkIgual         [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
+  ! TkDistinto      [ reduce using rule 56 (EXPR -> EXPR TkMod EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 78
+
+    (53) EXPR -> EXPR TkResta EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkSuma          reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkResta         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkMayor         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkMayorIgual    reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkMenor         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkMenorIgual    reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkParCierra     reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkPunto         reduce using rule 53 (EXPR -> EXPR TkResta EXPR .)
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkMult          [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkDiv           [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkMod           [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkConjuncion    [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkIgual         [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkDistinto      [ reduce using rule 53 (EXPR -> EXPR TkResta EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 79
+
+    (54) EXPR -> EXPR TkMult EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkSuma          reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkResta         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMult          reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkDiv           reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMod           reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMayor         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMayorIgual    reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMenor         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkMenorIgual    reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkParCierra     reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkPunto         reduce using rule 54 (EXPR -> EXPR TkMult EXPR .)
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkConjuncion    [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
+  ! TkIgual         [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
+  ! TkDistinto      [ reduce using rule 54 (EXPR -> EXPR TkMult EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 80
+
+    (66) EXPR -> EXPR TkDistinto EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkSuma          reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkResta         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMult          reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkDiv           reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMod           reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkConjuncion    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkDisyuncion    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkIgual         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMayor         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMayorIgual    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMenor         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkMenorIgual    reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkDistinto      reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkParCierra     reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+    TkPunto         reduce using rule 66 (EXPR -> EXPR TkDistinto EXPR .)
+
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkConjuncion    [ shift and go to state 49 ]
+  ! TkDisyuncion    [ shift and go to state 60 ]
+  ! TkIgual         [ shift and go to state 48 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+  ! TkDistinto      [ shift and go to state 57 ]
+
+
+state 81
+
+    (65) EXPR -> EXPR TkMenorIgual EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
+
+    TkDosPuntos     reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkMayor         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkMayorIgual    reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkMenor         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkMenorIgual    reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkParCierra     reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkPunto         reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .)
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkSuma          [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkResta         [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkMult          [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkDiv           [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkMod           [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkConjuncion    [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkDisyuncion    [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkIgual         [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkDistinto      [ reduce using rule 65 (EXPR -> EXPR TkMenorIgual EXPR .) ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
+
+
+state 82
+
+    (43) INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST . TkEnd
+
+    TkEnd           shift and go to state 92
 
 
 state 83
 
-    (49) EXPR -> TkParAbre EXPR TkParCierra .
+    (60) EXPR -> EXPR TkDisyuncion EXPR .
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkSuma          reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkResta         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMult          reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkDiv           reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMod           reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkConjuncion    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkDisyuncion    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkIgual         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMayor         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMayorIgual    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMenor         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkMenorIgual    reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkDistinto      reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkDosPuntos     reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkParCierra     reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
-    TkPunto         reduce using rule 49 (EXPR -> TkParAbre EXPR TkParCierra .)
+    TkDosPuntos     reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkSuma          reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkResta         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMult          reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkDiv           reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMod           reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkDisyuncion    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMayor         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMayorIgual    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMenor         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkMenorIgual    reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkParCierra     reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkPunto         reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .)
+    TkConjuncion    shift and go to state 49
+    TkIgual         shift and go to state 48
+    TkDistinto      shift and go to state 57
+
+  ! TkConjuncion    [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
+  ! TkIgual         [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
+  ! TkDistinto      [ reduce using rule 60 (EXPR -> EXPR TkDisyuncion EXPR .) ]
+  ! TkSuma          [ shift and go to state 51 ]
+  ! TkResta         [ shift and go to state 55 ]
+  ! TkMult          [ shift and go to state 56 ]
+  ! TkDiv           [ shift and go to state 50 ]
+  ! TkMod           [ shift and go to state 54 ]
+  ! TkDisyuncion    [ shift and go to state 60 ]
+  ! TkMayor         [ shift and go to state 47 ]
+  ! TkMayorIgual    [ shift and go to state 53 ]
+  ! TkMenor         [ shift and go to state 52 ]
+  ! TkMenorIgual    [ shift and go to state 58 ]
 
 
 state 84
@@ -2400,15 +2400,18 @@ state 84
     (41) INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST . TkElse TkDosPuntos INST_CONT_LIST TkEnd
     (42) INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST . TkEnd
 
-    TkElse          shift and go to state 93
-    TkEnd           shift and go to state 94
+    TkElse          shift and go to state 94
+    TkEnd           shift and go to state 93
 
 
 state 85
 
-    (18) STATE -> TkDeactivation .
+    (6) DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .
 
-    TkDosPuntos     reduce using rule 18 (STATE -> TkDeactivation .)
+    TkBool          reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
+    TkChar          reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
+    TkInt           reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
+    TkExecute       reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
 
 
 state 86
@@ -2427,9 +2430,9 @@ state 87
 
 state 88
 
-    (17) STATE -> TkActivation .
+    (18) STATE -> TkDeactivation .
 
-    TkDosPuntos     reduce using rule 17 (STATE -> TkActivation .)
+    TkDosPuntos     reduce using rule 18 (STATE -> TkDeactivation .)
 
 
 state 89
@@ -2450,29 +2453,26 @@ state 89
     (66) EXPR -> EXPR . TkDistinto EXPR
 
     TkDosPuntos     shift and go to state 96
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
 
 
 state 90
 
-    (6) DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .
+    (17) STATE -> TkActivation .
 
-    TkBool          reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
-    TkChar          reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
-    TkInt           reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
-    TkExecute       reduce using rule 6 (DEC -> TIPO TkBot ID_LIST COMP_LIST TkEnd .)
+    TkDosPuntos     reduce using rule 17 (STATE -> TkActivation .)
 
 
 state 91
@@ -2493,18 +2493,11 @@ state 92
     TkWhile         reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkCreate        reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkExecute       reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
-    TkEnd           reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkElse          reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
+    TkEnd           reduce using rule 43 (INST_CONT -> TkWhile EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
 
 
 state 93
-
-    (41) INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse . TkDosPuntos INST_CONT_LIST TkEnd
-
-    TkDosPuntos     shift and go to state 97
-
-
-state 94
 
     (42) INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .
 
@@ -2515,8 +2508,15 @@ state 94
     TkWhile         reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkCreate        reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkExecute       reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
-    TkEnd           reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
     TkElse          reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
+    TkEnd           reduce using rule 42 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkEnd .)
+
+
+state 94
+
+    (41) INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse . TkDosPuntos INST_CONT_LIST TkEnd
+
+    TkDosPuntos     shift and go to state 97
 
 
 state 95
@@ -2538,19 +2538,19 @@ state 95
     (33) DIR -> . TkUp
     (34) DIR -> . TkDown
 
-    TkStore         shift and go to state 105
-    TkCollect       shift and go to state 109
-    TkDrop          shift and go to state 104
-    TkRead          shift and go to state 106
-    TkSend          shift and go to state 98
-    TkLeft          shift and go to state 99
-    TkRight         shift and go to state 107
-    TkUp            shift and go to state 108
-    TkDown          shift and go to state 101
+    TkStore         shift and go to state 106
+    TkCollect       shift and go to state 107
+    TkDrop          shift and go to state 98
+    TkRead          shift and go to state 104
+    TkSend          shift and go to state 105
+    TkLeft          shift and go to state 108
+    TkRight         shift and go to state 101
+    TkUp            shift and go to state 103
+    TkDown          shift and go to state 100
 
-    INST_BOT                       shift and go to state 102
-    DIR                            shift and go to state 103
-    INST_BOT_LIST                  shift and go to state 100
+    INST_BOT                       shift and go to state 99
+    INST_BOT_LIST                  shift and go to state 102
+    DIR                            shift and go to state 109
 
 state 96
 
@@ -2571,19 +2571,19 @@ state 96
     (33) DIR -> . TkUp
     (34) DIR -> . TkDown
 
-    TkStore         shift and go to state 105
-    TkCollect       shift and go to state 109
-    TkDrop          shift and go to state 104
-    TkRead          shift and go to state 106
-    TkSend          shift and go to state 98
-    TkLeft          shift and go to state 99
-    TkRight         shift and go to state 107
-    TkUp            shift and go to state 108
-    TkDown          shift and go to state 101
+    TkStore         shift and go to state 106
+    TkCollect       shift and go to state 107
+    TkDrop          shift and go to state 98
+    TkRead          shift and go to state 104
+    TkSend          shift and go to state 105
+    TkLeft          shift and go to state 108
+    TkRight         shift and go to state 101
+    TkUp            shift and go to state 103
+    TkDown          shift and go to state 100
 
-    DIR                            shift and go to state 103
+    DIR                            shift and go to state 109
+    INST_BOT                       shift and go to state 99
     INST_BOT_LIST                  shift and go to state 110
-    INST_BOT                       shift and go to state 102
 
 state 97
 
@@ -2602,67 +2602,59 @@ state 97
     (3) DEC_LIST_INIT -> . TkCreate DEC_LIST
     (35) INST_EXE -> . TkExecute INST_CONT_LIST TkEnd
 
-    TkActivate      shift and go to state 19
-    TkAdvance       shift and go to state 18
-    TkDeactivate    shift and go to state 16
-    TkIf            shift and go to state 20
+    TkActivate      shift and go to state 16
+    TkAdvance       shift and go to state 15
+    TkDeactivate    shift and go to state 20
+    TkIf            shift and go to state 18
     TkWhile         shift and go to state 17
     TkCreate        shift and go to state 1
-    TkExecute       shift and go to state 3
+    TkExecute       shift and go to state 5
 
     INST_CONT_LIST                 shift and go to state 111
+    INST_EXE                       shift and go to state 2
+    DEC_LIST_INIT                  shift and go to state 3
     INST_CONT                      shift and go to state 14
-    DEC_LIST_INIT                  shift and go to state 2
-    PROGRAM                        shift and go to state 15
-    INST_EXE                       shift and go to state 5
+    PROGRAM                        shift and go to state 19
 
 state 98
 
-    (30) INST_BOT -> TkSend . TkPunto
+    (25) INST_BOT -> TkDrop . EXPR TkPunto
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkPunto         shift and go to state 112
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
+    EXPR                           shift and go to state 112
 
 state 99
-
-    (31) DIR -> TkLeft .
-
-    TkPunto         reduce using rule 31 (DIR -> TkLeft .)
-    TkNum           reduce using rule 31 (DIR -> TkLeft .)
-    TkIdent         reduce using rule 31 (DIR -> TkLeft .)
-    TkCaracter      reduce using rule 31 (DIR -> TkLeft .)
-    TkMe            reduce using rule 31 (DIR -> TkLeft .)
-    TkParAbre       reduce using rule 31 (DIR -> TkLeft .)
-    TkNegacion      reduce using rule 31 (DIR -> TkLeft .)
-    TkResta         reduce using rule 31 (DIR -> TkLeft .)
-    TkTrue          reduce using rule 31 (DIR -> TkLeft .)
-    TkFalse         reduce using rule 31 (DIR -> TkLeft .)
-
-
-state 100
-
-    (16) COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST . TkEnd
-
-    TkEnd           shift and go to state 113
-
-
-state 101
-
-    (34) DIR -> TkDown .
-
-    TkPunto         reduce using rule 34 (DIR -> TkDown .)
-    TkNum           reduce using rule 34 (DIR -> TkDown .)
-    TkIdent         reduce using rule 34 (DIR -> TkDown .)
-    TkCaracter      reduce using rule 34 (DIR -> TkDown .)
-    TkMe            reduce using rule 34 (DIR -> TkDown .)
-    TkParAbre       reduce using rule 34 (DIR -> TkDown .)
-    TkNegacion      reduce using rule 34 (DIR -> TkDown .)
-    TkResta         reduce using rule 34 (DIR -> TkDown .)
-    TkTrue          reduce using rule 34 (DIR -> TkDown .)
-    TkFalse         reduce using rule 34 (DIR -> TkDown .)
-
-
-state 102
 
     (20) INST_BOT_LIST -> INST_BOT . INST_BOT_LIST
     (21) INST_BOT_LIST -> INST_BOT .
@@ -2683,21 +2675,155 @@ state 102
     (34) DIR -> . TkDown
 
     TkEnd           reduce using rule 21 (INST_BOT_LIST -> INST_BOT .)
-    TkStore         shift and go to state 105
-    TkCollect       shift and go to state 109
-    TkDrop          shift and go to state 104
-    TkRead          shift and go to state 106
-    TkSend          shift and go to state 98
-    TkLeft          shift and go to state 99
-    TkRight         shift and go to state 107
-    TkUp            shift and go to state 108
-    TkDown          shift and go to state 101
+    TkStore         shift and go to state 106
+    TkCollect       shift and go to state 107
+    TkDrop          shift and go to state 98
+    TkRead          shift and go to state 104
+    TkSend          shift and go to state 105
+    TkLeft          shift and go to state 108
+    TkRight         shift and go to state 101
+    TkUp            shift and go to state 103
+    TkDown          shift and go to state 100
 
-    DIR                            shift and go to state 103
-    INST_BOT_LIST                  shift and go to state 114
-    INST_BOT                       shift and go to state 102
+    INST_BOT_LIST                  shift and go to state 113
+    DIR                            shift and go to state 109
+    INST_BOT                       shift and go to state 99
+
+state 100
+
+    (34) DIR -> TkDown .
+
+    TkPunto         reduce using rule 34 (DIR -> TkDown .)
+    TkNum           reduce using rule 34 (DIR -> TkDown .)
+    TkIdent         reduce using rule 34 (DIR -> TkDown .)
+    TkCaracter      reduce using rule 34 (DIR -> TkDown .)
+    TkMe            reduce using rule 34 (DIR -> TkDown .)
+    TkParAbre       reduce using rule 34 (DIR -> TkDown .)
+    TkNegacion      reduce using rule 34 (DIR -> TkDown .)
+    TkResta         reduce using rule 34 (DIR -> TkDown .)
+    TkTrue          reduce using rule 34 (DIR -> TkDown .)
+    TkFalse         reduce using rule 34 (DIR -> TkDown .)
+
+
+state 101
+
+    (32) DIR -> TkRight .
+
+    TkPunto         reduce using rule 32 (DIR -> TkRight .)
+    TkNum           reduce using rule 32 (DIR -> TkRight .)
+    TkIdent         reduce using rule 32 (DIR -> TkRight .)
+    TkCaracter      reduce using rule 32 (DIR -> TkRight .)
+    TkMe            reduce using rule 32 (DIR -> TkRight .)
+    TkParAbre       reduce using rule 32 (DIR -> TkRight .)
+    TkNegacion      reduce using rule 32 (DIR -> TkRight .)
+    TkResta         reduce using rule 32 (DIR -> TkRight .)
+    TkTrue          reduce using rule 32 (DIR -> TkRight .)
+    TkFalse         reduce using rule 32 (DIR -> TkRight .)
+
+
+state 102
+
+    (16) COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST . TkEnd
+
+    TkEnd           shift and go to state 114
+
 
 state 103
+
+    (33) DIR -> TkUp .
+
+    TkPunto         reduce using rule 33 (DIR -> TkUp .)
+    TkNum           reduce using rule 33 (DIR -> TkUp .)
+    TkIdent         reduce using rule 33 (DIR -> TkUp .)
+    TkCaracter      reduce using rule 33 (DIR -> TkUp .)
+    TkMe            reduce using rule 33 (DIR -> TkUp .)
+    TkParAbre       reduce using rule 33 (DIR -> TkUp .)
+    TkNegacion      reduce using rule 33 (DIR -> TkUp .)
+    TkResta         reduce using rule 33 (DIR -> TkUp .)
+    TkTrue          reduce using rule 33 (DIR -> TkUp .)
+    TkFalse         reduce using rule 33 (DIR -> TkUp .)
+
+
+state 104
+
+    (28) INST_BOT -> TkRead . TkPunto
+    (29) INST_BOT -> TkRead . TkAs ID TkPunto
+
+    TkPunto         shift and go to state 116
+    TkAs            shift and go to state 115
+
+
+state 105
+
+    (30) INST_BOT -> TkSend . TkPunto
+
+    TkPunto         shift and go to state 117
+
+
+state 106
+
+    (22) INST_BOT -> TkStore . EXPR TkPunto
+    (45) EXPR -> . TkNum
+    (46) EXPR -> . TkIdent
+    (47) EXPR -> . TkCaracter
+    (48) EXPR -> . TkMe
+    (49) EXPR -> . TkParAbre EXPR TkParCierra
+    (50) EXPR -> . TkNegacion EXPR
+    (51) EXPR -> . TkResta EXPR
+    (52) EXPR -> . EXPR TkSuma EXPR
+    (53) EXPR -> . EXPR TkResta EXPR
+    (54) EXPR -> . EXPR TkMult EXPR
+    (55) EXPR -> . EXPR TkDiv EXPR
+    (56) EXPR -> . EXPR TkMod EXPR
+    (57) EXPR -> . TkTrue
+    (58) EXPR -> . TkFalse
+    (59) EXPR -> . EXPR TkConjuncion EXPR
+    (60) EXPR -> . EXPR TkDisyuncion EXPR
+    (61) EXPR -> . EXPR TkIgual EXPR
+    (62) EXPR -> . EXPR TkMayor EXPR
+    (63) EXPR -> . EXPR TkMayorIgual EXPR
+    (64) EXPR -> . EXPR TkMenor EXPR
+    (65) EXPR -> . EXPR TkMenorIgual EXPR
+    (66) EXPR -> . EXPR TkDistinto EXPR
+
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
+
+    EXPR                           shift and go to state 118
+
+state 107
+
+    (23) INST_BOT -> TkCollect . TkPunto
+    (24) INST_BOT -> TkCollect . TkAs ID TkPunto
+
+    TkPunto         shift and go to state 120
+    TkAs            shift and go to state 119
+
+
+state 108
+
+    (31) DIR -> TkLeft .
+
+    TkPunto         reduce using rule 31 (DIR -> TkLeft .)
+    TkNum           reduce using rule 31 (DIR -> TkLeft .)
+    TkIdent         reduce using rule 31 (DIR -> TkLeft .)
+    TkCaracter      reduce using rule 31 (DIR -> TkLeft .)
+    TkMe            reduce using rule 31 (DIR -> TkLeft .)
+    TkParAbre       reduce using rule 31 (DIR -> TkLeft .)
+    TkNegacion      reduce using rule 31 (DIR -> TkLeft .)
+    TkResta         reduce using rule 31 (DIR -> TkLeft .)
+    TkTrue          reduce using rule 31 (DIR -> TkLeft .)
+    TkFalse         reduce using rule 31 (DIR -> TkLeft .)
+
+
+state 109
 
     (26) INST_BOT -> DIR . TkPunto
     (27) INST_BOT -> DIR . EXPR TkPunto
@@ -2724,144 +2850,18 @@ state 103
     (65) EXPR -> . EXPR TkMenorIgual EXPR
     (66) EXPR -> . EXPR TkDistinto EXPR
 
-    TkPunto         shift and go to state 116
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 115
-
-state 104
-
-    (25) INST_BOT -> TkDrop . EXPR TkPunto
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 117
-
-state 105
-
-    (22) INST_BOT -> TkStore . EXPR TkPunto
-    (45) EXPR -> . TkNum
-    (46) EXPR -> . TkIdent
-    (47) EXPR -> . TkCaracter
-    (48) EXPR -> . TkMe
-    (49) EXPR -> . TkParAbre EXPR TkParCierra
-    (50) EXPR -> . TkNegacion EXPR
-    (51) EXPR -> . TkResta EXPR
-    (52) EXPR -> . EXPR TkSuma EXPR
-    (53) EXPR -> . EXPR TkResta EXPR
-    (54) EXPR -> . EXPR TkMult EXPR
-    (55) EXPR -> . EXPR TkDiv EXPR
-    (56) EXPR -> . EXPR TkMod EXPR
-    (57) EXPR -> . TkTrue
-    (58) EXPR -> . TkFalse
-    (59) EXPR -> . EXPR TkConjuncion EXPR
-    (60) EXPR -> . EXPR TkDisyuncion EXPR
-    (61) EXPR -> . EXPR TkIgual EXPR
-    (62) EXPR -> . EXPR TkMayor EXPR
-    (63) EXPR -> . EXPR TkMayorIgual EXPR
-    (64) EXPR -> . EXPR TkMenor EXPR
-    (65) EXPR -> . EXPR TkMenorIgual EXPR
-    (66) EXPR -> . EXPR TkDistinto EXPR
-
-    TkNum           shift and go to state 34
-    TkIdent         shift and go to state 30
-    TkCaracter      shift and go to state 36
-    TkMe            shift and go to state 37
-    TkParAbre       shift and go to state 33
-    TkNegacion      shift and go to state 28
-    TkResta         shift and go to state 31
-    TkTrue          shift and go to state 35
-    TkFalse         shift and go to state 29
-
-    EXPR                           shift and go to state 118
-
-state 106
-
-    (28) INST_BOT -> TkRead . TkPunto
-    (29) INST_BOT -> TkRead . TkAs ID TkPunto
-
-    TkPunto         shift and go to state 119
-    TkAs            shift and go to state 120
-
-
-state 107
-
-    (32) DIR -> TkRight .
-
-    TkPunto         reduce using rule 32 (DIR -> TkRight .)
-    TkNum           reduce using rule 32 (DIR -> TkRight .)
-    TkIdent         reduce using rule 32 (DIR -> TkRight .)
-    TkCaracter      reduce using rule 32 (DIR -> TkRight .)
-    TkMe            reduce using rule 32 (DIR -> TkRight .)
-    TkParAbre       reduce using rule 32 (DIR -> TkRight .)
-    TkNegacion      reduce using rule 32 (DIR -> TkRight .)
-    TkResta         reduce using rule 32 (DIR -> TkRight .)
-    TkTrue          reduce using rule 32 (DIR -> TkRight .)
-    TkFalse         reduce using rule 32 (DIR -> TkRight .)
-
-
-state 108
-
-    (33) DIR -> TkUp .
-
-    TkPunto         reduce using rule 33 (DIR -> TkUp .)
-    TkNum           reduce using rule 33 (DIR -> TkUp .)
-    TkIdent         reduce using rule 33 (DIR -> TkUp .)
-    TkCaracter      reduce using rule 33 (DIR -> TkUp .)
-    TkMe            reduce using rule 33 (DIR -> TkUp .)
-    TkParAbre       reduce using rule 33 (DIR -> TkUp .)
-    TkNegacion      reduce using rule 33 (DIR -> TkUp .)
-    TkResta         reduce using rule 33 (DIR -> TkUp .)
-    TkTrue          reduce using rule 33 (DIR -> TkUp .)
-    TkFalse         reduce using rule 33 (DIR -> TkUp .)
-
-
-state 109
-
-    (23) INST_BOT -> TkCollect . TkPunto
-    (24) INST_BOT -> TkCollect . TkAs ID TkPunto
-
     TkPunto         shift and go to state 121
-    TkAs            shift and go to state 122
+    TkNum           shift and go to state 35
+    TkIdent         shift and go to state 34
+    TkCaracter      shift and go to state 38
+    TkMe            shift and go to state 32
+    TkParAbre       shift and go to state 29
+    TkNegacion      shift and go to state 37
+    TkResta         shift and go to state 31
+    TkTrue          shift and go to state 30
+    TkFalse         shift and go to state 36
 
+    EXPR                           shift and go to state 122
 
 state 110
 
@@ -2879,86 +2879,6 @@ state 111
 
 state 112
 
-    (30) INST_BOT -> TkSend TkPunto .
-
-    TkStore         reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkCollect       reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkDrop          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkRead          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkSend          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkLeft          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkRight         reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkUp            reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkDown          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-    TkEnd           reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
-
-
-state 113
-
-    (16) COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .
-
-    TkOn            reduce using rule 16 (COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .)
-    TkEnd           reduce using rule 16 (COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .)
-
-
-state 114
-
-    (20) INST_BOT_LIST -> INST_BOT INST_BOT_LIST .
-
-    TkEnd           reduce using rule 20 (INST_BOT_LIST -> INST_BOT INST_BOT_LIST .)
-
-
-state 115
-
-    (27) INST_BOT -> DIR EXPR . TkPunto
-    (52) EXPR -> EXPR . TkSuma EXPR
-    (53) EXPR -> EXPR . TkResta EXPR
-    (54) EXPR -> EXPR . TkMult EXPR
-    (55) EXPR -> EXPR . TkDiv EXPR
-    (56) EXPR -> EXPR . TkMod EXPR
-    (59) EXPR -> EXPR . TkConjuncion EXPR
-    (60) EXPR -> EXPR . TkDisyuncion EXPR
-    (61) EXPR -> EXPR . TkIgual EXPR
-    (62) EXPR -> EXPR . TkMayor EXPR
-    (63) EXPR -> EXPR . TkMayorIgual EXPR
-    (64) EXPR -> EXPR . TkMenor EXPR
-    (65) EXPR -> EXPR . TkMenorIgual EXPR
-    (66) EXPR -> EXPR . TkDistinto EXPR
-
-    TkPunto         shift and go to state 125
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
-
-
-state 116
-
-    (26) INST_BOT -> DIR TkPunto .
-
-    TkStore         reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkCollect       reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkDrop          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkRead          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkSend          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkLeft          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkRight         reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkUp            reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkDown          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-    TkEnd           reduce using rule 26 (INST_BOT -> DIR TkPunto .)
-
-
-state 117
-
     (25) INST_BOT -> TkDrop EXPR . TkPunto
     (52) EXPR -> EXPR . TkSuma EXPR
     (53) EXPR -> EXPR . TkResta EXPR
@@ -2974,20 +2894,76 @@ state 117
     (65) EXPR -> EXPR . TkMenorIgual EXPR
     (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkPunto         shift and go to state 126
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkPunto         shift and go to state 125
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
+
+
+state 113
+
+    (20) INST_BOT_LIST -> INST_BOT INST_BOT_LIST .
+
+    TkEnd           reduce using rule 20 (INST_BOT_LIST -> INST_BOT INST_BOT_LIST .)
+
+
+state 114
+
+    (16) COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .
+
+    TkOn            reduce using rule 16 (COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .)
+    TkEnd           reduce using rule 16 (COMP -> TkOn STATE TkDosPuntos INST_BOT_LIST TkEnd .)
+
+
+state 115
+
+    (29) INST_BOT -> TkRead TkAs . ID TkPunto
+    (12) ID -> . TkIdent
+
+    TkIdent         shift and go to state 26
+
+    ID                             shift and go to state 126
+
+state 116
+
+    (28) INST_BOT -> TkRead TkPunto .
+
+    TkStore         reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkCollect       reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkDrop          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkRead          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkSend          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkLeft          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkRight         reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkUp            reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkDown          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+    TkEnd           reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
+
+
+state 117
+
+    (30) INST_BOT -> TkSend TkPunto .
+
+    TkStore         reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkCollect       reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkDrop          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkRead          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkSend          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkLeft          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkRight         reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkUp            reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkDown          reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
+    TkEnd           reduce using rule 30 (INST_BOT -> TkSend TkPunto .)
 
 
 state 118
@@ -3008,47 +2984,31 @@ state 118
     (66) EXPR -> EXPR . TkDistinto EXPR
 
     TkPunto         shift and go to state 127
-    TkSuma          shift and go to state 53
-    TkResta         shift and go to state 47
-    TkMult          shift and go to state 54
-    TkDiv           shift and go to state 56
-    TkMod           shift and go to state 55
-    TkConjuncion    shift and go to state 52
-    TkDisyuncion    shift and go to state 46
-    TkIgual         shift and go to state 57
-    TkMayor         shift and go to state 59
-    TkMayorIgual    shift and go to state 50
-    TkMenor         shift and go to state 58
-    TkMenorIgual    shift and go to state 49
-    TkDistinto      shift and go to state 51
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
 
 
 state 119
 
-    (28) INST_BOT -> TkRead TkPunto .
-
-    TkStore         reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkCollect       reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkDrop          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkRead          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkSend          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkLeft          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkRight         reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkUp            reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkDown          reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-    TkEnd           reduce using rule 28 (INST_BOT -> TkRead TkPunto .)
-
-
-state 120
-
-    (29) INST_BOT -> TkRead TkAs . ID TkPunto
+    (24) INST_BOT -> TkCollect TkAs . ID TkPunto
     (12) ID -> . TkIdent
 
-    TkIdent         shift and go to state 25
+    TkIdent         shift and go to state 26
 
     ID                             shift and go to state 128
 
-state 121
+state 120
 
     (23) INST_BOT -> TkCollect TkPunto .
 
@@ -3064,14 +3024,54 @@ state 121
     TkEnd           reduce using rule 23 (INST_BOT -> TkCollect TkPunto .)
 
 
+state 121
+
+    (26) INST_BOT -> DIR TkPunto .
+
+    TkStore         reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkCollect       reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkDrop          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkRead          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkSend          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkLeft          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkRight         reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkUp            reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkDown          reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+    TkEnd           reduce using rule 26 (INST_BOT -> DIR TkPunto .)
+
+
 state 122
 
-    (24) INST_BOT -> TkCollect TkAs . ID TkPunto
-    (12) ID -> . TkIdent
+    (27) INST_BOT -> DIR EXPR . TkPunto
+    (52) EXPR -> EXPR . TkSuma EXPR
+    (53) EXPR -> EXPR . TkResta EXPR
+    (54) EXPR -> EXPR . TkMult EXPR
+    (55) EXPR -> EXPR . TkDiv EXPR
+    (56) EXPR -> EXPR . TkMod EXPR
+    (59) EXPR -> EXPR . TkConjuncion EXPR
+    (60) EXPR -> EXPR . TkDisyuncion EXPR
+    (61) EXPR -> EXPR . TkIgual EXPR
+    (62) EXPR -> EXPR . TkMayor EXPR
+    (63) EXPR -> EXPR . TkMayorIgual EXPR
+    (64) EXPR -> EXPR . TkMenor EXPR
+    (65) EXPR -> EXPR . TkMenorIgual EXPR
+    (66) EXPR -> EXPR . TkDistinto EXPR
 
-    TkIdent         shift and go to state 25
+    TkPunto         shift and go to state 129
+    TkSuma          shift and go to state 51
+    TkResta         shift and go to state 55
+    TkMult          shift and go to state 56
+    TkDiv           shift and go to state 50
+    TkMod           shift and go to state 54
+    TkConjuncion    shift and go to state 49
+    TkDisyuncion    shift and go to state 60
+    TkIgual         shift and go to state 48
+    TkMayor         shift and go to state 47
+    TkMayorIgual    shift and go to state 53
+    TkMenor         shift and go to state 52
+    TkMenorIgual    shift and go to state 58
+    TkDistinto      shift and go to state 57
 
-    ID                             shift and go to state 129
 
 state 123
 
@@ -3092,27 +3092,11 @@ state 124
     TkWhile         reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
     TkCreate        reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
     TkExecute       reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
-    TkEnd           reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
     TkElse          reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
+    TkEnd           reduce using rule 41 (INST_CONT -> TkIf EXPR TkDosPuntos INST_CONT_LIST TkElse TkDosPuntos INST_CONT_LIST TkEnd .)
 
 
 state 125
-
-    (27) INST_BOT -> DIR EXPR TkPunto .
-
-    TkStore         reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkCollect       reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkDrop          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkRead          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkSend          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkLeft          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkRight         reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkUp            reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkDown          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-    TkEnd           reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
-
-
-state 126
 
     (25) INST_BOT -> TkDrop EXPR TkPunto .
 
@@ -3126,6 +3110,13 @@ state 126
     TkUp            reduce using rule 25 (INST_BOT -> TkDrop EXPR TkPunto .)
     TkDown          reduce using rule 25 (INST_BOT -> TkDrop EXPR TkPunto .)
     TkEnd           reduce using rule 25 (INST_BOT -> TkDrop EXPR TkPunto .)
+
+
+state 126
+
+    (29) INST_BOT -> TkRead TkAs ID . TkPunto
+
+    TkPunto         shift and go to state 130
 
 
 state 127
@@ -3146,16 +3137,25 @@ state 127
 
 state 128
 
-    (29) INST_BOT -> TkRead TkAs ID . TkPunto
+    (24) INST_BOT -> TkCollect TkAs ID . TkPunto
 
-    TkPunto         shift and go to state 130
+    TkPunto         shift and go to state 131
 
 
 state 129
 
-    (24) INST_BOT -> TkCollect TkAs ID . TkPunto
+    (27) INST_BOT -> DIR EXPR TkPunto .
 
-    TkPunto         shift and go to state 131
+    TkStore         reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkCollect       reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkDrop          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkRead          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkSend          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkLeft          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkRight         reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkUp            reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkDown          reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
+    TkEnd           reduce using rule 27 (INST_BOT -> DIR EXPR TkPunto .)
 
 
 state 130

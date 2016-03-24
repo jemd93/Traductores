@@ -51,7 +51,7 @@ def p_dec_list_init(p):
   global simTabActual
   # Comienza un nuevo scope, se crea una nueva tabla de simbolos 
   simTabActual = SimTab(simTabActual)
-  simTabActual.agregarDecInit(p[2])
+  simTabActual.agregarDecInit(p[2],True)
 
   p[0] = ArbolDecListInit(p[2],p.lineno(1)+1-ContBot.numLines)
   p[0].check(simTabActual,p.lineno(1)+1-ContBot.numLines,True)
