@@ -14,7 +14,7 @@ create
     on activation:
       read.
       collect as a.
-      store a + b.
+      store a + me.
       send.
     end
   end

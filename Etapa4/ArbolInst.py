@@ -638,9 +638,9 @@ class ArbolWhile(ArbolInst):
 		else : 
 			self.h3.printArb(tabs+1,False)
 
-	# def run(self,simTab):
-	# OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
-	# 	while (self.h2.evaluate(simTab,None)):
-	# 		self.h3.run(SimTab)
+	def run(self,simTab):
+	#OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
+		while (self.h2.evaluate(simTab,None)):
+			self.h3.run(SimTab)
 
 ################# FIN DE LAS INSTRUCCIONES DEL CONTROLADOR #####################
