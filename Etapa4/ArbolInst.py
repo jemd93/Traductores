@@ -389,6 +389,8 @@ class ArbolRead(ArbolInst):
 				i = False
 			elif i == "true" :
 				i = True
+			elif (i[0] == '\\' and (i[1] == 't' or i[1] == 'n' or i[1] == '\'')) :
+				i = i
 			else :
 				print("Error: La entrada introducida no es valida.")
 				exit(1)
@@ -416,6 +418,8 @@ class ArbolSend(ArbolInst):
 			print("\n")
 		elif val[1] == "\\t" :
 			print("\t",end="")
+		elif val[1] == "\\'" :
+			print("'",end="")
 		elif val[1] == False and val[0] == "bool" :
 			print("false",end="")
 		elif val[1] == True and val[0] == "bool":

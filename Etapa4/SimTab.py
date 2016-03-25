@@ -132,7 +132,7 @@ class SimTab(object):
 			if ((((isinstance(val,float) or isinstance(val,int)) and not(isinstance(val,bool))) and 
 				(tipo == 'int')) or (isinstance(val,bool) and tipo == 'bool') 
 				or (isinstance(val,str) and tipo == 'char')) :
-				if (tipo == 'char') and len(val) > 1 and not(val == "\\n" or val == "\\t"):
+				if (tipo == 'char') and len(val) > 1 and not(val == "\\n" or val == "\\t" or val == "\\'"):
 					print("Error : La entrada introducida no es valida.")
 					exit(1)
 

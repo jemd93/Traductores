@@ -74,7 +74,7 @@ class ArbolExChar(ArbolExpr):
 		print(self.elem)
 
 	def evaluate(self,simTab,var):
-		if self.elem == "'\\t'" or self.elem == "'\\n'" :
+		if self.elem == "'\\t'" or self.elem == "'\\n'" or self.elem == "'\\''":
 			return self.elem[1:3]
 		else : 
 			return self.elem[1]
