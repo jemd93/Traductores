@@ -336,7 +336,8 @@ class ArbolDrop(ArbolInst):
 		self.linea = linea
 
 	def check(self,tipo,simTab,linea,esDec):
-		if not(self.h2.check(tipo,simTab,self.linea,esDec)):
+		if not(self.h2.check("char",simTab,self.linea,esDec) or self.h2.check("int",simTab,self.linea,esDec)
+			or self.h2.check("bool",simTab,self.linea,esDec)):
 			print("Error en la linea "+str(self.linea)+" : la expresion debe ser de tipo "+tipo)
 			exit(1)
 

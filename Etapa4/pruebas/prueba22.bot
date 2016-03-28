@@ -1,17 +1,18 @@
 create
 	char bot bot1
 		on activation :
-			read.
-			send.
+			drop 1+1.
 		end
 	end
 
-	char bot bot2
+	int bot bot2
 		on activation :
-			store 't'.
+			collect.
+			send.
 		end
 	end
 
 execute
 	activate bot1.
+	activate bot2.
 end
