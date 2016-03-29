@@ -118,7 +118,7 @@ class ArbolExMe(ArbolExpr):
 	def evaluate(self,simTab,var):
 		val = simTab.obtener(var,self.linea)[0][1]
 		if val is None :
-			print("Error : La variable "+str(var)+" no ha sido inicializada")
+			print("Error : La variable "+str(var)+" no ha sido inicializada en la linea " +str(self.linea))
 			exit(1)
 		return val
 

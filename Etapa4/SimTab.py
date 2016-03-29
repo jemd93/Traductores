@@ -83,6 +83,7 @@ class SimTab(object):
 		# Descripción: Método para agregar lista de declaraciones de DecListInit
 		#			   a la tabla de simbolos.
   		# Parámetros: - lista: lista de declaraciones de bots.
+  		#			  - check: booleano que indica comportamiento inexistente.
 
 		if (lista.h2 != None) :
 			self.agregarDecList(lista.h1,lista.h2,check)
@@ -95,6 +96,7 @@ class SimTab(object):
 		# 			   DecList en la tabla de simbolos.
   		# Parámetros: - dec: declaracion a agregar en la lista de declaraciones.
   		# 			  - lista: lista de declaraciones de bots.
+  		# 			  - check: booleano que indica comportamiento inexistente.
 
 		self.agregarListaId(dec.h3,dec.h1,dec.h4,check)
 		if (lista != None) :
@@ -107,6 +109,7 @@ class SimTab(object):
   		# Parámetros: - lista: lista de ids de bots.
   		#			  - tipo: tipo de los identificadores de los bots.
   		#			  - comps: tabla hash de comportamientos para los bots.
+  		# 			  - check: booleano que indica comportamiento inexistente.
 
 		if (lista.h1.elem in self.tabhash) and check:
 			print("Error : la variable "+lista.h1.elem+" ya fue declarada anteriormente")
@@ -122,10 +125,6 @@ class SimTab(object):
 		# Descripción: Método para modificar y/o actualizar el valor de un bot.
 		# Parámetros: - clave: nombre del bot a buscar en la tabla hash
 		#			  - val: valor a actualizar en el bot.
-
-		# OJO EN CASO DE QUE LOS VALORES DEBAN SER INTS (creo que si es asi)
-		# if (isinstance(val,float)) : 
-		# 	val = int(val)
 
 		if clave in self.tabhash :
 			tipo = self.tabhash[clave][0][0]
@@ -173,15 +172,19 @@ class SimTab(object):
 		#			   execute lo indica.
 		# Parámetros: - lista: un bot o la lista de bots a activar.
 
-		if self.tabhash[lista.h1.elem][0][2] == 1:
-			print("Error ya el robot ha sido activado anteriormente")
-			exit(1)
-		self.tabhash[lista.h1.elem][0][2] = 1
-		if ('activation' in self.tabhash[lista.h1.elem][1]):
-			# El run de aqui es el run del ArbolComp asociado a activate
-			self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
-			if lista.h2 != None :
-				self.activate(lista.h2)
+		if lista.h1.elem in self.tabhash:
+			if self.tabhash[lista.h1.elem][0][2] == 1:
+				print("Error ya el robot "+str(lista.h1.elem)+" ha sido activado anteriormente")
+				exit(1)
+			self.tabhash[lista.h1.elem][0][2] = 1
+			if ('activation' in self.tabhash[lista.h1.elem][1]):
+				# El run de aqui es el run del ArbolComp asociado a activate
+				self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
+				if lista.h2 != None :
+					self.activate(lista.h2)
+		else:
+			if self.papa != None:
+				self.papa.activate(lista)
 
 	def deactivate(self,lista):
 
@@ -189,14 +192,18 @@ class SimTab(object):
 		#			   execute lo indica.
 		# Parámetros: - lista: un bot o la lista de bots a desactivar.
 
-		if self.tabhash[lista.h1.elem][0][2] == 0:
-			print("Error ya el robot ha sido desactivado anteriormente")
-			exit(1)
-		self.tabhash[lista.h1.elem][0][2] = 0		
-		if ('deactivation' in self.tabhash[lista.h1.elem][1]):
-			self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
-			if lista.h2 != None :
-				self.deactivate(lista.h2)
+		if lista.h1.elem in self.tabhash:
+			if self.tabhash[lista.h1.elem][0][2] == 0:
+				print("Error ya el robot "+str(lista.h1.elem)+" ha sido desactivado anteriormente")
+				exit(1)
+			self.tabhash[lista.h1.elem][0][2] = 0		
+			if ('deactivation' in self.tabhash[lista.h1.elem][1]):
+				self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
+				if lista.h2 != None :
+					self.deactivate(lista.h2)
+		else:
+			if self.papa != None:
+				self.papa.deactivate(lista)
 
 	def advance(self,lista):
 

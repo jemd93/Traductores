@@ -361,7 +361,6 @@ precedence = (
   ('left','TkIgual','TkDistinto'),
 )
 
-
 def numeroLineas():
 
   # Descripción: Método para usar en el cálculo del número de líneas para los
@@ -419,13 +418,13 @@ def main():
   parser = yacc.yacc()
   result = parser.parse(finput, lexer=botlex.lexer)
 
-  print("--------------------- PRINT DEL PROGRAMA   ---------------------------")
+  print("--------------------- PRINT DEL PROGRAMA -----------------------------")
   if (result != None):
     result.h2.printArb(0,True)
     
   print("")
   print("--------------------- CORRIDA DEL PROGRAMA ---------------------------")
-  # result.simTab.imprimir()
+
   result.run(simTabActual)
   f.close()
 

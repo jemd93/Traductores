@@ -14,7 +14,6 @@ from ArbolExpr import *
 from SimTab import *
 from ContBot import *
 
-# OJO REVISAR
 global superficie
 superficie = {}
 
@@ -50,8 +49,6 @@ class ArbolProgram(ArbolInst):
 			self.h2.printArb(tabs,usarTabs)
 
 	def run(self,simTab):
-		# OJO, LAS SIGUIENTES DOS LINEAS PUEDEN DAR ERRORES. 
-		# REINICIALIZAN LAS TABLAS CADA VEZ QUE HAY DECLARACIONES.
 		if not(self.h1 is None):
 			self.simTab.agregarDecInit(self.h1.h2,False)
 		self.h2.run(self.simTab)
@@ -104,8 +101,6 @@ class ArbolDec(ArbolInst):
 	def check(self,simTab,linea,esDec) :
 		simTab.insertar("me",[self.h1.inst,None,2,0,0],{})
 		self.h4.check(self.h1.inst,simTab,self.linea,esDec)
-		# OJO ESTO ESTABA DESCOMENTADO ANTES.
-		# simTab.eliminar("me")
 
 	def printArb(self,tabs,usarTabs):
 		self.h1.printArb(0,True)
@@ -208,16 +203,11 @@ class ArbolComp(ArbolInst):
 		# Desempilamos la tabla de simbolos del comportamiento
 		self.simTab = simTab
 		simTab = simTab.papa
-		# simTab.clean() 
 
 	def agregarATabla(self,tabla):
 		if (isinstance(self.h2,ArbolExpr.ArbolExpr)):
-			# ESTA AGREGANDO EXPS CON IDS INEXSISTENTES
 			if not('advance' in tabla) : 
-				#OJO ESTO ERA ANTES UN DICCIONARIO
 				tabla['advance'] = []
-			# OJO AQUI ESTABA SELF.H3 EN VEZ DE SELF.
-			# OJO 2 : AQUI ERA tabla['advance'][self.h2] = self PQ ANTES ERA DICCIONARIO
 			tabla['advance'].append((self.h2,self))
 			return 
 
@@ -347,7 +337,6 @@ class ArbolDrop(ArbolInst):
 
 	def run(self,simTab,var):
 		global superficie
-		# OJO DEVUELVE "'a'" en vez de 'a'
 		superficie[(simTab.obtener(var,self.linea)[0][3],simTab.obtener(var,self.linea)[0][4])] = self.h2.evaluate(simTab,var)
 
 # Árbol para la instrucción Entrada y Salida
@@ -426,7 +415,7 @@ class ArbolSend(ArbolInst):
 		elif val[1] == True and val[0] == "bool":
 			print("true",end="")
 		elif val[1] is None :
-			print("Error : La variable "+var+" no ha sido inicializada")
+			print("Error : La variable "+var+" no ha sido inicializada en la linea " +str(self.linea))
 			exit(1)
 		else:
 			print(val[1],end="")
@@ -620,7 +609,6 @@ class ArbolIf(ArbolInst):
 				self.h5.printArb(tabs+1,False)
 
 	def run(self,simTab):
-		# OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
 		if self.h2.evaluate(simTab,None) == True:
 			self.h3.run(simTab)
 		else:
@@ -656,7 +644,6 @@ class ArbolWhile(ArbolInst):
 			self.h3.printArb(tabs+1,False)
 
 	def run(self,simTab):
-	#OJO. FALTA CHEQUEAR QUE EL BOT ESTE ACTIVADO. VER MAIL DE MONASCAL.
 		while (self.h2.evaluate(simTab,None)):
 			self.h3.run(simTab)
 
