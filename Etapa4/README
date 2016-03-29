@@ -6,20 +6,20 @@
 #  Autores: Jorge Marcano   # Carnet 11-10566
 #           Meggie Sánchez  # Carnet 11-10939
 #
-# Proyecto BOT - Etapa 4 - Análisis de Contexto
+# Proyecto BOT - Etapa 4 - Intérprete del lenguaje
 # -------------------------------------------------
 
-Este archivo contiene algunos detalles extras respecto a la etapa 3 del proyecto.
+Este archivo contiene algunos detalles extras respecto a la etapa 4 del proyecto.
 
-El Script ContBot es un bash script que se encarga de correr el programa 
+El Script bot es un bash script que se encarga de correr el programa 
 principal del proyecto con un archivo de texto como parámetro. De manera que, 
-./ContBot <Archivo> corre el programa principal del proyecto con <Archivo> como 
+./bot <Archivo> corre el programa principal del proyecto con <Archivo> como 
 entrada.
 
-Dicho script correrá el programa ContBot.py que es donde se encuentra todo el 
-código de esta etapa del proyecto.
+Dicho script correrá el programa ContBot.py que es donde se encuentra el main 
+este proyecto.
 
-Notese que el Script ContBot utiliza el comando python3 debido a que la versión 
+Notese que el Script bot utiliza el comando python3 debido a que la versión 
 de python utilizada para la ejecución del proyecto es python 3.4. En el 
 supuesto de que se utilizara una versión anterior (2.x) de python para correr el
 programa, éste devolvera la salida correcta, pero en formato incorrecto. 
@@ -35,9 +35,9 @@ abstracto para las instrucciones del lenguaje BOT.
 
 El archivo SimTab.py contiene la clase SimTab, usada como tabla de simbolos, la cual
 contiene una tabla de hash, y una tabla de simbolos padre. La tabla de Hash contiene, para cada
-variable declarada en el programa su nombre, tipo y otra tabla de hash de la forma 
-(comportamiento,lista de comportamientos) para almacenar la informacion de cada comportamiento
-de la variable, si es que esta es un robot.
+variable declarada en el programa su nombre, tipo, valor, estado (inactivo o activo),
+posicion x y posicion y, y otra tabla de hash de la forma 
+(comportamiento,lista de comportamientos) para almacenar la informacion de cada comportamiento de la variable, si es que esta es un robot.
 
 El archivo LexBot.py contiene el analizador léxico creado en la primera etapa 
 del proyecto y usado en esta antes de iniciar el análisis sintáctico.
@@ -45,5 +45,4 @@ del proyecto y usado en esta antes de iniciar el análisis sintáctico.
 Es importante mencionar que si el archivo de entrada que se pasa como parámetro,
 si está vacío lanzará un mensaje de "error sintáctico".
 
-Por último, el informe junto con la resolución de las preguntas 
-teórico-prácticas se encuentran en el archivo InformeEtapa3.pdf.
+Por último, el informe se encuentra en el archivo InformeEtapa4.pdf.
