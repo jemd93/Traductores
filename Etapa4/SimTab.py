@@ -115,7 +115,7 @@ class SimTab(object):
 			diccComps = comps.generarTablaComps({},False)
 			self.tabhash[lista.h1.elem] = [[tipo.inst,None,0,0,0],diccComps] 
 			if (lista.h2 != None) :
-				self.agregarListaId(lista.h2,tipo,comps)
+				self.agregarListaId(lista.h2,tipo,comps,check)
 
 	def updateValue(self,clave,val):
 
@@ -176,8 +176,8 @@ class SimTab(object):
 		if self.tabhash[lista.h1.elem][0][2] == 1:
 			print("Error ya el robot ha sido activado anteriormente")
 			exit(1)
+		self.tabhash[lista.h1.elem][0][2] = 1
 		if ('activation' in self.tabhash[lista.h1.elem][1]):
-			self.tabhash[lista.h1.elem][0][2] = 1
 			# El run de aqui es el run del ArbolComp asociado a activate
 			self.tabhash[lista.h1.elem][1]['activation'].run(lista.h1.elem)
 			if lista.h2 != None :
@@ -192,8 +192,8 @@ class SimTab(object):
 		if self.tabhash[lista.h1.elem][0][2] == 0:
 			print("Error ya el robot ha sido desactivado anteriormente")
 			exit(1)
+		self.tabhash[lista.h1.elem][0][2] = 0		
 		if ('deactivation' in self.tabhash[lista.h1.elem][1]):
-			self.tabhash[lista.h1.elem][0][2] = 0
 			self.tabhash[lista.h1.elem][1]['deactivation'].run(lista.h1.elem)
 			if lista.h2 != None :
 				self.deactivate(lista.h2)
